@@ -8,3 +8,5 @@
     https://github.com/BuGGreaN
     - 651310353 จารวี แก้วเกียรติศักดิ์ : Game Design 
     https://github.com/bour2012
+
+    GDD presentation : https://www.canva.com/design/DAGZqA8XAbk/uccUgYadBW3CTMZz-Bi0mw/edit?utm_content=DAGZqA8XAbk&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
