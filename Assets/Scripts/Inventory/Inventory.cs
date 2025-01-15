@@ -44,17 +44,10 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-
-       // cookingInventory.CheckAllCookRecipe();
-
         Instance = this; // กำหนด Instance ให้กับตัวเอง
 
         gridLayoutGroup = InventoryPanel.GetComponent<GridLayoutGroup>();
-        //CreateInventorySlots(); // สร้างช่องในกระเป๋า
-        ////CreateHandleInventorySlots();
-        //AssignSlotIndexes();
-        //// โหลดข้อมูลหลังจากสร้างช่องในกระเป๋า
-        ////saveLoadData.LoadInventoryData(); // โหลดข้อมูลจากไฟล์
+
         //// โหลดข้อมูลหลังจากสร้าง slots เสร็จ
         if (InventoryPanel.childCount == 0 && ToolInventoryPanel.childCount == 0)
         {

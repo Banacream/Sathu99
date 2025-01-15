@@ -3,8 +3,7 @@ using UnityEngine.SceneManagement;
 
 public static class ScenesController
 {
-    private static HandleSlot handleSlot;
-    private static Inventory inventory;
+
     static int mainScene = 0;
 
     // ‚À≈¥©“°À≈—°

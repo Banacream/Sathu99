@@ -57,18 +57,6 @@ public class HandleSlot : InventorySlot
         }
 
     }
-    public bool HasItem()
-    {
-        return item != null;
-    }
-    //public void ReturnItemToInventory()
-    //{
-    //    if (HasItem() && inventory != null)
-    //    {
-    //        Debug.Log($"Returning item {item.name} to inventory...");
-    //        inventory.AddItem(item, stack);
-    //        ClearThisCookSlot(); // เคลียร์ช่องถือของ
-    //    }
-    //}
+
 
 }

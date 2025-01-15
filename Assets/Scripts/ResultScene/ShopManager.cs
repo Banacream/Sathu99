@@ -11,11 +11,6 @@ public class ShopManager : MonoBehaviour
     [Header("Slot Detail")]
     public DataItem item;
 
-    void Start()
-    {
-        
-    }
-
     public void BuyItem(int itemPrice)
     {
         price = itemPrice;
