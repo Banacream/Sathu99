@@ -39,7 +39,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
     public void SetSlotType(InventoryType type)
     {
-        slotType = type;
+        slotType = type;  
     }
 
 

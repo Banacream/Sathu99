@@ -15,6 +15,7 @@ public class ResultManager : MonoBehaviour
         totalCoins = GameDataManager.playerData.coins;
         UpdateCoinUI(); // อัปเดต UI ครั้งแรกเมื่อเริ่มเกม
     }
+  
 
     public void AddCoin(int amount)
     {
@@ -22,6 +23,14 @@ public class ResultManager : MonoBehaviour
         totalCoins = GameDataManager.playerData.coins;
         UpdateCoinUI(); // อัปเดต UI หลังเพิ่มเหรียญ
     }
+
+    public void SpendCoins(int amount)
+    {
+        GameDataManager.SpendCoins(amount);
+        totalCoins = GameDataManager.playerData.coins;
+        UpdateCoinUI(); // อัปเดต UI หลังเพิ่มเหรียญ
+    }
+
 
     private void UpdateCoinUI()
     {

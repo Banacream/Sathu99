@@ -180,7 +180,9 @@ public class GameDataManager : MonoBehaviour
 
     public static void SpendCoins(int amount)
     {
+        if(CanSpendAddcoins(amount))
         playerData.coins -= amount;
+
     }
 
     public static void SavePlayerData()

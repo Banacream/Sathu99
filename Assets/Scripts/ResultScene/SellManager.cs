@@ -8,7 +8,6 @@ using static DataItem;
 public class SellManager : MonoBehaviour
 {
     public Inventory mainInventory; // อินเวนทอรีหลักที่เก็บวัตถุดิบ
-
     public ResultManager resultManager;
     //public Image icon; // ภาพของCoin
 

@@ -3,26 +3,26 @@ using UnityEngine.SceneManagement;
 
 public static class ScenesController
 {
+    private static HandleSlot handleSlot;
+    private static Inventory inventory;
     static int mainScene = 0;
 
     // โหลดฉากหลัก
     public static void LoadMainScene()
     {
-        SaveCurrentSceneData();
-        SceneManager.LoadScene(mainScene);
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        PrepareForSceneTransition();
+        LoadSceneByIndex(mainScene);
     }
 
     // โหลดฉากถัดไป
     public static void LoadNextScene()
     {
-        SaveCurrentSceneData();
         int currentScene = SceneManager.GetActiveScene().buildIndex;
 
         if (currentScene < SceneManager.sceneCountInBuildSettings - 1)
         {
-            SceneManager.LoadScene(currentScene + 1);
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            PrepareForSceneTransition();
+            LoadSceneByIndex(currentScene + 1);
         }
         else
         {
@@ -33,13 +33,12 @@ public static class ScenesController
     // โหลดฉากก่อนหน้า
     public static void LoadPreviousScene()
     {
-        SaveCurrentSceneData();
         int currentScene = SceneManager.GetActiveScene().buildIndex;
 
         if (currentScene > 0)
         {
-            SceneManager.LoadScene(currentScene - 1);
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            PrepareForSceneTransition();
+            LoadSceneByIndex(currentScene - 1);
         }
         else
         {
@@ -52,9 +51,27 @@ public static class ScenesController
     {
         if (index >= 0 && index < SceneManager.sceneCountInBuildSettings)
         {
-            SaveCurrentSceneData();
-            SceneManager.LoadScene(index);
+            PrepareForSceneTransition();
+            LoadSceneByIndex(index);
         }
+        else
+        {
+            Debug.LogWarning("Invalid scene index.");
+        }
+    }
+
+    // ฟังก์ชันสำหรับเตรียมข้อมูลก่อนเปลี่ยนฉาก
+    private static void PrepareForSceneTransition()
+    {
+        Inventory.Instance.HandToInventory(InventorySlot.InventoryType.Tool);
+        SaveCurrentSceneData();
+    }
+
+    // ฟังก์ชันสำหรับโหลดฉากโดยระบุดัชนี
+    private static void LoadSceneByIndex(int index)
+    {
+        SceneManager.LoadScene(index);
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     // บันทึกข้อมูลในฉากปัจจุบัน
@@ -63,7 +80,6 @@ public static class ScenesController
         Inventory currentInventory = GameObject.FindObjectOfType<Inventory>();
         if (currentInventory != null && GameDataManager.Instance != null)
         {
-            // บันทึกข้อมูลของฉากปัจจุบัน
             GameDataManager.Instance.SaveInventory(currentInventory);
             Debug.Log($"Saved data for scene {SceneManager.GetActiveScene().buildIndex} before transition");
         }

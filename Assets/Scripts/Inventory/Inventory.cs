@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System.Linq; // เพิ่มการใช้งาน LINQ
 public class Inventory : MonoBehaviour
 {
 
@@ -91,22 +91,6 @@ public class Inventory : MonoBehaviour
     }
 
 
-    // ฟังก์ชันสร้างช่องในกระเป๋า สามารถถูก override ได้
-
-    //public void CreateHandleInventorySlots()
-    //{
-
-
-    
-
-    //    Transform slot = Instantiate(handleSlotPrefab, HandleInventoryPanel);
-    //    InventorySlot invSlot = slot.GetComponent<InventorySlot>();
-
-    //    invSlot.inventory = this;
-    //    invSlot.SetThisSlot(EMTRY_ITEM, 0);
-    //    invSlot.SetSlotType(InventorySlot.InventoryType.Item);
-
-    //}
 
     public virtual void CreateInventorySlots()
     {
@@ -182,6 +166,32 @@ public class Inventory : MonoBehaviour
     public void HandToInventory(InventorySlot.InventoryType inventoryType)
     {
 
+        // ตรวจสอบว่า handleSlot มีไอเทมอยู่หรือไม่
+        if (handleSlot.item == EMTRY_ITEM)
+        {
+            Debug.Log("No item in hand to transfer.");
+            return; // ถ้าไม่มีไอเทมในมือ ก็ไม่ทำอะไร
+        }
+
+        // หาก inventoryType เป็น Item ให้ย้ายไอเทมจาก handleSlot ไปยัง Tool Inventory
+        if (inventoryType == InventorySlot.InventoryType.Tool)
+        {
+            // ค้นหาช่องว่างใน Tool Inventory เพื่อย้ายไอเทมจาก handleSlot
+            for (int i = 0; i < toolinventorySlots.Length; i++)
+            {
+                if (toolinventorySlots[i].item == EMTRY_ITEM) // ถ้าช่องว่าง
+                {
+                    // ย้ายไอเทมจาก handleSlot ไปยังช่องที่ว่างใน Tool Inventory
+                    toolinventorySlots[i].SetThisSlot(handleSlot.item, handleSlot.stack);
+
+                    // ตั้งค่า handleSlot ให้เป็นช่องว่าง
+                    handleSlot.SetThisSlot(EMTRY_ITEM, 0);
+
+                    Debug.Log($"Moved {handleSlot.item.name} x{handleSlot.stack} to Tool Inventory.");
+                    break; // หยุดลูปหลังจากย้ายไอเทมแล้ว
+                }
+            }
+        }
 
     }
 
@@ -204,7 +214,14 @@ public class Inventory : MonoBehaviour
     public InventorySlot IsEmptySlotLeft(DataItem itemChecker = null, InventorySlot itemSlot = null)
     {
         InventorySlot firstEmptySlot = null; // เก็บช่องว่างที่พบในครั้งแรก
-        foreach (InventorySlot slot in iteminventorySlots)
+
+        // ตรวจสอบประเภทของไอเทม และเลือกช่องที่เหมาะสม
+        List<InventorySlot> inventorySlotsToCheck = itemChecker.itemType == DataItem.ItemType.Tool
+            ? toolinventorySlots.ToList() // แปลงเป็น List<InventorySlot> ถ้าเป็น Tool
+            : iteminventorySlots.ToList(); // แปลงเป็น List<InventorySlot> ถ้าไม่ใช่ Tool
+
+        // ลูปผ่านช่องที่เลือก
+        foreach (InventorySlot slot in inventorySlotsToCheck)
         {
             // ข้ามช่องที่เป็นช่องเดียวกันกับที่ส่งมา
             if (slot == itemSlot)
@@ -222,6 +239,7 @@ public class Inventory : MonoBehaviour
             else if (slot.item == EMTRY_ITEM && firstEmptySlot == null)
                 firstEmptySlot = slot;
         }
+
         return firstEmptySlot; // คืนค่าช่องที่ว่าง
     }
 
