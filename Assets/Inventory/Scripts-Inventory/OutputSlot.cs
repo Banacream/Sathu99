@@ -49,7 +49,25 @@ public class OutputSlot : InventorySlot
             else
             {
                 // หาก item ในช่องไม่เป็นช่องว่าง ให้เรียกใช้ฟังก์ชัน UseCookMaterials ของ cookingInventory
-                cookingInventory.UseCookMaterials();
+                bool isMatched = false;
+
+                foreach (CookRecipe recipe in cookingInventory.recipes)
+                {
+                    if (recipe.outputItem == item) // ตรวจสอบว่าไอเทมตรงกับผลลัพธ์ของสูตร
+                    {
+                        isMatched = true;
+
+                        // ใช้วัสดุในสูตร
+                        Debug.Log($"Using item: {item.name} from slot.");
+                        cookingInventory.UseSpecificCookMaterials(recipe, this); // ใช้ไอเทมเฉพาะในช่องนี้
+                        break;
+                    }
+                    if (!isMatched)
+                    {
+                        Debug.LogError("The clicked item does not match any recipe output.");
+                    }
+                }
+               // cookingInventory.UseCookMaterials();
             }
         }
     }

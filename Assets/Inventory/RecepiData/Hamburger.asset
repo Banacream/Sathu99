@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae4c7f17671d3c941aca7a26ec098c99, type: 3}
-  m_Name: Pepper
+  m_Name: Hamburger
   m_EditorClassIdentifier: 
-  outputItem: {fileID: 11400000, guid: 24a16b0c4d9d9974ab6a18c9f706ec38, type: 2}
+  outputItem: {fileID: 11400000, guid: dab4d9c35dfc90540bd622b0f0aa3856, type: 2}
   outputStack: 1
   recipeItems:
   - ingredient: {fileID: 11400000, guid: 2ccd27eb0b5516b4c82f091c48b58c0c, type: 2}

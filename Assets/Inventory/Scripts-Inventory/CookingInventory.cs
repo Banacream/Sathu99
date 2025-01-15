@@ -50,48 +50,89 @@ public class CookingInventory : Inventory
         }
     }
 
-    // ฟังก์ชันนี้ใช้ในการใช้วัตถุดิบจากอินเวนทอรีเพื่อทำอาหาร
-    public void UseCookMaterials()
+
+    public void UseSpecificCookMaterials(CookRecipe recipe, OutputSlot clickedSlot)
     {
-        Debug.Log("Using cooking materials...");
+        Debug.Log($"Using materials for recipe: {recipe.name}");
         bool materialsUsed = false;
 
-        // ลูปผ่านสูตรทั้งหมดเพื่อตรวจสอบว่าใช้วัตถุดิบครบหรือไม่
-        foreach (CookRecipe recipe in recipes)
+        // ลูปผ่านวัตถุดิบในสูตร
+        foreach (var recipeItem in recipe.recipeItems)
         {
-            // ตรวจสอบสูตรว่าใช้วัตถุดิบครบหรือไม่
-            if (IsRecipeMatch(recipe))
+            // หาวัตถุดิบที่ตรงในอินเวนทอรี
+            foreach (InventorySlot slot in iteminventorySlots)
             {
-                Debug.Log($"Recipe match found: {recipe.name}");
-
-                // ลูปผ่านวัตถุดิบในสูตร
-                foreach (var recipeItem in recipe.recipeItems)
+                if (slot.item == recipeItem.ingredient && slot.stack >= recipeItem.quantity)
                 {
-                    // หาวัตถุดิบที่ตรงในอินเวนทอรี
-                    foreach (InventorySlot slot in iteminventorySlots)
-                    {
-                        if (slot.item == recipeItem.ingredient && slot.stack >= recipeItem.quantity)
-                        {
-                            // ใช้ไอเทมจากสูตร
-                            Debug.Log($"Using material: {slot.item.name}");
-                            slot.UseItem(recipeItem.quantity); // ใช้ไอเทมตามจำนวนที่ต้องการ
-                            mainInventory.AddItem(recipe.outputItem, recipe.outputStack); // เพิ่มไอเทมที่ทำได้ในอินเวนทอรีหลัก
-                            materialsUsed = true;
-                            break;
-                        }
-                    }
+                    // ใช้ไอเทมจากสูตร
+                    Debug.Log($"Using material: {slot.item.name}");
+                    slot.UseItem(recipeItem.quantity); // ใช้ไอเทมตามจำนวนที่ต้องการ
+                    materialsUsed = true;
+                    break;
                 }
-
-                // เมื่อใช้วัสดุครบแล้วให้เช็คสูตรทั้งหมด
-                CheckAllCookRecipe();
-                return;
             }
         }
 
-        // ถ้าไม่พบวัสดุที่ใช้ได้
-        if (!materialsUsed)
-            Debug.Log("No material used.");
+        if (materialsUsed)
+        {
+            // เพิ่มไอเทมที่ทำได้ในอินเวนทอรีหลัก
+            mainInventory.AddItem(recipe.outputItem, recipe.outputStack);
+            Debug.Log($"Added {recipe.outputStack} of {recipe.outputItem.name} to inventory.");
+
+            // ล้างช่องที่คลิก
+            clickedSlot.ClearThisCookSlot();
+
+            // อัปเดตสูตรทั้งหมด
+            CheckAllCookRecipe();
+        }
+        else
+        {
+            Debug.LogError("Not enough materials to use this recipe.");
+        }
     }
+
+    // ฟังก์ชันนี้ใช้ในการใช้วัตถุดิบจากอินเวนทอรีเพื่อทำอาหาร
+    //public void UseCookMaterials()
+    //{
+    //    Debug.Log("Using cooking materials...");
+    //    bool materialsUsed = false;
+
+    //    // ลูปผ่านสูตรทั้งหมดเพื่อตรวจสอบว่าใช้วัตถุดิบครบหรือไม่
+    //    foreach (CookRecipe recipe in recipes)
+    //    {
+    //        // ตรวจสอบสูตรว่าใช้วัตถุดิบครบหรือไม่
+    //        if (IsRecipeMatch(recipe))
+    //        {
+    //            Debug.Log($"Recipe match found: {recipe.name}");
+
+    //            // ลูปผ่านวัตถุดิบในสูตร
+    //            foreach (var recipeItem in recipe.recipeItems)
+    //            {
+    //                // หาวัตถุดิบที่ตรงในอินเวนทอรี
+    //                foreach (InventorySlot slot in iteminventorySlots)
+    //                {
+    //                    if (slot.item == recipeItem.ingredient && slot.stack >= recipeItem.quantity)
+    //                    {
+    //                        // ใช้ไอเทมจากสูตร
+    //                        Debug.Log($"Using material: {slot.item.name}");
+    //                        slot.UseItem(recipeItem.quantity); // ใช้ไอเทมตามจำนวนที่ต้องการ
+    //                        mainInventory.AddItem(recipe.outputItem, recipe.outputStack); // เพิ่มไอเทมที่ทำได้ในอินเวนทอรีหลัก
+    //                        materialsUsed = true;
+    //                        break;
+    //                    }
+    //                }
+    //            }
+
+    //            // เมื่อใช้วัสดุครบแล้วให้เช็คสูตรทั้งหมด
+    //            CheckAllCookRecipe();
+    //            return;
+    //        }
+    //    }
+
+    //    // ถ้าไม่พบวัสดุที่ใช้ได้
+    //    if (!materialsUsed)
+    //        Debug.Log("No material used.");
+    //}
 
     // ฟังก์ชันนี้ใช้ตรวจสอบว่าสูตรสามารถทำได้หรือไม่
     public bool IsRecipeMatch(CookRecipe recipe)

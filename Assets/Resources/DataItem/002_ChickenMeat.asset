@@ -18,6 +18,5 @@ MonoBehaviour:
   description: Chicken Meat (Frog 1x)
   maxStack: 10
   weight: 0
-  gamePrefab: {fileID: 2983315341115562920, guid: 810c1d18f43662b4dab20cec7c6f1b1f,
-    type: 3}
-  itemType: 0
+  gamePrefab: {fileID: 2983315341115562920, guid: 810c1d18f43662b4dab20cec7c6f1b1f, type: 3}
+  itemType: 2

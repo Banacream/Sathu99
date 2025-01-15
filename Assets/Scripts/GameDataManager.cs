@@ -2,9 +2,16 @@
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.SceneManagement;
+    using UnityEngine.UI;
+
+[System.Serializable] public class PlayerData
+{
+    public int coins = 0;
+}
 
 public class GameDataManager : MonoBehaviour
     {
+    public static PlayerData playerData = new PlayerData();
     public static GameDataManager Instance { get; private set; }
     private const string INVENTORY_SAVE_KEY = "InventoryData";
     private const string CURRENT_SCENE_KEY = "CurrentSceneInventory";
@@ -12,6 +19,8 @@ public class GameDataManager : MonoBehaviour
 
     private void Awake()
     {
+        SavePlayerData();
+        LoadPlayerData();
         if (Instance == null)
         {
             Instance = this;
@@ -24,6 +33,7 @@ public class GameDataManager : MonoBehaviour
         }
     }
 
+    #region Medthod Inventory
     public void SaveInventory(Inventory inventory)
     {
         if (inventory != null)
@@ -149,7 +159,53 @@ public class GameDataManager : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region Medthos PlayerData
+
+    public static int GetCoins()
+    {
+        return playerData.coins;
+    }
+    public static void Addcoins(int amount)
+    {
+        playerData.coins += amount;
+        SavePlayerData();
+    }
+
+    public static bool CanSpendAddcoins(int amount)
+    {
+        return (playerData.coins >= amount);
+    }
+
+    public static void SpendCoins(int amount)
+    {
+        playerData.coins -= amount;
+    }
+
+    public static void SavePlayerData()
+    {
+        PlayerPrefs.SetInt("TotalCoins", playerData.coins); // เซฟจำนวนเหรียญ
+        PlayerPrefs.Save(); // บันทึกลงในระบบ
+        Debug.Log("Game Saved!");
+    }
+    public static void LoadPlayerData()
+    {
+        if (PlayerPrefs.HasKey("TotalCoins"))
+        {
+            playerData.coins = PlayerPrefs.GetInt("TotalCoins"); // โหลดจำนวนเหรียญ
+            Debug.Log($"Game Loaded! Total Coins: {playerData.coins}");
+        }
+        else
+        {
+            Debug.Log("No saved data found.");
+        }
+    }
+
+
+
+
+    #endregion
 
 
 

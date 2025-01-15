@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae4c7f17671d3c941aca7a26ec098c99, type: 3}
-  m_Name: ChickenMeat
+  m_Name: Pizza
   m_EditorClassIdentifier: 
-  outputItem: {fileID: 11400000, guid: 6b2f18b33f1fa72438f1de0066d2e1ed, type: 2}
+  outputItem: {fileID: 11400000, guid: d12eef74dfeb7734687cbea3fb5f0c7f, type: 2}
   outputStack: 1
   recipeItems:
   - ingredient: {fileID: 11400000, guid: 141ad53be2ee57d4585c58a1e6ea8c7c, type: 2}
