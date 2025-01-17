@@ -10,3 +10,5 @@
     https://github.com/bour2012
 
     GDD presentation : https://www.canva.com/design/DAGZqA8XAbk/uccUgYadBW3CTMZz-Bi0mw/edit?utm_content=DAGZqA8XAbk&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
+    Presentation Pitch 2nd 18/1/2025 : https://www.canva.com/design/DAGcXkd2ylM/Pk3-t8iNigxD5lpZqLx4Lg/edit?utm_content=DAGcXkd2ylM&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
