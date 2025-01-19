@@ -3036,6 +3036,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryPanel: {fileID: 794908038}
   CookingPanel: {fileID: 2078077448}
+  shopPanel: {fileID: 0}
 --- !u!4 &1967628877
 Transform:
   m_ObjectHideFlags: 0
