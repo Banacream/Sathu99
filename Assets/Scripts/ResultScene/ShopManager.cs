@@ -24,17 +24,17 @@ public class ShopManager : MonoBehaviour
         {
             Debug.Log($"Adding tool item: {item.name}");
 
-            // ค้นหา Tool Slot ใน Inventory
+            // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ Tool Slot ๏ฟฝ Inventory
             InventorySlot slot = mainInventory.IsEmptySlotLeft(item);
             slot.SetThisSlot(item, 1);
         }
         //foreach (InventorySlot slot in mainInventory.toolinventorySlots)
         //{
-        //    // if (slot.()) // ตรวจสอบว่า Slot นี้ว่างหรือไม่
+        //    // if (slot.()) // ๏ฟฝ๏ฟฝวจ๏ฟฝอบ๏ฟฝ๏ฟฝ๏ฟฝ Slot ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
         //    //{
-        //    slot.SetThisSlot(item, 1); // เพิ่มไอเทมลงใน Slot (จำนวน 1)
+        //    slot.SetThisSlot(item, 1); // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝลง๏ฟฝ Slot (๏ฟฝำนวน 1)
         //    Debug.Log($"Added {item.name} to tool slot.");
-        //    return; // ออกจากฟังก์ชันทันทีหลังเพิ่มไอเทมสำเร็จ
+        //    return; // ๏ฟฝอก๏ฟฝาก๏ฟฝัง๏ฟฝ๏ฟฝัน๏ฟฝัน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
         //            // }
         //}
         //}

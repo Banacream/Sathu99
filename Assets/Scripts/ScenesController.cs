@@ -6,14 +6,14 @@ public static class ScenesController
 
     static int mainScene = 0;
 
-    // โหลดฉากหลัก
+    // ๏ฟฝ๏ฟฝลด๏ฟฝาก๏ฟฝ๏ฟฝัก
     public static void LoadMainScene()
     {
         PrepareForSceneTransition();
         LoadSceneByIndex(mainScene);
     }
 
-    // โหลดฉากถัดไป
+    // ๏ฟฝ๏ฟฝลด๏ฟฝาก๏ฟฝัด๏ฟฝ
     public static void LoadNextScene()
     {
         int currentScene = SceneManager.GetActiveScene().buildIndex;
@@ -29,7 +29,7 @@ public static class ScenesController
         }
     }
 
-    // โหลดฉากก่อนหน้า
+    // ๏ฟฝ๏ฟฝลด๏ฟฝาก๏ฟฝ๏ฟฝอนหน๏ฟฝ๏ฟฝ
     public static void LoadPreviousScene()
     {
         int currentScene = SceneManager.GetActiveScene().buildIndex;
@@ -45,7 +45,7 @@ public static class ScenesController
         }
     }
 
-    // โหลดฉากตามดัชนีที่กำหนด
+    // ๏ฟฝ๏ฟฝลด๏ฟฝาก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัช๏ฟฝีท๏ฟฝ๏ฟฝ๏ฟฝหน๏ฟฝ
     public static void LoadScene(int index)
     {
         if (index >= 0 && index < SceneManager.sceneCountInBuildSettings)
@@ -59,21 +59,21 @@ public static class ScenesController
         }
     }
 
-    // ฟังก์ชันสำหรับเตรียมข้อมูลก่อนเปลี่ยนฉาก
+    // ๏ฟฝัง๏ฟฝ๏ฟฝัน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝลก๏ฟฝอน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝยน๏ฟฝาก
     private static void PrepareForSceneTransition()
     {
         Inventory.Instance.HandToInventory(InventorySlot.InventoryType.Tool);
         SaveCurrentSceneData();
     }
 
-    // ฟังก์ชันสำหรับโหลดฉากโดยระบุดัชนี
+    // ๏ฟฝัง๏ฟฝ๏ฟฝัน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝ๏ฟฝลด๏ฟฝาก๏ฟฝ๏ฟฝ๏ฟฝะบุดัช๏ฟฝ๏ฟฝ
     private static void LoadSceneByIndex(int index)
     {
         SceneManager.LoadScene(index);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    // บันทึกข้อมูลในฉากปัจจุบัน
+    // ๏ฟฝัน๏ฟฝึก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝในฉาก๏ฟฝัจ๏ฟฝุบัน
     private static void SaveCurrentSceneData()
     {
         Inventory currentInventory = GameObject.FindObjectOfType<Inventory>();
@@ -84,7 +84,7 @@ public static class ScenesController
         }
     }
 
-    // โหลดข้อมูลสำหรับฉากใหม่
+    // ๏ฟฝ๏ฟฝลด๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝาก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     private static void LoadSceneData()
     {
         if (GameDataManager.Instance != null)
@@ -102,11 +102,11 @@ public static class ScenesController
         }
     }
 
-    // เรียกใช้เมื่อฉากใหม่โหลดเสร็จ
+    // ๏ฟฝ๏ฟฝ๏ฟฝยก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอฉาก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝลด๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         LoadSceneData();
-        SceneManager.sceneLoaded -= OnSceneLoaded; // ยกเลิกการสมัคร event
+        SceneManager.sceneLoaded -= OnSceneLoaded; // ยก๏ฟฝ๏ฟฝิก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัค๏ฟฝ event
     }
 
 }

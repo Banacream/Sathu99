@@ -14,8 +14,8 @@ public class CookRecipe : ScriptableObject
     [System.Serializable]
     public struct RecipeIngredient
     {
-        public DataItem ingredient; // วัตถุดิบที่ใช้
-        public int quantity; // จำนวนที่ต้องการ
+        public DataItem ingredient; // ๏ฟฝัต๏ฟฝุดิบ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+        public int quantity; // ๏ฟฝำนวน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ
 
         public RecipeIngredient(DataItem ingredient, int quantity)
         {
@@ -24,12 +24,11 @@ public class CookRecipe : ScriptableObject
         }
     }
 
-    [SerializeField] public RecipeIngredient[] recipeItems = new RecipeIngredient[0]; // รายการวัตถุดิบที่ต้องใช้
+    [SerializeField] public RecipeIngredient[] recipeItems = new RecipeIngredient[0]; 
 
-    // จำนวนวัตถุดิบทั้งหมดในสูตร
     public int NumberOfIngredients => recipeItems.Length;
 
-    // ดึงข้อมูลวัตถุดิบจากตำแหน่งที่กำหนด
+
     public DataItem GetIngredientAt(int index)
     {
         if (index >= recipeItems.Length)
@@ -41,7 +40,6 @@ public class CookRecipe : ScriptableObject
         return recipeItems[index].ingredient;
     }
 
-    // ดึงจำนวนที่ต้องการของวัตถุดิบจากตำแหน่งที่กำหนด
     public int GetQuantityAt(int index)
     {
         if (index >= recipeItems.Length)
@@ -53,7 +51,7 @@ public class CookRecipe : ScriptableObject
         return recipeItems[index].quantity;
     }
 
-    // เพิ่มวัตถุดิบใหม่ลงในสูตร
+
     public void AddIngredient(DataItem ingredient, int quantity)
     {
         RecipeIngredient[] copy = new RecipeIngredient[recipeItems.Length + 1];

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class HandleSlot : InventorySlot
 {
@@ -11,46 +12,46 @@ public class HandleSlot : InventorySlot
     void Start()
     {
         Debug.Log("HandleSlot Started");
-        // หา HandleSlotSync ในฉาก
+        // ๏ฟฝ๏ฟฝ HandleSlotSync ในฉาก
         slotSync = FindObjectOfType<HandleSlotSync>();
         if (slotSync == null)
         {
             Debug.LogError("HandleSlotSync not found in scene!");
         }
         CheckShowText();
-
     }
 
     public override void OnPointerClick(PointerEventData eventData)
     {
+        if(SceneManager.GetActiveScene().name != "Result")
         Inventory.Instance.HandToInventory(slotType);
     }
 
     public override void SetThisSlot(DataItem newItem, int amount)
     {
-        // หาก newItem เป็น null ให้แสดงข้อความผิดพลาด
+        // ๏ฟฝาก newItem ๏ฟฝ๏ฟฝ null ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝสด๏ฟฝ๏ฟฝ๏ฟฝอค๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝิด๏ฟฝ๏ฟฝาด
         if (newItem == null)
         {
-            Debug.LogError("SetThisSlot: newItem is null!"); // แจ้งว่า newItem ที่จะใช้ไม่ได้ถูกกำหนด
+            Debug.LogError("SetThisSlot: newItem is null!"); // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ newItem ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝูก๏ฟฝ๏ฟฝหน๏ฟฝ
             return;
         }
 
-        // ตั้งค่า item และ icon ในช่องนี้ให้เป็น item ใหม่
+        // ๏ฟฝ๏ฟฝ้งค๏ฟฝ๏ฟฝ item ๏ฟฝ๏ฟฝ๏ฟฝ icon ในช๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ item ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
         item = newItem;
         icon.sprite = newItem.icon;
 
-        // คำนวณจำนวนที่สามารถเก็บใน slot โดยไม่เกิน maxStack ของ item
+        // ๏ฟฝำนวณ๏ฟฝำนวน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝรถ๏ฟฝ๏ฟฝ๏ฟฝ slot ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝิน maxStack ๏ฟฝอง item
         int itemAmount = amount;
-        int intInthisSlot = Mathf.Clamp(itemAmount, 0, newItem.maxStack); // คำนวณจำนวนไอเทมที่สามารถเก็บได้
-        stack = intInthisSlot; // อัพเดท stack ด้วยจำนวนที่คำนวณได้
+        int intInthisSlot = Mathf.Clamp(itemAmount, 0, newItem.maxStack); // ๏ฟฝำนวณ๏ฟฝำนวน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝรถ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+        stack = intInthisSlot; // ๏ฟฝัพเดท stack ๏ฟฝ๏ฟฝ๏ฟฝยจำนวน๏ฟฝ๏ฟฝ๏ฟฝำนวณ๏ฟฝ๏ฟฝ
 
-        // แสดงข้อความในคอนโซลว่า OutputSlot ถูกตั้งค่าเรียบร้อยแล้ว
+        // ๏ฟฝสด๏ฟฝ๏ฟฝ๏ฟฝอค๏ฟฝ๏ฟฝ๏ฟฝในคอน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ OutputSlot ๏ฟฝูก๏ฟฝ๏ฟฝ้งค๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝยบ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
         Debug.Log($"Handle slot set with item: {newItem.name}, amount: {stack}");
 
-        // เรียกใช้งาน CheckShowText เพื่ออัพเดทการแสดงผลจำนวนไอเทมในสลอต
+        // ๏ฟฝ๏ฟฝ๏ฟฝยก๏ฟฝ๏ฟฝาน CheckShowText ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัพเดท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝสด๏ฟฝ๏ฟฝลจำนวน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอต
         CheckShowText();
 
-        // sync ไปยัง slot อื่น
+        // sync ๏ฟฝ๏ฟฝัง slot ๏ฟฝ๏ฟฝ๏ฟฝ
         if (slotSync != null)
         {
             slotSync.SyncSlots(this, newItem, amount);

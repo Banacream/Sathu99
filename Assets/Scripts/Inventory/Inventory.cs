@@ -2,63 +2,72 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq; // เพิ่มการใช้งาน LINQ
+using TMPro;
+using System.Linq; // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาน LINQ
+
+
 public class Inventory : MonoBehaviour
 {
 
     public static Inventory Instance { get; private set; }
 
     [Header("Inventory")]
-    public DataItem EMTRY_ITEM; // ไอเทมที่ใช้เป็นตัวแทนของช่องว่างในกระเป๋า
-    public Transform slotPrefab; // Prefab ของช่องในกระเป๋า
-    public Transform handleSlotPrefab; // Prefab ของช่องในกระเป๋า
-    public Transform InventoryPanel; // พาเนลที่ใช้แสดงกระเป๋า
-    public Transform ToolInventoryPanel; // พาเนลที่ใช้แสดงกระเป๋า
-    public Transform[] HandleInventoryPanel; // พาเนลที่ใช้แสดงกระเป๋า
+    public DataItem EMTRY_ITEM; // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ็นต๏ฟฝ๏ฟฝแทน๏ฟฝอง๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝางในก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    public Transform slotPrefab; // Prefab ๏ฟฝอง๏ฟฝ๏ฟฝองในก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    public Transform handleSlotPrefab; // Prefab ๏ฟฝอง๏ฟฝ๏ฟฝองในก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    public Transform InventoryPanel; // ๏ฟฝ๏ฟฝ๏ฟฝลท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝสด๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    public Transform ToolInventoryPanel; // ๏ฟฝ๏ฟฝ๏ฟฝลท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝสด๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    public Transform CookSellPanel; // ๏ฟฝ๏ฟฝ๏ฟฝลท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝสด๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    public Transform[] HandleInventoryPanel; // ๏ฟฝ๏ฟฝ๏ฟฝลท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝสด๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     [Header("Cook Inventory")]
-    public CookingInventory cookingInventory; // กระเป๋าสำหรับเก็บวัตถุดิบในการทำอาหาร
+    public CookingInventory cookingInventory; // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝ๏ฟฝ๏ฟฝัต๏ฟฝุดิบในก๏ฟฝรท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    public ResultManager resultManager; // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝ๏ฟฝ๏ฟฝัต๏ฟฝุดิบในก๏ฟฝรท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    public CookRecipe[] recipes;
 
     [Header("Tool")]
     public HandleSlot handleSlot;
 
-    protected GridLayoutGroup gridLayoutGroup; // GridLayoutGroup สำหรับจัดเรียงช่องในกระเป๋า
+    protected GridLayoutGroup gridLayoutGroup; // GridLayoutGroup ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝัด๏ฟฝ๏ฟฝ๏ฟฝยง๏ฟฝ๏ฟฝองในก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     [Space(5)]
-    public int slotAmount = 30; // จำนวนช่องในกระเป๋า
-    public InventorySlot[] toolinventorySlots; // อาร์เรย์ของช่องในกระเป๋า
-    public InventorySlot[] iteminventorySlots; // อาร์เรย์ของช่องในกระเป๋า
+    public int slotAmount = 30; // ๏ฟฝำนวน๏ฟฝ๏ฟฝองในก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    public InventorySlot[] toolinventorySlots; // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝองในก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    public InventorySlot[] iteminventorySlots; // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝองในก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    public InventorySlot[] cookSellSlots; // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝองในก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
 
     [Header("Inventory Data")]
     [SerializeField]
     InventoryData invData;
+
 
     // Start is called before the first frame update
 
 
     void Start()
     {
-        // ดึง GridLayoutGroup จาก InventoryPanel เพื่อใช้ในการจัดเรียงช่อง
+        // ๏ฟฝึง GridLayoutGroup ๏ฟฝาก InventoryPanel ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝในก๏ฟฝรจัด๏ฟฝ๏ฟฝ๏ฟฝยง๏ฟฝ๏ฟฝอง
 
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject); // ทำลาย Instance ซ้ำ
+            Destroy(gameObject); // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ Instance ๏ฟฝ๏ฟฝ๏ฟฝ
             return;
         }
 
-        Instance = this; // กำหนด Instance ให้กับตัวเอง
+        Instance = this; // ๏ฟฝ๏ฟฝหน๏ฟฝ Instance ๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอง
 
         gridLayoutGroup = InventoryPanel.GetComponent<GridLayoutGroup>();
 
-        //// โหลดข้อมูลหลังจากสร้าง slots เสร็จ
-        if (InventoryPanel.childCount == 0 && ToolInventoryPanel.childCount == 0)
+        //// ๏ฟฝ๏ฟฝลด๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัง๏ฟฝาก๏ฟฝ๏ฟฝ๏ฟฝาง slots ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+        if (InventoryPanel.childCount == 0 && ToolInventoryPanel.childCount == 0 && CookSellPanel.childCount == 0)
         {
             CreateInventorySlots();
             AssignSlotIndexes();
         }
         else
         {
-            // ถ้ามี slots อยู่แล้ว ให้เก็บ reference
+            // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ slots ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ reference
             iteminventorySlots = InventoryPanel.GetComponentsInChildren<InventorySlot>();
             toolinventorySlots = ToolInventoryPanel.GetComponentsInChildren<InventorySlot>();
+            cookSellSlots = CookSellPanel.GetComponentsInChildren<InventorySlot>();
             AssignSlotIndexes();
         }
 
@@ -87,7 +96,7 @@ public class Inventory : MonoBehaviour
 
     public virtual void CreateInventorySlots()
     {
-        // สร้างช่องสำหรับ iteminventorySlots
+        // ๏ฟฝ๏ฟฝ๏ฟฝาง๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ iteminventorySlots
         iteminventorySlots = new InventorySlot[slotAmount];
         for (int i = 0; i < slotAmount; i++)
         {
@@ -100,7 +109,7 @@ public class Inventory : MonoBehaviour
             invSlot.SetSlotType(InventorySlot.InventoryType.Item);
         }
 
-        // สร้างช่องสำหรับ toolinventorySlots
+        // ๏ฟฝ๏ฟฝ๏ฟฝาง๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ toolinventorySlots
         toolinventorySlots = new InventorySlot[4];
         for (int i = 0; i < 4; i++)
         {
@@ -112,13 +121,25 @@ public class Inventory : MonoBehaviour
             invSlot.SetThisSlot(EMTRY_ITEM, 0);
             invSlot.SetSlotType(InventorySlot.InventoryType.Tool);
         }
+
+        cookSellSlots = new InventorySlot[10];
+        for (int i = 0; i < 10; i++)
+        {
+            Transform slot = Instantiate(slotPrefab, CookSellPanel);
+            InventorySlot invSlot = slot.GetComponent<InventorySlot>();
+
+            cookSellSlots[i] = invSlot;
+            invSlot.inventory = this;
+            invSlot.SetThisSlot(EMTRY_ITEM, 0);
+            invSlot.SetSlotType(InventorySlot.InventoryType.Food);
+        }
     }
 
 
 
     public void InventoryToHand(int slotIndex, InventorySlot.InventoryType inventoryType)
     {
-        // ดึงข้อมูลไอเทมจาก Tool Inventory
+        // ๏ฟฝึง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาก Tool Inventory
         InventorySlot slot = toolinventorySlots[slotIndex];
         if (slot.item == EMTRY_ITEM)
         {
@@ -126,13 +147,13 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        // หาก handleSlot มีไอเทมอยู่แล้ว ให้ส่งค่ากลับไปที่ Tool Inventory
+        // ๏ฟฝาก handleSlot ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ่งค๏ฟฝาก๏ฟฝับไปท๏ฟฝ๏ฟฝ Tool Inventory
         if (handleSlot.item != EMTRY_ITEM)
         {
-            // ส่งค่าไอเทมที่มีอยู่ใน handleSlot กลับไปที่ Tool Inventory
+            // ๏ฟฝ่งค๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ handleSlot ๏ฟฝ๏ฟฝับไปท๏ฟฝ๏ฟฝ Tool Inventory
             for (int i = 0; i < toolinventorySlots.Length; i++)
             {
-                // ค้นหาช่องว่างใน Tool Inventory เพื่อนำไอเทมกลับไป
+                // ๏ฟฝ๏ฟฝ๏ฟฝาช๏ฟฝอง๏ฟฝ๏ฟฝาง๏ฟฝ Tool Inventory ๏ฟฝ๏ฟฝ๏ฟฝอน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝ
                 if (toolinventorySlots[i].item == EMTRY_ITEM)
                 {
                     toolinventorySlots[i].SetThisSlot(handleSlot.item, handleSlot.stack);
@@ -141,14 +162,14 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        // ย้ายไอเทมจาก Tool Inventory ไปยังมือ (handleSlot)
+        // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาก Tool Inventory ๏ฟฝ๏ฟฝัง๏ฟฝ๏ฟฝ๏ฟฝ (handleSlot)
         DataItem itemToEquip = slot.item;
         int itemAmount = slot.stack;
 
-        // ตั้งค่าช่องใน Tool Inventory ให้ว่างเปล่า
+        // ๏ฟฝ๏ฟฝ้งค๏ฟฝาช๏ฟฝอง๏ฟฝ Tool Inventory ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
         slot.SetThisSlot(EMTRY_ITEM, 0);
 
-        // ตั้งค่า handleSlot ด้วยไอเทมที่ย้ายมา
+        // ๏ฟฝ๏ฟฝ้งค๏ฟฝ๏ฟฝ handleSlot ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
         handleSlot.SetThisSlot(itemToEquip, itemAmount);
 
         Debug.Log($"Moved {itemToEquip.name} x{itemAmount} to hand.");
@@ -159,29 +180,29 @@ public class Inventory : MonoBehaviour
     public void HandToInventory(InventorySlot.InventoryType inventoryType)
     {
 
-        // ตรวจสอบว่า handleSlot มีไอเทมอยู่หรือไม่
+        // ๏ฟฝ๏ฟฝวจ๏ฟฝอบ๏ฟฝ๏ฟฝ๏ฟฝ handleSlot ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
         if (handleSlot.item == EMTRY_ITEM)
         {
             Debug.Log("No item in hand to transfer.");
-            return; // ถ้าไม่มีไอเทมในมือ ก็ไม่ทำอะไร
+            return; // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
         }
 
-        // หาก inventoryType เป็น Item ให้ย้ายไอเทมจาก handleSlot ไปยัง Tool Inventory
+        // ๏ฟฝาก inventoryType ๏ฟฝ๏ฟฝ Item ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาก handleSlot ๏ฟฝ๏ฟฝัง Tool Inventory
         if (inventoryType == InventorySlot.InventoryType.Tool)
         {
-            // ค้นหาช่องว่างใน Tool Inventory เพื่อย้ายไอเทมจาก handleSlot
+            // ๏ฟฝ๏ฟฝ๏ฟฝาช๏ฟฝอง๏ฟฝ๏ฟฝาง๏ฟฝ Tool Inventory ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาก handleSlot
             for (int i = 0; i < toolinventorySlots.Length; i++)
             {
-                if (toolinventorySlots[i].item == EMTRY_ITEM) // ถ้าช่องว่าง
+                if (toolinventorySlots[i].item == EMTRY_ITEM) // ๏ฟฝ๏ฟฝาช๏ฟฝอง๏ฟฝ๏ฟฝาง
                 {
-                    // ย้ายไอเทมจาก handleSlot ไปยังช่องที่ว่างใน Tool Inventory
+                    // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาก handleSlot ๏ฟฝ๏ฟฝัง๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาง๏ฟฝ Tool Inventory
                     toolinventorySlots[i].SetThisSlot(handleSlot.item, handleSlot.stack);
 
-                    // ตั้งค่า handleSlot ให้เป็นช่องว่าง
+                    // ๏ฟฝ๏ฟฝ้งค๏ฟฝ๏ฟฝ handleSlot ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ็นช๏ฟฝอง๏ฟฝ๏ฟฝาง
                     handleSlot.SetThisSlot(EMTRY_ITEM, 0);
 
                     Debug.Log($"Moved {handleSlot.item.name} x{handleSlot.stack} to Tool Inventory.");
-                    break; // หยุดลูปหลังจากย้ายไอเทมแล้ว
+                    break; // ๏ฟฝ๏ฟฝุด๏ฟฝูป๏ฟฝ๏ฟฝัง๏ฟฝาก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
                 }
             }
         }
@@ -190,80 +211,95 @@ public class Inventory : MonoBehaviour
 
     //public virtual void CreateInventorySlots()
     //{
-    //    iteminventorySlots = new InventorySlot[slotAmount]; // สร้างอาร์เรย์ของช่องในกระเป๋า
+    //    iteminventorySlots = new InventorySlot[slotAmount]; // ๏ฟฝ๏ฟฝ๏ฟฝาง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝองในก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     //    for (int i = 0; i < slotAmount; i++)
     //    {
-    //        // สร้างช่องใหม่จาก prefab และเพิ่มไปยัง InventoryPanel
+    //        // ๏ฟฝ๏ฟฝ๏ฟฝาง๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาก prefab ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัง InventoryPanel
     //        Transform slot = Instantiate(slotPrefab, InventoryPanel);
     //        InventorySlot invSlot = slot.GetComponent<InventorySlot>();
 
-    //        iteminventorySlots[i] = invSlot; // กำหนดช่องที่สร้างให้กับอาร์เรย์
-    //        invSlot.inventory = this; // กำหนดให้ช่องนี้รู้จักกับ Inventory
-    //        invSlot.SetThisSlot(EMTRY_ITEM, 0); // กำหนดค่าเริ่มต้นให้กับช่อง (ช่องว่าง)
+    //        iteminventorySlots[i] = invSlot; // ๏ฟฝ๏ฟฝหน๏ฟฝ๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาง๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    //        invSlot.inventory = this; // ๏ฟฝ๏ฟฝหน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัก๏ฟฝับ Inventory
+    //        invSlot.SetThisSlot(EMTRY_ITEM, 0); // ๏ฟฝ๏ฟฝหน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝ๏ฟฝอง (๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝาง)
     //    }
     //}
 
-    // ฟังก์ชันเช็คว่ามีช่องว่างในกระเป๋าหรือไม่ และคืนค่าช่องที่ว่าง
+    // ๏ฟฝัง๏ฟฝ๏ฟฝัน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝีช๏ฟฝอง๏ฟฝ๏ฟฝางในก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ ๏ฟฝ๏ฟฝะคืน๏ฟฝ๏ฟฝาช๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาง
     public InventorySlot IsEmptySlotLeft(DataItem itemChecker = null, InventorySlot itemSlot = null)
     {
-        InventorySlot firstEmptySlot = null; // เก็บช่องว่างที่พบในครั้งแรก
+        InventorySlot firstEmptySlot = null; // เน€เธเนเธเธเนเธญเธเธงเนเธฒเธเธ—เธตเนเธเธเนเธเธเธฃเธฑเนเธเนเธฃเธ
 
-        // ตรวจสอบประเภทของไอเทม และเลือกช่องที่เหมาะสม
-        List<InventorySlot> inventorySlotsToCheck = itemChecker.itemType == DataItem.ItemType.Tool
-            ? toolinventorySlots.ToList() // แปลงเป็น List<InventorySlot> ถ้าเป็น Tool
-            : iteminventorySlots.ToList(); // แปลงเป็น List<InventorySlot> ถ้าไม่ใช่ Tool
+        // เน€เธฅเธทเธญเธเธเนเธญเธเน€เธเนเธเธเธญเธเธ•เธฒเธกเธเธฃเธฐเน€เธ เธ—เธเธญเธเนเธญเน€เธ—เนเธก
+        List<InventorySlot> inventorySlotsToCheck;
 
-        // ลูปผ่านช่องที่เลือก
+        if (itemChecker.itemType == DataItem.ItemType.Tool)
+        {
+            inventorySlotsToCheck = toolinventorySlots.ToList(); // เนเธเธฅเธเน€เธเนเธ List<InventorySlot> เธชเธณเธซเธฃเธฑเธ Tool
+        }
+        else if (itemChecker.itemType == DataItem.ItemType.Food)
+        {
+            inventorySlotsToCheck = cookSellSlots.ToList(); // เนเธเธฅเธเน€เธเนเธ List<InventorySlot> เธชเธณเธซเธฃเธฑเธ Food
+        }
+        else
+        {
+            inventorySlotsToCheck = iteminventorySlots.ToList(); // เนเธเธฅเธเน€เธเนเธ List<InventorySlot> เธชเธณเธซเธฃเธฑเธ Item เธญเธทเนเธเน
+        }
+
+        // เธ•เธฃเธงเธเธชเธญเธเธเนเธญเธเน€เธเนเธเธเธญเธเธ—เธตเนเน€เธฅเธทเธญเธ
         foreach (InventorySlot slot in inventorySlotsToCheck)
         {
-            // ข้ามช่องที่เป็นช่องเดียวกันกับที่ส่งมา
+            // เธเนเธฒเธกเธเนเธญเธเธ—เธตเนเธ•เธฃเธเธเธฑเธเธเนเธญเธเธเธฑเธเธเธธเธเธฑเธเธ—เธตเนเธ•เธฃเธงเธเธชเธญเธ
             if (slot == itemSlot)
                 continue;
 
-            // ถ้าไอเทมในช่องตรงกับไอเทมที่ต้องการ และยังไม่เต็ม
+            // เธซเธฒเธเธกเธตเนเธญเน€เธ—เนเธกเน€เธ”เธตเธขเธงเธเธฑเธเนเธฅเธฐเธขเธฑเธเธชเธฒเธกเธฒเธฃเธ–เน€เธเธดเนเธกเธเธณเธเธงเธเนเธ”เน
             if (slot.item == itemChecker)
             {
                 if (slot.stack < slot.item.maxStack)
                 {
-                    return slot; // คืนค่าช่องที่สามารถเพิ่มไอเทมได้
+                    return slot; // เธเธทเธเธเนเธฒเธเนเธญเธเธ—เธตเนเธชเธฒเธกเธฒเธฃเธ–เน€เธเธดเนเธกเธเธณเธเธงเธเนเธ”เน
                 }
             }
-            // ถ้าช่องว่างและยังไม่เจอช่องว่างที่แรก
+            // เธซเธฒเธเธเธเธเนเธญเธเธงเนเธฒเธ เนเธซเนเน€เธเนเธเธเนเธญเธเธงเนเธฒเธเนเธฃเธเธ—เธตเนเธเธ
             else if (slot.item == EMTRY_ITEM && firstEmptySlot == null)
+            {
                 firstEmptySlot = slot;
+            }
         }
 
-        return firstEmptySlot; // คืนค่าช่องที่ว่าง
+        return firstEmptySlot; // เธเธทเธเธเนเธฒเธเนเธญเธเธงเนเธฒเธ (เธ–เนเธฒเธกเธต)
     }
 
-    // ฟังก์ชันเพิ่มไอเทมลงในกระเป๋า
+    // ๏ฟฝัง๏ฟฝ๏ฟฝัน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝลงในก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     public virtual void AddItem(DataItem item, int amount)
     {
-        // ค้นหาช่องที่สามารถเพิ่มไอเทมได้
+   
+        // ๏ฟฝ๏ฟฝ๏ฟฝาช๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝรถ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
         InventorySlot slot = IsEmptySlotLeft(item);
-        if (slot == null) // ถ้าไม่พบช่องที่สามารถเพิ่มไอเทมได้ (กระเป๋าเต็ม)
+        if (slot == null) // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ่พบ๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝรถ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ (๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ)
         {
-            DropItem(item, amount); // ทิ้งไอเทมออกไป
+            DropItem(item, amount); // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอก๏ฟฝ
             return;
         }
 
-        // รวมไอเทมที่มีอยู่ในช่อง
+        // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝในช๏ฟฝอง
         slot.MergeThisSlot(item, amount);
-        cookingInventory.CheckAllCookRecipe(); // ตรวจสอบสูตรอาหารที่สามารถทำได้
+        cookingInventory.CheckAllCookRecipe(); // ๏ฟฝ๏ฟฝวจ๏ฟฝอบ๏ฟฝูต๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝรท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝรถ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+        resultManager.CheckPriceFood();
 
     }
 
-    // ฟังก์ชันทิ้งไอเทมที่ไม่สามารถเก็บได้
+    // ๏ฟฝัง๏ฟฝ๏ฟฝัน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝรถ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     public void DropItem(DataItem item, int amount)
     {
-        // สร้างไอเทมใหม่ในโลกของเกม (จากการทิ้งไอเทม)
+        // ๏ฟฝ๏ฟฝ๏ฟฝาง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝลก๏ฟฝอง๏ฟฝ๏ฟฝ (๏ฟฝาก๏ฟฝ๏ฟฝรท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ)
         SpawnItem.Instance.SpawnItemFromPlayer(item, amount);
     }
 
-    // ฟังก์ชันลบไอเทมออกจากช่องในกระเป๋า
+    // ๏ฟฝัง๏ฟฝ๏ฟฝันลบ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอก๏ฟฝาก๏ฟฝ๏ฟฝองในก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     public void RemoveItem(InventorySlot slot)
     {
-        // รีเซ็ตช่องเป็นช่องว่าง
+        // ๏ฟฝ๏ฟฝ๏ฟฝ็ตช๏ฟฝอง๏ฟฝ็นช๏ฟฝอง๏ฟฝ๏ฟฝาง
         slot.SetThisSlot(EMTRY_ITEM, 0);
     }
 
@@ -285,9 +321,9 @@ public class Inventory : MonoBehaviour
     public virtual void SaveInventory()
     {
 
-        string data = SaveData(); // ใช้ฟังก์ชัน SaveData ที่คุณมีอยู่แล้ว
-        PlayerPrefs.SetString("InventoryData", data); // เก็บข้อมูลใน PlayerPrefs
-        PlayerPrefs.Save(); // บันทึกข้อมูล
+        string data = SaveData(); // ๏ฟฝ๏ฟฝัง๏ฟฝ๏ฟฝัน SaveData ๏ฟฝ๏ฟฝ๏ฟฝุณ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+        PlayerPrefs.SetString("InventoryData", data); // ๏ฟฝ็บข๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ PlayerPrefs
+        PlayerPrefs.Save(); // ๏ฟฝัน๏ฟฝึก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     }
 
     public void LoadData(string data)
@@ -300,10 +336,10 @@ public class Inventory : MonoBehaviour
 
         try
         {
-            // ตรวจสอบว่ามี slots อยู่แล้ว
+            // ๏ฟฝ๏ฟฝวจ๏ฟฝอบ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ slots ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
             if (iteminventorySlots == null || toolinventorySlots == null)
             {
-                // ถ้ายังไม่มี ให้ดึง slots ที่มีอยู่ใน panel
+                // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ ๏ฟฝ๏ฟฝ๏ฟฝึง slots ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ panel
                 iteminventorySlots = InventoryPanel.GetComponentsInChildren<InventorySlot>();
                 toolinventorySlots = ToolInventoryPanel.GetComponentsInChildren<InventorySlot>();
 
@@ -337,7 +373,7 @@ public class Inventory : MonoBehaviour
         if (PlayerPrefs.HasKey("InventoryData"))
         {
             string data = PlayerPrefs.GetString("InventoryData");
-            LoadData(data); // ใช้ฟังก์ชัน LoadData ที่คุณมีอยู่แล้ว
+            LoadData(data); // ๏ฟฝ๏ฟฝัง๏ฟฝ๏ฟฝัน LoadData ๏ฟฝ๏ฟฝ๏ฟฝุณ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
         }
         else
         {
@@ -353,13 +389,13 @@ public class Inventory : MonoBehaviour
         return;
     }
 
-    // สร้าง slots ถ้ายังไม่มี
+    // ๏ฟฝ๏ฟฝ๏ฟฝาง slots ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     if (iteminventorySlots == null || iteminventorySlots.Length == 0)
     {
         CreateInventorySlots();
     }
 
-    // ตั้งค่าข้อมูลใน iteminventorySlots
+    // ๏ฟฝ๏ฟฝ้งค๏ฟฝาข๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ iteminventorySlots
     int itemSlotsLength = Mathf.Min(iteminventorySlots.Length, inventoryData.slotItemDatas.Length);
     for (int i = 0; i < itemSlotsLength; i++)
     {
@@ -392,7 +428,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    // ตั้งค่าข้อมูลใน toolinventorySlots
+    // ๏ฟฝ๏ฟฝ้งค๏ฟฝาข๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ toolinventorySlots
     int toolSlotsLength = Mathf.Min(toolinventorySlots.Length, inventoryData.slotToolDatas.Length);
     for (int i = 0; i < toolSlotsLength; i++)
     {

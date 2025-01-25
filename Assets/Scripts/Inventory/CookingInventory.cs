@@ -6,49 +6,54 @@ using UnityEngine.UI;
 public class CookingInventory : Inventory
 {
     [Header("Cooking")]
-    public Inventory mainInventory; // อินเวนทอรีหลักที่เก็บวัตถุดิบ
-    public int cookSlotAmount = 30; // จำนวนช่องในอินเวนทอรีการทำอาหาร
-    public OutputSlot outputSlot; // ช่องแสดงผลลัพธ์การทำอาหาร
-    public Transform cookInventoryPanel; // แผงอินเวนทอรีการทำอาหาร
-    public OutputSlot[] outputSlots; // ช่องสำหรับแสดงสูตรที่ทำได้
+    public Inventory mainInventory; 
+    public int cookSlotAmount = 30; 
+    public OutputSlot outputSlot; 
+    public Transform cookInventoryPanel; 
+    public OutputSlot[] outputSlots; 
 
-    [Header("Cooking Recipes")]
-    public CookRecipe[] recipes; // สูตรอาหารที่สามารถทำได้
+    //[Header("Cooking Recipes")]
+    //public CookRecipe[] recipes;
     //public Text requiredIngredientsTextUI;
 
     void Start()
     {
         Debug.Log("CookingInventory Started");
 
-        // ตรวจสอบว่า mainInventory และ outputSlot ถูกตั้งค่าหรือไม่
+        // ๏ฟฝ๏ฟฝวจ๏ฟฝอบ๏ฟฝ๏ฟฝ๏ฟฝ mainInventory ๏ฟฝ๏ฟฝ๏ฟฝ outputSlot 
         if (mainInventory == null || outputSlot == null)
         {
-            Debug.LogError("Required references not set in CookingInventory!"); // แจ้งเตือนหากไม่มีการตั้งค่า
+            Debug.LogError("Required references not set in CookingInventory!"); 
         }
 
 
-        // ใช้ slot จาก Inventory หลัก
+       
         iteminventorySlots = mainInventory.iteminventorySlots;
-        CreateCookSlots(); // สร้างช่องสำหรับเก็บของในการทำอาหาร
+        iteminventorySlots = mainInventory.iteminventorySlots;
+        CreateCookSlots();
 
     }
 
     #region Inventory Methods
-    // ฟังก์ชันนี้ใช้ในการสร้างช่องสำหรับเก็บของในการทำอาหาร
+
     public void CreateCookSlots()
     {
-        outputSlots = new OutputSlot[cookSlotAmount]; // สร้างอาร์เรย์สำหรับเก็บช่อง
+        outputSlots = new OutputSlot[cookSlotAmount]; 
         for (int i = 0; i < cookSlotAmount; i++)
         {
-            Transform slot = Instantiate(outputSlot.transform, cookInventoryPanel); // สร้างช่องใหม่ใน UI
-            OutputSlot invSlot = slot.GetComponent<OutputSlot>(); // ดึง Component ของ OutputSlot
+            Transform slot = Instantiate(outputSlot.transform, cookInventoryPanel); 
+            OutputSlot invSlot = slot.GetComponent<OutputSlot>(); 
 
-            outputSlots[i] = invSlot; // เก็บช่องที่สร้างในอาร์เรย์
-            invSlot.inventory = mainInventory; // ตั้งค่าการเชื่อมโยงกับอินเวนทอรีหลัก
-            invSlot.cookingInventory = this; // ตั้งค่าการเชื่อมโยงกับอินเวนทอรีการทำอาหาร
-            invSlot.SetThisSlot(EMTRY_ITEM, 0); // ตั้งค่าช่องเริ่มต้นเป็นช่องว่าง
+            outputSlots[i] = invSlot; 
+            invSlot.inventory = mainInventory; 
+            invSlot.cookingInventory = this; 
+            invSlot.SetThisSlot(EMTRY_ITEM, 0); 
         }
     }
+
+
+  
+
 
 
     public void UseSpecificCookMaterials(CookRecipe recipe, OutputSlot clickedSlot)
@@ -56,17 +61,16 @@ public class CookingInventory : Inventory
         Debug.Log($"Using materials for recipe: {recipe.name}");
         bool materialsUsed = false;
 
-        // ลูปผ่านวัตถุดิบในสูตร
+ 
         foreach (var recipeItem in recipe.recipeItems)
         {
-            // หาวัตถุดิบที่ตรงในอินเวนทอรี
             foreach (InventorySlot slot in iteminventorySlots)
             {
                 if (slot.item == recipeItem.ingredient && slot.stack >= recipeItem.quantity)
                 {
-                    // ใช้ไอเทมจากสูตร
+                 
                     Debug.Log($"Using material: {slot.item.name}");
-                    slot.UseItem(recipeItem.quantity); // ใช้ไอเทมตามจำนวนที่ต้องการ
+                    slot.UseItem(recipeItem.quantity);
                     materialsUsed = true;
                     break;
                 }
@@ -75,14 +79,13 @@ public class CookingInventory : Inventory
 
         if (materialsUsed)
         {
-            // เพิ่มไอเทมที่ทำได้ในอินเวนทอรีหลัก
+          
             mainInventory.AddItem(recipe.outputItem, recipe.outputStack);
             Debug.Log($"Added {recipe.outputStack} of {recipe.outputItem.name} to inventory.");
-
-            // ล้างช่องที่คลิก
+         
             clickedSlot.ClearThisCookSlot();
 
-            // อัปเดตสูตรทั้งหมด
+          
             CheckAllCookRecipe();
         }
         else
@@ -91,56 +94,53 @@ public class CookingInventory : Inventory
         }
     }
 
-    // ฟังก์ชันนี้ใช้ในการใช้วัตถุดิบจากอินเวนทอรีเพื่อทำอาหาร
+    // ๏ฟฝัง๏ฟฝ๏ฟฝัน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝในก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัต๏ฟฝุดิบ๏ฟฝาก๏ฟฝิน๏ฟฝวน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     //public void UseCookMaterials()
     //{
     //    Debug.Log("Using cooking materials...");
     //    bool materialsUsed = false;
 
-    //    // ลูปผ่านสูตรทั้งหมดเพื่อตรวจสอบว่าใช้วัตถุดิบครบหรือไม่
+    //    // ๏ฟฝูป๏ฟฝ๏ฟฝาน๏ฟฝูตรท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอต๏ฟฝวจ๏ฟฝอบ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัต๏ฟฝุดิบ๏ฟฝรบ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     //    foreach (CookRecipe recipe in recipes)
     //    {
-    //        // ตรวจสอบสูตรว่าใช้วัตถุดิบครบหรือไม่
+    //        // ๏ฟฝ๏ฟฝวจ๏ฟฝอบ๏ฟฝูต๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัต๏ฟฝุดิบ๏ฟฝรบ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     //        if (IsRecipeMatch(recipe))
     //        {
     //            Debug.Log($"Recipe match found: {recipe.name}");
 
-    //            // ลูปผ่านวัตถุดิบในสูตร
+    //            // ๏ฟฝูป๏ฟฝ๏ฟฝาน๏ฟฝัต๏ฟฝุดิบ๏ฟฝ๏ฟฝูต๏ฟฝ
     //            foreach (var recipeItem in recipe.recipeItems)
     //            {
-    //                // หาวัตถุดิบที่ตรงในอินเวนทอรี
+    //                // ๏ฟฝ๏ฟฝ๏ฟฝัต๏ฟฝุดิบ๏ฟฝ๏ฟฝ๏ฟฝรง๏ฟฝ๏ฟฝิน๏ฟฝวน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     //                foreach (InventorySlot slot in iteminventorySlots)
     //                {
     //                    if (slot.item == recipeItem.ingredient && slot.stack >= recipeItem.quantity)
     //                    {
-    //                        // ใช้ไอเทมจากสูตร
+    //                        // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาก๏ฟฝูต๏ฟฝ
     //                        Debug.Log($"Using material: {slot.item.name}");
-    //                        slot.UseItem(recipeItem.quantity); // ใช้ไอเทมตามจำนวนที่ต้องการ
-    //                        mainInventory.AddItem(recipe.outputItem, recipe.outputStack); // เพิ่มไอเทมที่ทำได้ในอินเวนทอรีหลัก
+    //                        slot.UseItem(recipeItem.quantity); // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝำนวน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ
+    //                        mainInventory.AddItem(recipe.outputItem, recipe.outputStack); // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝิน๏ฟฝวน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัก
     //                        materialsUsed = true;
     //                        break;
     //                    }
     //                }
     //            }
 
-    //            // เมื่อใช้วัสดุครบแล้วให้เช็คสูตรทั้งหมด
+    //            // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝสดุครบ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝูตรท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     //            CheckAllCookRecipe();
     //            return;
     //        }
     //    }
 
-    //    // ถ้าไม่พบวัสดุที่ใช้ได้
+    //    // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ่พบ๏ฟฝ๏ฟฝสดุท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     //    if (!materialsUsed)
     //        Debug.Log("No material used.");
     //}
 
-    // ฟังก์ชันนี้ใช้ตรวจสอบว่าสูตรสามารถทำได้หรือไม่
     public bool IsRecipeMatch(CookRecipe recipe)
     {
-        // สร้าง Dictionary เพื่อเก็บจำนวนวัตถุดิบที่มี
         Dictionary<DataItem, int> availableIngredients = new Dictionary<DataItem, int>();
 
-        // รวบรวมวัตถุดิบที่มีในช่อง inventory
         foreach (InventorySlot slot in iteminventorySlots)
         {
             if (slot.item != null && slot.item != EMTRY_ITEM)
@@ -156,7 +156,6 @@ public class CookingInventory : Inventory
             }
         }
 
-        // ตรวจสอบว่ามีวัตถุดิบครบตามสูตรหรือไม่
         foreach (var recipeItem in recipe.recipeItems)
         {
             if (!availableIngredients.ContainsKey(recipeItem.ingredient) ||
@@ -165,20 +164,20 @@ public class CookingInventory : Inventory
                 Debug.Log($"Missing ingredient: {recipeItem.ingredient.name} " +
                          $"(Need: {recipeItem.quantity}, " +
                          $"Have: {(availableIngredients.ContainsKey(recipeItem.ingredient) ? availableIngredients[recipeItem.ingredient] : 0)})");
-                return false; // ถ้าวัตถุดิบไม่ครบให้คืนค่า false
+                return false; 
             }
         }
 
-        return true; // ถ้าวัตถุดิบครบตามสูตร
+        return true;
     }
 
-    // ฟังก์ชันนี้ใช้ตรวจสอบสูตรทั้งหมดที่สามารถทำได้
+    // ๏ฟฝัง๏ฟฝ๏ฟฝัน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝวจ๏ฟฝอบ๏ฟฝูตรท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝรถ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
 
     //public void DisplayRequiredIngredients(CookRecipe recipe)
     //{
     //    Debug.Log($"Displaying required ingredients for recipe: {recipe.name}");
 
-    //    // สร้างข้อความแสดงวัตถุดิบที่จำเป็น
+    //    // ๏ฟฝ๏ฟฝ๏ฟฝาง๏ฟฝ๏ฟฝอค๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝสด๏ฟฝ๏ฟฝัต๏ฟฝุดิบ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     //    string requiredIngredientsText = $"Recipe: {recipe.name}\nRequired Ingredients:\n";
 
     //    foreach (var recipeItem in recipe.recipeItems)
@@ -186,7 +185,7 @@ public class CookingInventory : Inventory
     //        requiredIngredientsText += $"{recipeItem.ingredient.name} x {recipeItem.quantity}\n";
     //    }
 
-    //    // แสดงข้อความใน UI (สมมติว่ามี Text ชื่อ requiredIngredientsTextUI)
+    //    // ๏ฟฝสด๏ฟฝ๏ฟฝ๏ฟฝอค๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ UI (๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ Text ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ requiredIngredientsTextUI)
     //    requiredIngredientsTextUI.text = requiredIngredientsText;
     //}
 
@@ -194,36 +193,35 @@ public class CookingInventory : Inventory
     {
         Debug.Log("Checking all recipes...");
 
-        List<CookRecipe> validRecipes = new List<CookRecipe>(); // รายการสูตรที่สามารถทำได้
+        List<CookRecipe> validRecipes = new List<CookRecipe>(); 
 
-        // ตรวจสอบทุกสูตรใน recipes ว่ามีวัตถุดิบครบหรือไม่
+        
         foreach (CookRecipe recipe in recipes)
         {
             if (IsRecipeMatch(recipe))
             {
-                validRecipes.Add(recipe); // เพิ่มสูตรที่ทำได้ในรายการ validRecipes
-                //DisplayRequiredIngredients(recipe); // แสดงวัตถุดิบที่จำเป็นสำหรับสูตรนี้
+                validRecipes.Add(recipe);
             }
         }
 
-        // หากมีสูตรที่ทำได้ให้แสดงใน outputSlots
+        // outputSlots
         if (validRecipes.Count > 0)
         {
             Debug.Log($"Found {validRecipes.Count} valid recipes!");
 
-            // เคลียร์ช่องทั้งหมดก่อน
+            
             foreach (OutputSlot slot in outputSlots)
             {
                 slot.ClearThisCookSlot();
             }
 
-            // แสดงสูตรที่ทำได้ใน outputSlots
+            // outputSlots
             int index = 0;
             foreach (CookRecipe validRecipe in validRecipes)
             {
                 if (index < outputSlots.Length)
                 {
-                    outputSlots[index].SetThisSlot(validRecipe.outputItem, validRecipe.outputStack); // ตั้งค่าผลลัพธ์ในช่อง
+                    outputSlots[index].SetThisSlot(validRecipe.outputItem, validRecipe.outputStack); 
                     Debug.Log($"Displaying recipe: {validRecipe.name} in slot {index + 1}");
                     index++;
                 }
@@ -232,7 +230,7 @@ public class CookingInventory : Inventory
         else
         {
             Debug.Log("No valid recipes found. Clearing all output slots...");
-            // หากไม่มีสูตรที่ทำได้ เคลียร์ทุกช่องใน outputSlots
+  
             foreach (OutputSlot slot in outputSlots)
             {
                 slot.ClearThisCookSlot();
@@ -240,7 +238,7 @@ public class CookingInventory : Inventory
         }
     }
 
-    // ฟังก์ชันนี้ใช้คืนของทั้งหมดกลับไปยังอินเวนทอรีหลัก
+
     public void ReturnAllToMainInventory()
     {
         Debug.Log("Returning all items to main inventory");
@@ -248,8 +246,8 @@ public class CookingInventory : Inventory
         {
             if (slot.item != null && slot.item != EMTRY_ITEM)
             {
-                mainInventory.AddItem(slot.item, slot.stack); // เพิ่มไอเทมกลับไปยังอินเวนทอรีหลัก
-                slot.ClearThisCookSlot(); // เคลียร์ช่องในการทำอาหาร
+                mainInventory.AddItem(slot.item, slot.stack); 
+                slot.ClearThisCookSlot(); 
             }
         }
     }
@@ -257,17 +255,17 @@ public class CookingInventory : Inventory
 
 
     
-    //// ฟังก์ชันนี้ใช้คืนของบางรายการกลับไปยังอินเวนทอรีหลัก
+    //// ๏ฟฝัง๏ฟฝ๏ฟฝัน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝืน๏ฟฝอง๏ฟฝาง๏ฟฝ๏ฟฝยก๏ฟฝรก๏ฟฝับ๏ฟฝ๏ฟฝัง๏ฟฝิน๏ฟฝวน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัก
     //public void ReturnToMainInventory(DataItem item, int amount)
     //{
     //    Debug.Log($"Returning {amount} {item.name} to main inventory");
-    //    mainInventory.AddItem(item, amount); // เพิ่มไอเทมกลับไปยังอินเวนทอรีหลัก
+    //    mainInventory.AddItem(item, amount); // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝ๏ฟฝัง๏ฟฝิน๏ฟฝวน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัก
     //}
 
-    //// ฟังก์ชันนี้จะถูกเรียกเมื่อวัตถุดิบทั้งหมดถูกคืนกลับไปยังอินเวนทอรีหลัก
+    //// ๏ฟฝัง๏ฟฝ๏ฟฝัน๏ฟฝ๏ฟฝ๏ฟฝะถูก๏ฟฝ๏ฟฝ๏ฟฝยก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัต๏ฟฝุดิบ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝูก๏ฟฝืน๏ฟฝ๏ฟฝับ๏ฟฝ๏ฟฝัง๏ฟฝิน๏ฟฝวน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัก
     //private void OnDisable()
     //{
-    //    ReturnAllToMainInventory(); // คืนของทั้งหมดเมื่ออินเวนทอรีการทำอาหารถูกปิด
+    //    ReturnAllToMainInventory(); // ๏ฟฝืน๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝิน๏ฟฝวน๏ฟฝ๏ฟฝ๏ฟฝีก๏ฟฝรท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝรถูก๏ฟฝิด
     //}
 
 

@@ -41,10 +41,10 @@ public class GameDataManager : MonoBehaviour
             try
             {
                 string jsonData = inventory.SaveData();
-                // เก็บข้อมูลแยกตามฉาก
+                // ๏ฟฝ็บข๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝยก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาก
                 string sceneKey = INVENTORY_SAVE_KEY + SceneManager.GetActiveScene().buildIndex;
                 PlayerPrefs.SetString(sceneKey, jsonData);
-                PlayerPrefs.SetString(CURRENT_SCENE_KEY, sceneKey); // เก็บ key ของฉากปัจจุบัน
+                PlayerPrefs.SetString(CURRENT_SCENE_KEY, sceneKey); // ๏ฟฝ๏ฟฝ key ๏ฟฝอง๏ฟฝาก๏ฟฝัจ๏ฟฝุบัน
                 PlayerPrefs.Save();
                 Debug.Log($"Saved inventory data for scene {SceneManager.GetActiveScene().buildIndex}: {jsonData}");
             }
@@ -61,7 +61,7 @@ public class GameDataManager : MonoBehaviour
         {
             try
             {
-                // โหลดข้อมูลตามฉาก
+                // ๏ฟฝ๏ฟฝลด๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝลต๏ฟฝ๏ฟฝ๏ฟฝาก
                 string sceneKey = INVENTORY_SAVE_KEY + SceneManager.GetActiveScene().buildIndex;
                 if (PlayerPrefs.HasKey(sceneKey))
                 {
@@ -88,7 +88,7 @@ public class GameDataManager : MonoBehaviour
             string previousSceneKey = PlayerPrefs.GetString(CURRENT_SCENE_KEY);
             string jsonData = PlayerPrefs.GetString(previousSceneKey);
 
-            // บันทึกข้อมูลไปยังฉากใหม่
+            // ๏ฟฝัน๏ฟฝึก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัง๏ฟฝาก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
             string newSceneKey = INVENTORY_SAVE_KEY + SceneManager.GetActiveScene().buildIndex;
             PlayerPrefs.SetString(newSceneKey, jsonData);
             PlayerPrefs.SetString(CURRENT_SCENE_KEY, newSceneKey);
@@ -98,7 +98,7 @@ public class GameDataManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // รอให้ฉากโหลดเสร็จก่อนแล้วค่อยโหลดข้อมูล
+        // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาก๏ฟฝ๏ฟฝลด๏ฟฝ๏ฟฝ๏ฟฝ็จก๏ฟฝอน๏ฟฝ๏ฟฝ๏ฟฝวค๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝลด๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
         StartCoroutine(LoadInventoryAfterDelay());
     }
 
@@ -109,10 +109,10 @@ public class GameDataManager : MonoBehaviour
         Inventory inventory = FindObjectOfType<Inventory>();
         if (inventory != null)
         {
-            // โอนข้อมูลมาจากฉากก่อนหน้า (ถ้ามี)
+            // ๏ฟฝอน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาจาก๏ฟฝาก๏ฟฝ๏ฟฝอนหน๏ฟฝ๏ฟฝ (๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ)
             TransferInventoryToNewScene();
 
-            // รอให้ Inventory พร้อม
+            // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ Inventory ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
             while (inventory.iteminventorySlots == null || inventory.toolinventorySlots == null)
             {
                 yield return null;
@@ -129,11 +129,11 @@ public class GameDataManager : MonoBehaviour
     }
     private void OnGUI()
     {
-        // กำหนดตำแหน่งและขนาดของปุ่ม
-        // สร้างปุ่ม Save
+        // ๏ฟฝ๏ฟฝหน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝหน๏ฟฝ๏ฟฝ๏ฟฝะข๏ฟฝาด๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+        // ๏ฟฝ๏ฟฝ๏ฟฝาง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ Save
         if (GUILayout.Button("Save"))
         {
-            // เรียกฟังก์ชัน SaveInventory
+            // ๏ฟฝ๏ฟฝ๏ฟฝยก๏ฟฝัง๏ฟฝ๏ฟฝัน SaveInventory
             Inventory currentInventory = GameObject.FindObjectOfType<Inventory>();
             if (currentInventory != null)
             {
@@ -187,15 +187,15 @@ public class GameDataManager : MonoBehaviour
 
     public static void SavePlayerData()
     {
-        PlayerPrefs.SetInt("TotalCoins", playerData.coins); // เซฟจำนวนเหรียญ
-        PlayerPrefs.Save(); // บันทึกลงในระบบ
+        PlayerPrefs.SetInt("TotalCoins", playerData.coins); // เซฟ๏ฟฝำนวน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝยญ
+        PlayerPrefs.Save(); // ๏ฟฝัน๏ฟฝึกลง๏ฟฝ๏ฟฝะบ๏ฟฝ
         Debug.Log("Game Saved!");
     }
     public static void LoadPlayerData()
     {
         if (PlayerPrefs.HasKey("TotalCoins"))
         {
-            playerData.coins = PlayerPrefs.GetInt("TotalCoins"); // โหลดจำนวนเหรียญ
+            playerData.coins = PlayerPrefs.GetInt("TotalCoins"); // ๏ฟฝ๏ฟฝลด๏ฟฝำนวน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝยญ
             Debug.Log($"Game Loaded! Total Coins: {playerData.coins}");
         }
         else

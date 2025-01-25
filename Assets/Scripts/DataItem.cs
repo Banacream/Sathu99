@@ -17,13 +17,13 @@ public class DataItem : ScriptableObject
     public GameObject gamePrefab;
 
     [Header("Item Type")]
-    public ItemType itemType; // ประเภทของไอเทม
+    public ItemType itemType; 
 
-    // Enum สำหรับประเภทของไอเทม
+    
     public enum ItemType
     {
-        Food,   // อาหาร
-        Tool,   // เครื่องมือ
-        Material, // วัตถุดิบ
+        Food,   
+        Tool,   
+        Material, 
     }
 }

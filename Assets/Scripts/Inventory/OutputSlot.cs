@@ -2,64 +2,64 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;  // เพิ่มการใช้งาน UI
+using UnityEngine.UI;  // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาน UI
 using TMPro;
 
 
 public class OutputSlot : InventorySlot
 {
     //// Start is called before the first frame update
-    public TextMeshProUGUI descriptionText;  // ตัวแปรที่เก็บ Text UI สำหรับแสดงคำอธิบาย
-    public string itemDescription;  // ตัวแปรเก็บคำอธิบายของไอเทม
+    public TextMeshProUGUI descriptionText;  // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝรท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ Text UI ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝสด๏ฟฝ๏ฟฝ๏ฟฝอธิบ๏ฟฝ๏ฟฝ
+    public string itemDescription;  // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ็บค๏ฟฝอธิบ๏ฟฝยของ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
 
     void Start()
     {
-        // แสดงข้อความในคอนโซลเมื่อ OutputSlot เริ่มทำงาน
+        // ๏ฟฝสด๏ฟฝ๏ฟฝ๏ฟฝอค๏ฟฝ๏ฟฝ๏ฟฝในคอน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ OutputSlot ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝำงาน
         Debug.Log("OutputSlot Started");
 
-        // เรียกใช้งาน CheckShowText เพื่ออัพเดทการแสดงผลจำนวนไอเทมในสลอต
+        // ๏ฟฝ๏ฟฝ๏ฟฝยก๏ฟฝ๏ฟฝาน CheckShowText ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัพเดท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝสด๏ฟฝ๏ฟฝลจำนวน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอต
         CheckShowText();
 
-        // ตรวจสอบว่า inventory และ cookingInventory ถูกกำหนดค่าเรียบร้อยหรือยัง
+        // ๏ฟฝ๏ฟฝวจ๏ฟฝอบ๏ฟฝ๏ฟฝ๏ฟฝ inventory ๏ฟฝ๏ฟฝ๏ฟฝ cookingInventory ๏ฟฝูก๏ฟฝ๏ฟฝหน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝยบ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัง
         if (inventory == null)
-            Debug.LogError("OutputSlot: inventory is not assigned!"); // หากยังไม่ได้กำหนดค่า จะให้แสดงข้อความผิดพลาด
+            Debug.LogError("OutputSlot: inventory is not assigned!"); // ๏ฟฝาก๏ฟฝัง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝหน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝสด๏ฟฝ๏ฟฝ๏ฟฝอค๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝิด๏ฟฝ๏ฟฝาด
         if (cookingInventory == null)
-            Debug.LogError("OutputSlot: cookingInventory is not assigned!"); // หากยังไม่ได้กำหนดค่า จะให้แสดงข้อความผิดพลาด
+            Debug.LogError("OutputSlot: cookingInventory is not assigned!"); // ๏ฟฝาก๏ฟฝัง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝหน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝสด๏ฟฝ๏ฟฝ๏ฟฝอค๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝิด๏ฟฝ๏ฟฝาด
     }
 
-    // ฟังก์ชันตรวจสอบว่า OutputSlot ว่างหรือไม่
+    // ๏ฟฝัง๏ฟฝ๏ฟฝัน๏ฟฝ๏ฟฝวจ๏ฟฝอบ๏ฟฝ๏ฟฝ๏ฟฝ OutputSlot ๏ฟฝ๏ฟฝาง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     public bool IsSlotEmpty()
     {
-        // หาก item เป็น EMTRY_ITEM หรือ stack เป็น 0 ให้ถือว่าเป็นช่องว่าง
+        // ๏ฟฝาก item ๏ฟฝ๏ฟฝ EMTRY_ITEM ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ stack ๏ฟฝ๏ฟฝ 0 ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ็นช๏ฟฝอง๏ฟฝ๏ฟฝาง
         return item == inventory.EMTRY_ITEM || stack == 0;
     }
 
-    // ฟังก์ชันที่เรียกเมื่อมีการคลิกที่ OutputSlot (คลิกซ้าย)
+    // ๏ฟฝัง๏ฟฝ๏ฟฝัน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝยก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝีก๏ฟฝรค๏ฟฝิก๏ฟฝ๏ฟฝ๏ฟฝ OutputSlot (๏ฟฝ๏ฟฝิก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ)
     public override void OnPointerClick(PointerEventData eventData)
     {
-        // ตรวจสอบว่าเป็นการคลิกซ้าย
+        // ๏ฟฝ๏ฟฝวจ๏ฟฝอบ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ็นก๏ฟฝรค๏ฟฝิก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            // หาก item ในช่องนี้เป็น EMTRY_ITEM (ช่องว่าง) ให้แสดงข้อความผิดพลาด
+            // ๏ฟฝาก item ในช๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ EMTRY_ITEM (๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝาง) ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝสด๏ฟฝ๏ฟฝ๏ฟฝอค๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝิด๏ฟฝ๏ฟฝาด
             if (item == cookingInventory.EMTRY_ITEM)
             {
-                Debug.LogError("SetThisSlot: newItem is null!"); // แจ้งว่า item ที่จะใช้ไม่ได้ถูกกำหนด
+                Debug.LogError("SetThisSlot: newItem is null!"); // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ item ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝูก๏ฟฝ๏ฟฝหน๏ฟฝ
                 return;
             }
             else
             {
-                // หาก item ในช่องไม่เป็นช่องว่าง ให้เรียกใช้ฟังก์ชัน UseCookMaterials ของ cookingInventory
+                // ๏ฟฝาก item ในช๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ็นช๏ฟฝอง๏ฟฝ๏ฟฝาง ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝยก๏ฟฝ๏ฟฝัง๏ฟฝ๏ฟฝัน UseCookMaterials ๏ฟฝอง cookingInventory
                 bool isMatched = false;
 
                 foreach (CookRecipe recipe in cookingInventory.recipes)
                 {
-                    if (recipe.outputItem == item) // ตรวจสอบว่าไอเทมตรงกับผลลัพธ์ของสูตร
+                    if (recipe.outputItem == item) // ๏ฟฝ๏ฟฝวจ๏ฟฝอบ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝรง๏ฟฝับ๏ฟฝ๏ฟฝ๏ฟฝัพ๏ฟฝ๏ฟฝอง๏ฟฝูต๏ฟฝ
                     {
                         isMatched = true;
 
-                        // ใช้วัสดุในสูตร
+                        // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝสด๏ฟฝ๏ฟฝ๏ฟฝูต๏ฟฝ
                         Debug.Log($"Using item: {item.name} from slot.");
-                        cookingInventory.UseSpecificCookMaterials(recipe, this); // ใช้ไอเทมเฉพาะในช่องนี้
+                        cookingInventory.UseSpecificCookMaterials(recipe, this); // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝเฉพ๏ฟฝ๏ฟฝในช๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ
                         break;
                     }
                     if (!isMatched)
@@ -72,30 +72,30 @@ public class OutputSlot : InventorySlot
         }
     }
 
-    // ฟังก์ชันที่ใช้ในการตั้งค่า item ใน OutputSlot
+    // ๏ฟฝัง๏ฟฝ๏ฟฝัน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝในก๏ฟฝรต๏ฟฝ้งค๏ฟฝ๏ฟฝ item ๏ฟฝ OutputSlot
     public override void SetThisSlot(DataItem newItem, int amount)
     {
-        // หาก newItem เป็น null ให้แสดงข้อความผิดพลาด
+        // ๏ฟฝาก newItem ๏ฟฝ๏ฟฝ null ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝสด๏ฟฝ๏ฟฝ๏ฟฝอค๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝิด๏ฟฝ๏ฟฝาด
         if (newItem == null)
         {
-            Debug.LogError("SetThisSlot: newItem is null!"); // แจ้งว่า newItem ที่จะใช้ไม่ได้ถูกกำหนด
+            Debug.LogError("SetThisSlot: newItem is null!"); // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ newItem ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝูก๏ฟฝ๏ฟฝหน๏ฟฝ
             return;
         }
 
-        // ตั้งค่า item และ icon ในช่องนี้ให้เป็น item ใหม่
+        // ๏ฟฝ๏ฟฝ้งค๏ฟฝ๏ฟฝ item ๏ฟฝ๏ฟฝ๏ฟฝ icon ในช๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ item ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
         item = newItem;
         icon.sprite = newItem.icon;
 
-        // คำนวณจำนวนที่สามารถเก็บใน slot โดยไม่เกิน maxStack ของ item
+        // ๏ฟฝำนวณ๏ฟฝำนวน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝรถ๏ฟฝ๏ฟฝ๏ฟฝ slot ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝิน maxStack ๏ฟฝอง item
         int itemAmount = amount;
-        int intInthisSlot = Mathf.Clamp(itemAmount, 0, newItem.maxStack); // คำนวณจำนวนไอเทมที่สามารถเก็บได้
-        stack = intInthisSlot; // อัพเดท stack ด้วยจำนวนที่คำนวณได้
+        int intInthisSlot = Mathf.Clamp(itemAmount, 0, newItem.maxStack); // ๏ฟฝำนวณ๏ฟฝำนวน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝรถ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+        stack = intInthisSlot; // ๏ฟฝัพเดท stack ๏ฟฝ๏ฟฝ๏ฟฝยจำนวน๏ฟฝ๏ฟฝ๏ฟฝำนวณ๏ฟฝ๏ฟฝ
         itemDescription = item.description;
-        descriptionText.text = itemDescription;  // แสดงคำอธิบายของไอเทม
-        // แสดงข้อความในคอนโซลว่า OutputSlot ถูกตั้งค่าเรียบร้อยแล้ว
+        descriptionText.text = itemDescription;  // ๏ฟฝสด๏ฟฝ๏ฟฝ๏ฟฝอธิบ๏ฟฝยของ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+        // ๏ฟฝสด๏ฟฝ๏ฟฝ๏ฟฝอค๏ฟฝ๏ฟฝ๏ฟฝในคอน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ OutputSlot ๏ฟฝูก๏ฟฝ๏ฟฝ้งค๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝยบ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
         Debug.Log($"Output slot set with item: {newItem.name}, amount: {stack}");
 
-        // เรียกใช้งาน CheckShowText เพื่ออัพเดทการแสดงผลจำนวนไอเทมในสลอต
+        // ๏ฟฝ๏ฟฝ๏ฟฝยก๏ฟฝ๏ฟฝาน CheckShowText ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัพเดท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝสด๏ฟฝ๏ฟฝลจำนวน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอต
         CheckShowText();
     }
 }

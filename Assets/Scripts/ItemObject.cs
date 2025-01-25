@@ -23,14 +23,14 @@ public class ItemObject : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // ตรวจจับการคลิกเมาส์ซ้าย
+        if (Input.GetMouseButtonDown(0)) 
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // สร้าง Ray จากตำแหน่งเมาส์
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
             {
-                if (hit.collider != null && hit.collider.gameObject == gameObject) // ตรวจสอบว่า Ray ชนวัตถุนี้
+                if (hit.collider != null && hit.collider.gameObject == gameObject) 
                 {
-                    // เพิ่มไอเท็ม
+                  
                     GameObject player = GameObject.FindWithTag("Player");
                     if (player != null)
                     {

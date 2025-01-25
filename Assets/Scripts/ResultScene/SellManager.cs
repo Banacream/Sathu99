@@ -7,31 +7,31 @@ using static DataItem;
 
 public class SellManager : MonoBehaviour
 {
-    public Inventory mainInventory; // อินเวนทอรีหลักที่เก็บวัตถุดิบ
+    public Inventory mainInventory; 
     public ResultManager resultManager;
-    //public Image icon; // ภาพของCoin
+    //public Image icon; 
 
-    // ฟังก์ชันสำหรับขายไอเท็มทั้งหมดที่เป็น food
     public void SellAllFoodItems()
     {
 
+      
+        int totalAmount = 0; 
 
-        int totalAmount = 0; // เก็บจำนวนเงินรวมทั้งหมดที่ขายได้
-
-        // ลูปผ่านช่องใน inventory เพื่อตรวจสอบไอเท็มประเภท food
-        foreach (InventorySlot slot in mainInventory.iteminventorySlots)
+       
+        foreach (InventorySlot slot in mainInventory.cookSellSlots)
         {
-            if (slot.item != null && slot.item.itemType == ItemType.Food) // ตรวจสอบประเภทไอเท็ม
+            if (slot.item != null && slot.item.itemType == ItemType.Food) 
             {
-                int sellPrice = slot.item.sellPrice * slot.stack; // คำนวณราคาขายทั้งหมด
+                int sellPrice = slot.item.sellPrice * slot.stack; 
                 Debug.Log($"Selling {slot.stack} of {slot.item.name} for {sellPrice} coins.");
 
-                totalAmount += sellPrice; // เพิ่มราคาขายรวม
-                slot.ClearThisCookSlot(); // ลบไอเท็มจาก inventory หลังขาย
+                totalAmount += sellPrice; 
+                slot.ClearThisCookSlot(); 
+                resultManager.CheckPriceFood();
             }
         }
 
-        // เพิ่มจำนวนเงินที่ขายได้ไปยัง GameManager
+       
         if (totalAmount > 0)
         {
             Debug.Log($"Total coins earned: {totalAmount}");
