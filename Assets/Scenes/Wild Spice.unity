@@ -1207,14 +1207,18 @@ MonoBehaviour:
   handleSlotPrefab: {fileID: 26659361971301361}
   InventoryPanel: {fileID: 1462926335}
   ToolInventoryPanel: {fileID: 2141104410}
+  CookSellPanel: {fileID: 0}
   HandleInventoryPanel:
   - {fileID: 1724964222}
   - {fileID: 1990269872}
   cookingInventory: {fileID: 2078077454}
+  resultManager: {fileID: 0}
+  recipes: []
   handleSlot: {fileID: 6878959522414698169}
   slotAmount: 12
   toolinventorySlots: []
   iteminventorySlots: []
+  cookSellSlots: []
   invData:
     slotItemDatas: []
     slotToolDatas: []
@@ -3035,8 +3039,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryPanel: {fileID: 794908038}
-  CookingPanel: {fileID: 2078077448}
   shopPanel: {fileID: 0}
+  cookingPanelCanvasGroup: {fileID: 0}
+  cookSellPanelCanvasGroup: {fileID: 0}
 --- !u!4 &1967628877
 Transform:
   m_ObjectHideFlags: 0
@@ -3688,12 +3693,18 @@ MonoBehaviour:
   handleSlotPrefab: {fileID: 0}
   InventoryPanel: {fileID: 0}
   ToolInventoryPanel: {fileID: 0}
+  CookSellPanel: {fileID: 0}
   HandleInventoryPanel: []
   cookingInventory: {fileID: 2078077454}
+  resultManager: {fileID: 0}
+  recipes:
+  - {fileID: 11400000, guid: 477ecb47f508ce74b9ed03676c28ae2f, type: 2}
+  - {fileID: 11400000, guid: 9aec086ed19d25c4d87c1dd2b4a61b01, type: 2}
   handleSlot: {fileID: 0}
   slotAmount: 4
   toolinventorySlots: []
   iteminventorySlots: []
+  cookSellSlots: []
   invData:
     slotItemDatas: []
     slotToolDatas: []
@@ -3702,9 +3713,6 @@ MonoBehaviour:
   outputSlot: {fileID: 3658934794983115277, guid: 2f10f0260196b914091a7b46b93196eb, type: 3}
   cookInventoryPanel: {fileID: 1847174871}
   outputSlots: []
-  recipes:
-  - {fileID: 11400000, guid: 477ecb47f508ce74b9ed03676c28ae2f, type: 2}
-  - {fileID: 11400000, guid: 9aec086ed19d25c4d87c1dd2b4a61b01, type: 2}
 --- !u!1 &2141104409
 GameObject:
   m_ObjectHideFlags: 0
