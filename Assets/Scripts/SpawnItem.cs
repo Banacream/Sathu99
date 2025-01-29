@@ -48,6 +48,22 @@ public class SpawnItem : MonoBehaviour
         }
     }
 
+
+
+    public void SpawnItemAtPosition(GameObject itemPrefab, Vector3 position)
+    {
+        if (itemPrefab != null)
+        {
+            Instantiate(itemPrefab, position, Quaternion.identity);
+        }
+        else
+        {
+            Debug.LogError("Item prefab is null.");
+        }
+    }
+
+
+
     private void OnGUI()
     {
         //if (GUILayout.Button("Spawn a Random Item"))
