@@ -9,6 +9,12 @@ public class ItemObject : MonoBehaviour
     public int amount = 1;
     public TextMeshProUGUI amountText;
 
+
+    private void Start()
+    {
+        UpdateAmountText();
+    }
+
     public void SetAmount(int newAmount)
     {
         amount = newAmount;
@@ -20,27 +26,57 @@ public class ItemObject : MonoBehaviour
         amountText.text = amount.ToString();
     }
 
-
-    private void Update()
+    private void UpdateAmountText()
     {
-        if (Input.GetMouseButtonDown(0)) 
+        if (amountText != null)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
-            {
-                if (hit.collider != null && hit.collider.gameObject == gameObject) 
-                {
-                  
-                    GameObject player = GameObject.FindWithTag("Player");
-                    if (player != null)
-                    {
-                        player.GetComponent<PlayerMove>().inventory.AddItem(item, amount);
-                        Destroy(gameObject);
-                    }
-                }
-            }
+            amountText.text = amount.ToString();
         }
     }
+
+    private void OnMouseDown()
+    {
+        Destroy(gameObject);
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            PlayerMove playerMove = player.GetComponent<PlayerMove>();
+            if (playerMove != null)
+            {
+                playerMove.inventory.AddItem(item, amount);
+                Destroy(gameObject); // Remove the item from the scene
+            }
+            else
+            {
+                Debug.LogError("PlayerMove or Inventory component not found on the player.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Player not found in the scene.");
+        }
+    }
+
+    //private void Update()
+    //{
+    //    if (Input.GetMouseButtonDown(0)) 
+    //    {
+    //        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
+    //        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+    //        {
+    //            if (hit.collider != null && hit.collider.gameObject == gameObject) 
+    //            {
+
+    //                GameObject player = GameObject.FindWithTag("Player");
+    //                if (player != null)
+    //                {
+    //                    player.GetComponent<PlayerMove>().inventory.AddItem(item, amount);
+    //                    Destroy(gameObject);
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 
 
     //private void OnTriggerStay(Collider other)

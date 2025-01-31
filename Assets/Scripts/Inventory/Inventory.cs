@@ -285,6 +285,7 @@ public class Inventory : MonoBehaviour
         // ����������������㹪�ͧ
         slot.MergeThisSlot(item, amount);
         cookingInventory.CheckAllCookRecipe(); // ��Ǩ�ͺ�ٵ�����÷������ö����
+        if(resultManager != null)
         resultManager.CheckPriceFood();
 
     }

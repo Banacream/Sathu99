@@ -31,16 +31,16 @@ public class HandleSlotSync : MonoBehaviour
         }
     }
 
-    // àÁ·Í´ÊÓËÃÑº sync ¢éÍÁÙÅÃÐËÇèÒ§ slots
+    // ï¿½ï¿½ï¿½Í´ï¿½ï¿½ï¿½ï¿½Ñº sync ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò§ slots
     public void SyncSlots(HandleSlot sourceSlot, DataItem newItem, int amount)
     {
 
-        // ËÒ pair ·ÕèÁÕ sourceSlot
+        // ï¿½ï¿½ pair ï¿½ï¿½ï¿½ï¿½ï¿½ sourceSlot
         foreach (var pair in slotPairs)
         {
             if (pair.slot1 == sourceSlot)
             {
-                // sync ä»ÂÑ§ slot2
+                // sync ï¿½ï¿½Ñ§ slot2
                 pair.slot2.SetThisSlot(newItem, amount);
                 break;
             }
