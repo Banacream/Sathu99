@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e138eab59cd24740a30449b398322d3, type: 3}
   m_Name: 008_Holy basil leaves
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 2790aeeb1c5a75c43b26c22350c30eb0, type: 3}
   id: 
   itemName: 
   description: 
-  maxStack: 0
+  maxStack: 10
   weight: 0
   sellPrice: 0
-  gamePrefab: {fileID: 0}
-  itemType: 0
+  gamePrefab: {fileID: 2983315341115562920, guid: 810c1d18f43662b4dab20cec7c6f1b1f, type: 3}
+  itemType: 2

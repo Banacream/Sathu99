@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e138eab59cd24740a30449b398322d3, type: 3}
   m_Name: Food_Spicy stir-fried frog
   m_EditorClassIdentifier: 
-  icon: {fileID: -1231189057, guid: 60340cc09ddc4a24480c57f662424cd0, type: 3}
+  icon: {fileID: 21300000, guid: 338ab7e3cafac1543903447b0f63bf00, type: 3}
   id: 005
-  itemName: Hamburger
-  description: 'Pepper : Need  Garlic 2x Garlic 2x Garlic 2x Garlic 2x'
+  itemName: Padchagob
+  description: 'Padchagob : Garlic 2x Garlic 2x Garlic 2x Garlic 2x'
   maxStack: 10
   weight: 0
   sellPrice: 20

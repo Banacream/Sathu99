@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e138eab59cd24740a30449b398322d3, type: 3}
   m_Name: Food_Fried frog with garlic
   m_EditorClassIdentifier: 
-  icon: {fileID: -913951520, guid: 60340cc09ddc4a24480c57f662424cd0, type: 3}
+  icon: {fileID: 21300000, guid: ad6bc731c70dcf94fa05fea318df2355, type: 3}
   id: 005
-  itemName: Pizza
-  description: 'Pepper : Need  Garlic 2x Garlic 2x Garlic 2x Garlic 2x'
+  itemName: Gobtodkratiem
+  description: 'Gobtodkratiem : Garlic 2x Garlic 2x Garlic 2x Garlic 2x'
   maxStack: 10
   weight: 0
   sellPrice: 5

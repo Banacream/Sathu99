@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e138eab59cd24740a30449b398322d3, type: 3}
   m_Name: 001_FrogMeat
   m_EditorClassIdentifier: 
-  icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 21300000, guid: b9dd26d165e8af942918c1b77e508cf0, type: 3}
   id: 001
   itemName: Frog Meat
   description: 
   maxStack: 10
   weight: 0
+  sellPrice: 0
   gamePrefab: {fileID: 2983315341115562920, guid: 810c1d18f43662b4dab20cec7c6f1b1f, type: 3}
   itemType: 2

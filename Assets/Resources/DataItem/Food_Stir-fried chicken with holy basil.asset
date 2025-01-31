@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e138eab59cd24740a30449b398322d3, type: 3}
   m_Name: Food_Stir-fried chicken with holy basil
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: b539197680dadef4ea86d4d94478bc58, type: 3}
   id: 
   itemName: 
   description: 
