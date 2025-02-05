@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+    using UnityEngine.SceneManagement;
 
 
-[System.Serializable]
-public class PlayerData
+[System.Serializable] public class PlayerData
 {
     public int coins = 0;
     public float debt = 0;
@@ -14,7 +13,7 @@ public class PlayerData
 }
 
 public class GameDataManager : MonoBehaviour
-{
+    {
     public static PlayerData playerData = new PlayerData();
     public static GameDataManager Instance { get; private set; }
     private const string INVENTORY_SAVE_KEY = "InventoryData";
@@ -71,8 +70,8 @@ public class GameDataManager : MonoBehaviour
         {
             IncrementDaysWithoutPayment();
         }
-
-        if (playerData.daysWithoutPayment > 3)
+        
+        if(playerData.daysWithoutPayment > 3)
         {
             ResetDaysWithoutPayment();
         }
@@ -333,8 +332,8 @@ public class GameDataManager : MonoBehaviour
 
     public static void SpendCoins(int amount)
     {
-        if (CanSpendAddcoins(amount))
-            playerData.coins -= amount;
+        if(CanSpendAddcoins(amount))
+        playerData.coins -= amount;
 
     }
 

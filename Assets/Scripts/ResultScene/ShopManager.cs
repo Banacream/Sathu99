@@ -28,15 +28,6 @@ public class ShopManager : MonoBehaviour
             InventorySlot slot = mainInventory.IsEmptySlotLeft(item);
             slot.SetThisSlot(item, 1);
         }
-        //foreach (InventorySlot slot in mainInventory.toolinventorySlots)
-        //{
-        //    // if (slot.()) // ��Ǩ�ͺ��� Slot �����ҧ�������
-        //    //{
-        //    slot.SetThisSlot(item, 1); // ��������ŧ� Slot (�ӹǹ 1)
-        //    Debug.Log($"Added {item.name} to tool slot.");
-        //    return; // �͡�ҡ�ѧ��ѹ�ѹ����ѧ�������������
-        //            // }
-        //}
-        //}
+
     }
 }

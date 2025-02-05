@@ -17,7 +17,7 @@ MonoBehaviour:
   itemName: Knife level01
   description: 
   maxStack: 1
-  weight: 0
+  damage: 5
   sellPrice: 0
   gamePrefab: {fileID: 520867697026677811, guid: fef46059d29c8384ba7efe0b44f45007, type: 3}
   itemType: 1

@@ -11,7 +11,6 @@ public class PanelManager : MonoBehaviour
     public GameObject shopPanel;
     public GameObject debtPanel;
     public GameObject debtWarnPanel;
-    public GameObject cookBookPanel;
     public CanvasGroup cookingPanelCanvasGroup; // CanvasGroup ของ Cooking Panel
     public CanvasGroup cookSellPanelCanvasGroup; // CanvasGroup ของ Cook Sell Panel
     private float debtWarnPanelCooldown = 5f; // เวลาที่ต้องรอก่อนจะเปิดใหม่อีกครั้ง
@@ -100,12 +99,7 @@ public class PanelManager : MonoBehaviour
         cookSellPanelCanvasGroup.interactable = !isCookSellPanelActive;
         cookSellPanelCanvasGroup.blocksRaycasts = !isCookSellPanelActive;
 
-        if (cookBookPanel != null)
-        {
-            bool isActive = cookBookPanel.activeSelf;
-            cookBookPanel.SetActive(!isActive);
-        }
-  
+
     }
    
 
