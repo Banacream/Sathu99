@@ -6,21 +6,30 @@ using UnityEngine.UI;
 
 public class PanelManager : MonoBehaviour
 {
+
     public GameObject inventoryPanel;
     public GameObject shopPanel;
+    public GameObject debtPanel;
+    public GameObject debtWarnPanel;
     public CanvasGroup cookingPanelCanvasGroup; // CanvasGroup ของ Cooking Panel
     public CanvasGroup cookSellPanelCanvasGroup; // CanvasGroup ของ Cook Sell Panel
+    private float debtWarnPanelCooldown = 5f; // เวลาที่ต้องรอก่อนจะเปิดใหม่อีกครั้ง
+    private float debtWarnPanelTimer = 0f;
 
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Tab))
+
+        
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             inventoryPanel.SetActive(!inventoryPanel.activeSelf);
           
 
             //CookingPanel.SetActive(!CookingPanel.activeSelf);
         }
+        CheckDebtStatus();
+
 
 
     }
@@ -30,6 +39,42 @@ public class PanelManager : MonoBehaviour
         {
             bool isActive = shopPanel.activeSelf; 
             shopPanel.SetActive(!isActive);     
+        }
+        else
+        {
+            Debug.LogWarning("Panel is not assigned in the Inspector.");
+        }
+    }
+
+    public void CheckDebtStatus()
+    {
+        if (debtWarnPanel != null)
+        {
+            if (GameDataManager.Instance.HasPaidToday())
+            {
+                debtWarnPanel.SetActive(false);
+            }
+            else
+            {
+                debtWarnPanelTimer = debtWarnPanelCooldown;
+                debtWarnPanelTimer -= Time.deltaTime;
+                    if (debtWarnPanelTimer <= 0f)
+                    {
+                    debtWarnPanel.SetActive(true);
+                    }
+ 
+            }
+        }
+  
+    }
+
+
+    public void ActiveDebtPanel()
+    {
+        if (debtPanel != null)
+        {
+            bool isActive = debtPanel.activeSelf;
+            debtPanel.SetActive(!isActive);     
         }
         else
         {
@@ -56,7 +101,7 @@ public class PanelManager : MonoBehaviour
 
 
     }
-
+   
 
 }
     
