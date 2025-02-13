@@ -7,26 +7,18 @@ using UnityEngine.UI;
 
 public class ResultManager : MonoBehaviour
 {
-
     public int totalCoins = 0; 
     public int totalSell = 0;
-    public float totalDebt= 0;
-    public float withoutPaytotalDebt = 0;  
     public TextMeshProUGUI coinText; 
     public TextMeshProUGUI cookSellText; 
-    public TextMeshProUGUI debtText;
-    public TextMeshProUGUI daysWithoutPaymentText;
     public Inventory mainInventory;
     private List<int> slotPrices = new List<int>();
-
 
     private void Start()
     {
         GameDataManager.LoadPlayerData();
         cookSellText.text = $"Sell: {totalSell}";
         totalCoins = GameDataManager.playerData.coins;
-        totalDebt = GameDataManager.playerData.debt;
-        withoutPaytotalDebt = GameDataManager.playerData.daysWithoutPayment;
         UpdateCoinUI(); 
     }
 
@@ -82,49 +74,16 @@ public class ResultManager : MonoBehaviour
         UpdateCoinUI(); 
     }
 
-    public void PayDebt(int amount)
-    {
-        if (amount <= 0)
-        {
-            Debug.LogError("Payment amount must be positive.");
-            return;
-        }
-
-        if (amount > totalCoins)
-        {
-            Debug.LogError("Not enough coins to pay the debt.");
-            return;
-        }
-
-        GameDataManager.MakePayment(amount);
-        totalDebt = GameDataManager.playerData.debt;
-        SpendCoins(amount);
-        Debug.Log($"Paid debt: {amount}. Remaining debt: {GameDataManager.GetCurrentDebt()}");
-        UpdateCoinUI();
-    }
-
-
 
     private void UpdateCoinUI()
     {
-        if (coinText != null || debtText != null)
+        if (coinText != null)
         {
             coinText.text = $"Coins: {totalCoins}"; // �ʴ��ӹǹ����­� UI
-            debtText.text = $"Total Debt: {totalDebt}"; // �ʴ��ӹǹ����­� UI
         }
         else
         {
             Debug.LogError("CoinText is not assigned in the GameManager!");
-        }
-
-        if (daysWithoutPaymentText != null)
-        {
-            int daysWithoutPayment = GameDataManager.GetDaysWithoutPayment();
-            daysWithoutPaymentText.text = $"Days without payment : {withoutPaytotalDebt} / 3";
-        }
-        else
-        {
-            Debug.LogError("DaysWithoutPaymentText is not assigned in the ResultManager!");
         }
     }
 }

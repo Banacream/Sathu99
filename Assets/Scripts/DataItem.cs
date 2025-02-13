@@ -10,7 +10,7 @@ public class DataItem : ScriptableObject
     public string itemName;
     public string description;
     public int maxStack;
-    public float damage;
+    public float weight;
     public int sellPrice;
 
     [Header("In Game Object")]

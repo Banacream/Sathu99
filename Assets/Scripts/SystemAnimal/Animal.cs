@@ -84,29 +84,23 @@ public abstract class Animal : MonoBehaviour
 
     // Method to take damage from a weapon
 
-    public void TakeDamage(HandleSlot weaponSlot)
+    public void TakeDamage(HandleSlot handleSlot)
     {
-        if (weaponSlot == null || weaponSlot.item == null && !isDead)
+        if (handleSlot == null || handleSlot.item == null && !isDead)
         {
             Debug.Log("No weapon equipped in the handle slot.");
             return;
         }
 
-        string equippedWeapon = weaponSlot.item.name; // Get weapon name from the HandleSlot
+        string equippedWeapon = handleSlot.item.name; // Get weapon name from the HandleSlot
         if (IsWeaponEffective(equippedWeapon))
         {
-            if (weaponSlot.item != null && weaponSlot.item.itemType == DataItem.ItemType.Tool)
+            Health -= 10; // Example damage value
+            if (Health <= 0)
             {
-                DataItem weapon = weaponSlot.item;
-                Health -= (int)weapon.damage;
-                Debug.Log($"{Name} took {weapon.damage} damage. Health remaining: {Health}");
+                Die();
 
-                if (Health <= 0)
-                {
-                    Die();
-                }
             }
-
         }
         else
         {
