@@ -10,15 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e138eab59cd24740a30449b398322d3, type: 3}
-  m_Name: Food_Stir-fried chicken with curry paste
+  m_Name: Weapon_Knife 1
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 0cfaf79f579b0444b8a4aab1cc2f477e, type: 3}
-  id: 
-  itemName: 
-  description: 'Padprikgaegkhai 10$ Chicken Meat 1x ,            Chili 1x ,               
-    Bai kaphrao 1x '
-  maxStack: 10
-  damage: 0
-  sellPrice: 10
-  gamePrefab: {fileID: 0}
-  itemType: 0
+  icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  id: 007
+  itemName: Knife level02
+  description: 
+  maxStack: 1
+  damage: 10
+  sellPrice: 0
+  gamePrefab: {fileID: 520867697026677811, guid: fef46059d29c8384ba7efe0b44f45007, type: 3}
+  itemType: 1
