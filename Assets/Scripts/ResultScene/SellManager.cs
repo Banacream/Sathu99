@@ -11,6 +11,7 @@ public class SellManager : MonoBehaviour
     public ResultManager resultManager;
     //public Image icon; 
 
+
     public void SellAllFoodItems()
     {
 
