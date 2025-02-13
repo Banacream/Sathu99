@@ -15,10 +15,9 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 0cfaf79f579b0444b8a4aab1cc2f477e, type: 3}
   id: 
   itemName: 
-  description: 'Padprikgaegkhai 10$ Chicken Meat 1x ,            Chili 1x ,               
-    Bai kaphrao 1x '
-  maxStack: 10
-  damage: 0
-  sellPrice: 10
+  description: 
+  maxStack: 0
+  weight: 0
+  sellPrice: 0
   gamePrefab: {fileID: 0}
   itemType: 0

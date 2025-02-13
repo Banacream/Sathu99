@@ -7,7 +7,7 @@ public class CookingInventory : Inventory
 {
     [Header("Cooking")]
     public Inventory mainInventory; 
-    public int cookSlotAmount = 7; 
+    public int cookSlotAmount = 30; 
     public OutputSlot outputSlot; 
     public Transform cookInventoryPanel; 
     public OutputSlot[] outputSlots; 
