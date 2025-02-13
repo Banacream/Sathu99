@@ -7,9 +7,9 @@ using TMPro;
 
 public class ResourceGatheringTimer : MonoBehaviour
 {
-    public float gatheringTime = 300f; // เวลาที่ใช้ในการหาวัตถุดิบ (วินาที)
-    public TextMeshProUGUI timerText; // UI สำหรับแสดงเวลา
-    public string targetSceneName; // ชื่อของซีนที่ต้องการย้ายไปเมื่อเวลาสิ้นสุดลง
+    public float gatheringTime = 300f; // ๏ฟฝ๏ฟฝ๏ฟฝาท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝในก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัต๏ฟฝุดิบ (๏ฟฝินาท๏ฟฝ)
+    public TextMeshProUGUI timerText; // UI ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝสด๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    public string targetSceneName; // ๏ฟฝ๏ฟฝ๏ฟฝอของ๏ฟฝีน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝุดลง
 
     private float remainingTime;
 
