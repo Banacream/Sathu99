@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   id: 007
-  itemName: Knife
+  itemName: Knife level01
   description: 
   maxStack: 1
   weight: 0
