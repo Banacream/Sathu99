@@ -19,14 +19,14 @@ public class PlayerMove : MonoBehaviour
     public float health = 100.0f;
 
     public Animator anim;
-    public SpriteRenderer theSR;
-
+    public List<SpriteRenderer> spriteRenderers;
+    public List<SpriteRenderer> armSpriteRenderer; // SpriteRenderer ที่เป็นแขน
     public float attackRange = 2.0f; // ระยะการโจมตี
-
+    private bool isFlipped = false; // สถานะการฟลิป
 
     void Update()
     {
-        anim.SetFloat("moveSpeed", theRB.velocity.magnitude);
+        anim.SetFloat("Speed", theRB.velocity.magnitude);
         moveInput.x = Input.GetAxis("Horizontal");
         moveInput.y = Input.GetAxis("Vertical");
         moveInput.Normalize();
@@ -43,16 +43,26 @@ public class PlayerMove : MonoBehaviour
 
         float currentSpeed = isCrouching ? crouchSpeed : moveSpeed;
         theRB.velocity = new Vector3(moveInput.x * currentSpeed, theRB.velocity.y, moveInput.y * currentSpeed);
+        if (moveInput.x > 0 && !isFlipped)
+        {
+            SetFlipX(true);
+            isFlipped = true;
+        }
+        else if (moveInput.x < 0 && isFlipped)
+        {
+            SetFlipX(false);
+            isFlipped = false;
+        }
 
 
-        if (!theSR.flipX && moveInput.x < 0)
-        {
-            theSR.flipX = true;
-        }
-        else if (theSR.flipX && moveInput.x > 0)
-        {
-            theSR.flipX = false;
-        }
+        //if (!theSR.flipX && moveInput.x < 0)
+        //{
+        //    theSR.flipX = true;
+        //}
+        //else if (theSR.flipX && moveInput.x > 0)
+        //{
+        //    theSR.flipX = false;
+        //}
 
         // Check for jump input
         if (Input.GetButtonDown("Jump") && isGrounded)
@@ -75,7 +85,29 @@ public class PlayerMove : MonoBehaviour
             }
         }
     }
-    private void Jump()
+
+    private void SetFlipX(bool flipX)
+    {
+        foreach (SpriteRenderer sr in spriteRenderers)
+        {
+            sr.flipX = flipX;
+        }
+
+        // Flip และเลื่อนตำแหน่ง X ของแขนเมื่อถูกฟลิป
+        if (armSpriteRenderer != null)
+        {
+            foreach (SpriteRenderer sr in armSpriteRenderer)
+            {
+                sr.flipX = flipX;
+                Vector3 armPosition = sr.transform.localPosition;
+                armPosition.x = -0.5f; // ตั้งค่า X ของแขนเป็น 0
+                sr.transform.localPosition = armPosition;
+            }
+        }
+    }
+
+
+        private void Jump()
     {
         theRB.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         isGrounded = false;
