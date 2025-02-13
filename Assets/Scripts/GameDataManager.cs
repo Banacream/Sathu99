@@ -1,26 +1,37 @@
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
-    using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
-[System.Serializable] public class PlayerData
+[System.Serializable]
+public class PlayerData
 {
     public int coins = 0;
+    public float debt = 0;
+    public int day = 0;
+    public int daysWithoutPayment = 0;
 }
 
 public class GameDataManager : MonoBehaviour
-    {
+{
     public static PlayerData playerData = new PlayerData();
     public static GameDataManager Instance { get; private set; }
     private const string INVENTORY_SAVE_KEY = "InventoryData";
     private const string CURRENT_SCENE_KEY = "CurrentSceneInventory";
-
+    private const float INITIAL_DEBT = 10000f;
+    private const string DEBT_KEY = "DEBT_KEY";
+    private const string DAY_KEY = "CurrentDay";
+    private const string DAYS_WITHOUT_PAYMENT_KEY = "DaysWithoutPayment";
+    private bool hasPaidToday = false;
 
     private void Awake()
     {
         SavePlayerData();
         LoadPlayerData();
+        LoadDebt();
+        LoadDay();
+        LoadDaysWithoutPayment();
         if (Instance == null)
         {
             Instance = this;
@@ -32,6 +43,148 @@ public class GameDataManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    #region Methods Day
+    private void LoadDay()
+    {
+        if (PlayerPrefs.HasKey(DAY_KEY))
+        {
+            playerData.day = PlayerPrefs.GetInt(DAY_KEY);
+        }
+        else
+        {
+            playerData.day = 1;
+            SaveDay();
+        }
+        Debug.Log($"Current day: {playerData.day}");
+    }
+
+    private void SaveDay()
+    {
+        PlayerPrefs.SetInt(DAY_KEY, playerData.day);
+        PlayerPrefs.Save();
+    }
+
+    public static void NextDay()
+    {
+        if (!Instance.hasPaidToday)
+        {
+            IncrementDaysWithoutPayment();
+        }
+
+        if (playerData.daysWithoutPayment > 3)
+        {
+            ResetDaysWithoutPayment();
+        }
+
+        playerData.day++;
+        Instance.hasPaidToday = false;
+        Instance.SaveDay();
+        Debug.Log($"Next day: {playerData.day}");
+    }
+
+    public static int GetCurrentDay()
+    {
+        return playerData.day;
+    }
+    #endregion
+
+    #region Debt
+    private void LoadDebt()
+    {
+        if (PlayerPrefs.HasKey(DEBT_KEY))
+        {
+            playerData.debt = PlayerPrefs.GetFloat(DEBT_KEY);
+        }
+        else
+        {
+            playerData.debt = INITIAL_DEBT;
+            SaveDebt();
+        }
+        Debug.Log($"Current debt: {playerData.debt}");
+    }
+
+    private void SaveDebt()
+    {
+        PlayerPrefs.SetFloat(DEBT_KEY, playerData.debt);
+        PlayerPrefs.Save();
+    }
+
+    public static void MakePayment(int amount)
+    {
+        if (amount <= 0)
+        {
+            Debug.LogError("Payment amount must be positive.");
+            return;
+        }
+
+        if (amount > playerData.debt)
+        {
+            Debug.LogError("Payment amount exceeds current debt.");
+            return;
+        }
+
+        playerData.debt -= amount;
+        Instance.SaveDebt();
+        Debug.Log($"Payment made: {amount}. Remaining debt: {playerData.debt}");
+    }
+
+    public static float GetCurrentDebt()
+    {
+        return playerData.debt;
+    }
+    #endregion
+
+    #region DaysWithoutPayment
+    private void LoadDaysWithoutPayment()
+    {
+        if (PlayerPrefs.HasKey(DAYS_WITHOUT_PAYMENT_KEY))
+        {
+            playerData.daysWithoutPayment = PlayerPrefs.GetInt(DAYS_WITHOUT_PAYMENT_KEY);
+        }
+        else
+        {
+            SaveDaysWithoutPayment();
+        }
+        Debug.Log($"Days without payment: {playerData.daysWithoutPayment}");
+    }
+
+    private void SaveDaysWithoutPayment()
+    {
+        PlayerPrefs.SetInt(DAYS_WITHOUT_PAYMENT_KEY, playerData.daysWithoutPayment);
+        PlayerPrefs.Save();
+    }
+
+    public static void IncrementDaysWithoutPayment()
+    {
+        playerData.daysWithoutPayment++;
+        Instance.SaveDaysWithoutPayment();
+        Debug.Log($"Incremented days without payment: {playerData.daysWithoutPayment}");
+    }
+
+    public static void ResetDaysWithoutPayment()
+    {
+        playerData.daysWithoutPayment = 0;
+        Instance.SaveDaysWithoutPayment();
+        Debug.Log("Reset days without payment");
+    }
+
+    public static int GetDaysWithoutPayment()
+    {
+        return playerData.daysWithoutPayment;
+    }
+
+    public void MarkDebtPaid()
+    {
+        hasPaidToday = true;
+    }
+
+    public bool HasPaidToday()
+    {
+        return hasPaidToday;
+    }
+
+    #endregion
 
     #region Medthod Inventory
     public void SaveInventory(Inventory inventory)
@@ -180,8 +333,8 @@ public class GameDataManager : MonoBehaviour
 
     public static void SpendCoins(int amount)
     {
-        if(CanSpendAddcoins(amount))
-        playerData.coins -= amount;
+        if (CanSpendAddcoins(amount))
+            playerData.coins -= amount;
 
     }
 
