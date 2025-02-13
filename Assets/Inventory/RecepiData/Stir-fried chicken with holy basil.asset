@@ -14,10 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outputItem: {fileID: 0}
   outputStack: 1
-  recipeItems:
-  - ingredient: {fileID: 11400000, guid: 6b2f18b33f1fa72438f1de0066d2e1ed, type: 2}
-    quantity: 1
-  - ingredient: {fileID: 11400000, guid: 24a16b0c4d9d9974ab6a18c9f706ec38, type: 2}
-    quantity: 1
-  - ingredient: {fileID: 11400000, guid: ba8f315eb7587e0449209e5aff285748, type: 2}
-    quantity: 1
+  recipeItems: []
