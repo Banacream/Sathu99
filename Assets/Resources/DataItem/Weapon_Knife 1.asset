@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e138eab59cd24740a30449b398322d3, type: 3}
   m_Name: Weapon_Knife 1
   m_EditorClassIdentifier: 
-  icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 21300000, guid: 1597425a8b6a5354e90aa4ac1e4343f6, type: 3}
   id: 007
   itemName: Knife level02
   description: 

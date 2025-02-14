@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e138eab59cd24740a30449b398322d3, type: 3}
   m_Name: 004_Garlic
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 40728b1335c81da41869caa9c7d900b5, type: 3}
+  icon: {fileID: 21300000, guid: 6a4944d380373e74ba1a9f8643697105, type: 3}
   id: 004
   itemName: Garlic
   description: 
   maxStack: 10
-  weight: 0
+  damage: 0
   sellPrice: 0
   gamePrefab: {fileID: 2983315341115562920, guid: 810c1d18f43662b4dab20cec7c6f1b1f, type: 3}
   itemType: 2
