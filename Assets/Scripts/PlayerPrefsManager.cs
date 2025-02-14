@@ -22,12 +22,12 @@ public class PlayerPrefsManager : MonoBehaviour
     }
 
 
-    //public static void ResetPlayerData()
-    //{
-    //    PlayerPrefs.DeleteAll();
-    //    PlayerPrefs.Save();
-    //    Debug.Log("All PlayerPrefs data has been reset.");
-    //}
+    public static void ResetPlayerDataAll()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        Debug.Log("All PlayerPrefs data has been reset.");
+    }
 
 
 

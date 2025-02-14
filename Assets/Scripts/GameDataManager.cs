@@ -6,7 +6,7 @@
 
 [System.Serializable] public class PlayerData
 {
-    public int coins = 0;
+    public int coins = 250;
     public float debt = 0;
     public int day = 0;
     public int daysWithoutPayment = 0;
@@ -22,10 +22,14 @@ public class GameDataManager : MonoBehaviour
     private const string DEBT_KEY = "DEBT_KEY";
     private const string DAY_KEY = "CurrentDay";
     private const string DAYS_WITHOUT_PAYMENT_KEY = "DaysWithoutPayment";
+    private const string SaveStatusKey = "HasSaved";
     private bool hasPaidToday = false;
+    private bool hasSaved = false;
 
     private void Awake()
     {
+
+ 
         SavePlayerData();
         LoadPlayerData();
         LoadDebt();
@@ -41,7 +45,49 @@ public class GameDataManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+
+  
+
+
     }
+
+    private void Start()
+    {
+        // เช็คว่าเคยบันทึกแล้วหรือยังจาก PlayerPrefs
+        if (PlayerPrefs.GetInt(SaveStatusKey, 0) == 0)
+        {
+            // บันทึก Inventory
+            Inventory currentInventory = GameObject.FindObjectOfType<Inventory>();
+            if (currentInventory != null)
+            {
+                GameDataManager.Instance.SaveInventory(currentInventory);
+                Debug.Log("Inventory saved!");
+            }
+            else
+            {
+                Debug.LogWarning("No Inventory found to save.");
+            }
+
+            // โหลด Inventory
+            if (currentInventory != null)
+            {
+                GameDataManager.Instance.LoadInventory(currentInventory);
+                Debug.Log("Inventory loaded!");
+            }
+            else
+            {
+                Debug.LogWarning("No Inventory found to load.");
+            }
+
+            // ตั้งค่าให้บันทึกสถานะว่าได้ทำการบันทึกแล้ว
+            PlayerPrefs.SetInt(SaveStatusKey, 1);
+            PlayerPrefs.Save();
+        }
+    }
+
+
+
 
     #region Methods Day
     private void LoadDay()

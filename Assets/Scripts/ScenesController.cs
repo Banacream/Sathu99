@@ -102,6 +102,10 @@ public static class ScenesController
         }
     }
 
+
+    // ฟังก์ชันสำหรับย้ายไปยังฉากที่กำหนดชื่อ
+   
+
     // ���¡������ͩҡ������Ŵ����
     private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
