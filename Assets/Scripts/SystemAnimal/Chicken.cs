@@ -18,8 +18,6 @@ public class Chicken : Animal
     {
         base.Start();
         DropItemPrefab = chickenMeatPrefab;// Assign the drop item
-        // Example: Move to a specific position when spawned
-        MoveTo(new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5)));
 
         navMeshAgent = GetComponent<NavMeshAgent>();
         if (navMeshAgent != null)

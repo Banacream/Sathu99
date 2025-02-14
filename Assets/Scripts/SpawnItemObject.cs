@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [System.Serializable]
 public class ItemSpawnInfo
 {
-    public GameObject itemPrefab; // Prefab ของไอเท็ม
-    public int numberOfItems; // จำนวนไอเท็มที่ต้องการ spawn
+    public GameObject itemPrefab; // Prefab ๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    public int numberOfItems; // ๏ฟฝำนวน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ spawn
 }
 
 public class SpawnItemObject : MonoBehaviour
 {
-    public List<ItemSpawnInfo> itemSpawnInfos; // รายการของข้อมูลการ spawn ไอเท็ม
-    public List<Transform> spawnPositions; // รายการของตำแหน่งที่สามารถ spawn ไอเท็มได้
+    public List<ItemSpawnInfo> itemSpawnInfos; // ๏ฟฝ๏ฟฝยก๏ฟฝรของ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝลก๏ฟฝ๏ฟฝ spawn ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    public List<Transform> spawnPositions; // ๏ฟฝ๏ฟฝยก๏ฟฝรของ๏ฟฝ๏ฟฝ๏ฟฝหน่งท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝรถ spawn ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
 
     void Start()
     {
@@ -21,8 +22,8 @@ public class SpawnItemObject : MonoBehaviour
 
     void SpawnItems()
     {
-        List<Transform> availablePositions = new List<Transform>(spawnPositions); // คัดลอกตำแหน่งที่สามารถ spawn ได้
-        Dictionary<Transform, GameObject> occupiedPositions = new Dictionary<Transform, GameObject>(); // เก็บตำแหน่งที่ถูกใช้ไปแล้วและไอเท็มที่ spawn ในตำแหน่งนั้น
+        List<Transform> availablePositions = new List<Transform>(spawnPositions); // ๏ฟฝัด๏ฟฝอก๏ฟฝ๏ฟฝ๏ฟฝหน่งท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝรถ spawn ๏ฟฝ๏ฟฝ
+        Dictionary<Transform, GameObject> occupiedPositions = new Dictionary<Transform, GameObject>(); // ๏ฟฝ็บต๏ฟฝ๏ฟฝหน่งท๏ฟฝ๏ฟฝูก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ spawn ในต๏ฟฝ๏ฟฝหน่งน๏ฟฝ๏ฟฝ
 
         foreach (ItemSpawnInfo spawnInfo in itemSpawnInfos)
         {
@@ -30,10 +31,10 @@ public class SpawnItemObject : MonoBehaviour
             {
                 Transform spawnPosition = null;
 
-                // หาตำแหน่งที่เหมาะสมสำหรับการ spawn
+                // ๏ฟฝาต๏ฟฝ๏ฟฝหน่งท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝ๏ฟฝ๏ฟฝ spawn
                 if (occupiedPositions.ContainsValue(spawnInfo.itemPrefab))
                 {
-                    // ถ้าไอเท็มชนิดเดียวกันถูก spawn ในตำแหน่งใดตำแหน่งหนึ่งแล้ว ให้ใช้ตำแหน่งนั้น
+                    // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝิด๏ฟฝ๏ฟฝ๏ฟฝวกัน๏ฟฝูก spawn ในต๏ฟฝ๏ฟฝหน๏ฟฝใดต๏ฟฝ๏ฟฝหน๏ฟฝหน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝหน่งน๏ฟฝ๏ฟฝ
                     foreach (var entry in occupiedPositions)
                     {
                         if (entry.Value == spawnInfo.itemPrefab)
@@ -45,7 +46,7 @@ public class SpawnItemObject : MonoBehaviour
                 }
                 else
                 {
-                    // ถ้าไอเท็มชนิดนี้ยังไม่ถูก spawn ให้หาตำแหน่งใหม่
+                    // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝิด๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัง๏ฟฝ๏ฟฝ๏ฟฝูก spawn ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาต๏ฟฝ๏ฟฝหน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
                     if (availablePositions.Count > 0)
                     {
                         int randomIndex = Random.Range(0, availablePositions.Count);
@@ -61,13 +62,18 @@ public class SpawnItemObject : MonoBehaviour
 
                 if (spawnPosition != null)
                 {
-                    // สุ่มตำแหน่งภายในรัศมีของตำแหน่งที่เลือก
-                    Vector3 randomPosition = spawnPosition.position + Random.insideUnitSphere * 10f; // รัศมี 1 หน่วย
-                    randomPosition.y = spawnPosition.position.y; // ตั้งค่า y ให้ตรงกับตำแหน่งที่เลือก
+                    // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝหน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝีของ๏ฟฝ๏ฟฝ๏ฟฝหน่งท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอก
+                    Vector3 randomPosition = spawnPosition.position + Random.insideUnitSphere * 30f; // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ 1 หน๏ฟฝ๏ฟฝ๏ฟฝ
+                    randomPosition.y = spawnPosition.position.y; // ๏ฟฝ๏ฟฝ้งค๏ฟฝ๏ฟฝ y ๏ฟฝ๏ฟฝ๏ฟฝรง๏ฟฝับ๏ฟฝ๏ฟฝ๏ฟฝหน่งท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอก
+                     NavMeshHit hit;
+                    if (NavMesh.SamplePosition(randomPosition, out hit, 10f, NavMesh.AllAreas))
+                    {
+                        randomPosition.y = hit.position.y + 0.3f; // เธเธณเธซเธเธ”เธ•เธณเนเธซเธเนเธเธ—เธตเนเธซเธฒเนเธ”เนเธเธฒเธ NavMesh
+                    }
 
                     Instantiate(spawnInfo.itemPrefab, randomPosition, Quaternion.identity);
 
-                    // บันทึกตำแหน่งที่ใช้ไปแล้วและไอเท็มที่ spawn ในตำแหน่งนั้น
+                    // ๏ฟฝัน๏ฟฝึก๏ฟฝ๏ฟฝ๏ฟฝหน่งท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ spawn ในต๏ฟฝ๏ฟฝหน่งน๏ฟฝ๏ฟฝ
                     if (!occupiedPositions.ContainsKey(spawnPosition))
                     {
                         occupiedPositions.Add(spawnPosition, spawnInfo.itemPrefab);

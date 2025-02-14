@@ -136,11 +136,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyDistanceRun: 5
-  RandomMoveRadius: 50
-  RandomMoveInterval: 3
-  fogMeatPrefab: {fileID: 2983315341115562920, guid: 810c1d18f43662b4dab20cec7c6f1b1f, type: 3}
-  normalSpeed: 8
-  slowSpeed: 3
+  RandomMoveRadius: 10
+  RandomMoveInterval: 5
+  fogMeatPrefab: {fileID: 8872865953403846695, guid: 752eacb0b56765e4cb403eee3a76130c, type: 3}
+  normalSpeed: 5
+  slowSpeed: 7
   runAwaySpeed: 10
 --- !u!1001 &2558709083221580127
 PrefabInstance:

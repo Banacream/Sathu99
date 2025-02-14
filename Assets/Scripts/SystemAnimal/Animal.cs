@@ -14,7 +14,7 @@ public abstract class Animal : MonoBehaviour
     protected Transform playerTransform; // Reference to the player's transform
     public float EnemyDistanceRun = 5.0f; // Distance at which the animal starts running
     public float RandomMoveRadius = 50.0f; // Radius for random movement
-    public float RandomMoveInterval = 1.0f; // Time interval for random movement
+    public float RandomMoveInterval = 10.0f; // Time interval for random movement
 
     private float randomMoveTimer = 0f; // Timer for random movement
     private bool isMovingToTarget = false;
@@ -93,8 +93,8 @@ public abstract class Animal : MonoBehaviour
         }
 
         string equippedWeapon = weaponSlot.item.name; // Get weapon name from the HandleSlot
-        if (IsWeaponEffective(equippedWeapon))
-        {
+       // if (IsWeaponEffective(equippedWeapon))
+       // {
             if (weaponSlot.item != null && weaponSlot.item.itemType == DataItem.ItemType.Tool)
             {
                 DataItem weapon = weaponSlot.item;
@@ -107,11 +107,11 @@ public abstract class Animal : MonoBehaviour
                 }
             }
 
-        }
-        else
-        {
-            Debug.Log($"{equippedWeapon} is not effective against {Name}.");
-        }
+       // }
+        //else
+       // {
+        //    Debug.Log($"{equippedWeapon} is not effective against {Name}.");
+       // }
     }
     //public void TakeDamage(string weapon)
     //{
@@ -161,14 +161,12 @@ public abstract class Animal : MonoBehaviour
                 Vector3 newPos = transform.position + dirToPlayer.normalized * 5.0f; // Move slightly further away
                 MoveTo(newPos);
             }
-            
-            if (!isMovingToTarget && randomMoveTimer >= RandomMoveInterval)
+            else if (!isMovingToTarget && randomMoveTimer >= RandomMoveInterval)
             {
                 RandomMove();
                 randomMoveTimer = 0f;
-                RandomMoveInterval = Random.Range(1.0f, 3.0f);
+                RandomMoveInterval = Random.Range(3.0f, 6.0f);
             }
-
             //else if (randomMoveTimer >= RandomMoveInterval)
             //{
 

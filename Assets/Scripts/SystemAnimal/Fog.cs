@@ -19,7 +19,7 @@ public class Fog : Animal
         base.Start();
         DropItemPrefab = fogMeatPrefab;// Assign the drop item
         // Example: Move to a specific position when spawned
-        MoveTo(new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5)));
+        //MoveTo(new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5)));
 
         navMeshAgent = GetComponent<NavMeshAgent>();
         if (navMeshAgent != null)
@@ -33,6 +33,8 @@ public class Fog : Animal
 
 
         FindPlayerMove();
+
+
     }
 
     protected override void Update()

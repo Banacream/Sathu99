@@ -43,8 +43,8 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7335391101812035960}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
+  m_IsTrigger: 1
+  m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -85,7 +85,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyDistanceRun: 5
   RandomMoveRadius: 10
-  RandomMoveInterval: 3
+  RandomMoveInterval: 5
   chickenMeatPrefab: {fileID: 4903837347048911068, guid: 1787cb9881847f148800389650aaacd8, type: 3}
   normalSpeed: 9
   slowSpeed: 3

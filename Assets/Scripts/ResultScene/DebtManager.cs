@@ -23,9 +23,9 @@ public class DebtManager : MonoBehaviour
             return;
         }
 
-        if (GameDataManager.playerData.coins >= 1)
+        if (GameDataManager.playerData.coins >= amountToPay)
         {
-            resultManager.PayDebt(1);
+            resultManager.PayDebt(amountToPay);
            GameDataManager.Instance.MarkDebtPaid();
             GenerateRandomDebtAmount();
             UpdateDebtAmountUI();
@@ -38,7 +38,7 @@ public class DebtManager : MonoBehaviour
 
     private void GenerateRandomDebtAmount()
     {
-        amountToPay = Random.Range(100, 201); // ÊØèÁ¤èÒ·ÕèµéÍ§¨èÒÂÃĞËÇèÒ§ 100 ¶Ö§ 200
+        amountToPay = Random.Range(1, 10); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò·ï¿½ï¿½ï¿½Í§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò§ 100 ï¿½Ö§ 200
     }
 
     private void UpdateDebtAmountUI()
