@@ -61,12 +61,13 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
             if (item is DataItem dataItem && dataItem.itemType == DataItem.ItemType.Food)
             {
+
+
                 UseItem(1);
                 foreach (CookRecipe recipe in inventory.recipes)
                 {
                     if (recipe.outputItem == dataItem)
                     {
-                       
                         DisplayRecipeDetails(recipe);
 
                         // คืนวัตถุดิบที่ใช้ทำอาหารกลับไปที่ Main Inventory
@@ -74,15 +75,32 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
                         {
                             // เรียกคืนวัตถุดิบที่ใช้ โดยส่ง ingredient และ quantity ที่ใช้ในสูตร
                             ReturnUsedMaterials(recipeItem.ingredient, recipeItem.quantity);
-                            break;
                         }
-             
-
-
                     }
                 }
 
-  
+                //UseItem(1);
+                //foreach (CookRecipe recipe in inventory.recipes)
+                //{
+                //    if (recipe.outputItem == dataItem)
+                //    {
+
+                //        DisplayRecipeDetails(recipe);
+
+                //        // คืนวัตถุดิบที่ใช้ทำอาหารกลับไปที่ Main Inventory
+                //        foreach (var recipeItem in recipe.recipeItems)
+                //        {
+                //            // เรียกคืนวัตถุดิบที่ใช้ โดยส่ง ingredient และ quantity ที่ใช้ในสูตร
+                //            ReturnUsedMaterials(recipeItem.ingredient, recipeItem.quantity);
+                //            break;
+                //        }
+
+
+
+                //    }
+                //}
+
+
 
 
             }

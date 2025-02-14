@@ -122,6 +122,14 @@ public class PlayerMove : MonoBehaviour
     }
     public void Attack(Animal animal)
     {
+        if (theRB.velocity.magnitude > 0)
+        {
+            anim.SetTrigger("Attack&Walk");
+        }
+        else
+        {
+            anim.SetTrigger("Attack");
+        }
         animal.TakeDamage(handleSlot); // Use HandleSlot to check weapon
     }
 

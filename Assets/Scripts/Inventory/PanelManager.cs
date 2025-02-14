@@ -8,11 +8,13 @@ public class PanelManager : MonoBehaviour
 {
 
     public GameObject inventoryPanel;
+    
     public GameObject shopPanel;
     public GameObject debtPanel;
     public GameObject debtWarnPanel;
     public GameObject cookBookPanel;
     public CanvasGroup cookingPanelCanvasGroup; // CanvasGroup ของ Cooking Panel
+    public CanvasGroup inventoryPanelCanvasGroup;
     public CanvasGroup cookSellPanelCanvasGroup; // CanvasGroup ของ Cook Sell Panel
     private float debtWarnPanelCooldown = 5f; // เวลาที่ต้องรอก่อนจะเปิดใหม่อีกครั้ง
     private float debtWarnPanelTimer = 0f;
@@ -24,8 +26,12 @@ public class PanelManager : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            inventoryPanel.SetActive(!inventoryPanel.activeSelf);
-          
+            //inventoryPanel.SetActive(!inventoryPanel.activeSelf);
+            bool isinventoryPanelCanvasGroupActive = inventoryPanelCanvasGroup.alpha > 0;
+
+            inventoryPanelCanvasGroup.alpha = isinventoryPanelCanvasGroupActive ? 0 : 1;
+            inventoryPanelCanvasGroup.interactable = !isinventoryPanelCanvasGroupActive;
+            inventoryPanelCanvasGroup.blocksRaycasts = !isinventoryPanelCanvasGroupActive;
 
             //CookingPanel.SetActive(!CookingPanel.activeSelf);
         }
