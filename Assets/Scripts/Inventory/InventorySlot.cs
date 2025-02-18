@@ -23,6 +23,8 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     public Image icon; 
     public TextMeshProUGUI stackText; 
     public InventoryType slotType;
+    public Color emptyColor;
+    public Color itemColor;
     //public TextMeshProUGUI weightText; 
 
     public int slotIndex;
@@ -246,6 +248,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
   
     public void CheckShowText()
     {
+        UpdateColorSlot();
         stackText.text = stack.ToString(); 
 
        
@@ -261,5 +264,13 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
             else
                 stackText.gameObject.SetActive(false);
         }
+    }
+
+    public void UpdateColorSlot()
+    {
+        if (item == inventory.EMTRY_ITEM)
+            icon.color = emptyColor;
+        else
+            icon.color = itemColor;
     }
 }
