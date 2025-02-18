@@ -10,6 +10,7 @@ public class PlayerPrefsManager : MonoBehaviour
     private const string DAY_KEY = "CurrentDay";
     private const string DAYS_WITHOUT_PAYMENT_KEY = "DaysWithoutPayment";
     private const string DEBT_KEY = "DEBT_KEY";
+    private const string SaveStatusKey = "HasSaved";
 
     public static void ResetPlayerData()
     {
@@ -25,6 +26,8 @@ public class PlayerPrefsManager : MonoBehaviour
     public static void ResetPlayerDataAll()
     {
         PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        PlayerPrefs.SetInt(SaveStatusKey, 0);
         PlayerPrefs.Save();
         Debug.Log("All PlayerPrefs data has been reset.");
     }

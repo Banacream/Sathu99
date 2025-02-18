@@ -45,16 +45,6 @@ public class GameDataManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-
-  
-
-
-    }
-
-    private void Start()
-    {
-        // เช็คว่าเคยบันทึกแล้วหรือยังจาก PlayerPrefs
         if (PlayerPrefs.GetInt(SaveStatusKey, 0) == 0)
         {
             // บันทึก Inventory
@@ -84,6 +74,8 @@ public class GameDataManager : MonoBehaviour
             PlayerPrefs.SetInt(SaveStatusKey, 1);
             PlayerPrefs.Save();
         }
+
+
     }
 
 
@@ -172,6 +164,28 @@ public class GameDataManager : MonoBehaviour
         playerData.debt -= amount;
         Instance.SaveDebt();
         Debug.Log($"Payment made: {amount}. Remaining debt: {playerData.debt}");
+
+        // ตรวจสอบสถานะการชนะเกม
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        if (gameManager != null)
+        {
+            gameManager.CheckWinCondition();
+        }
+    }
+
+    public static void DebugMakePayment(int amount)
+    {
+
+        playerData.debt -= amount;
+        Instance.SaveDebt();
+        Debug.Log($"Payment made: {amount}. Remaining debt: {playerData.debt}");
+
+        // ตรวจสอบสถานะการชนะเกม
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        if (gameManager != null)
+        {
+            gameManager.CheckWinCondition();
+        }
     }
 
     public static float GetCurrentDebt()

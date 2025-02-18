@@ -103,6 +103,14 @@ public class ResultManager : MonoBehaviour
         UpdateCoinUI();
     }
 
+    public void DebugPayDebt(int amount)
+    {
+      
+        GameDataManager.DebugMakePayment(amount);
+        totalDebt = GameDataManager.playerData.debt;
+        UpdateCoinUI();
+    }
+
 
 
     private void UpdateCoinUI()
