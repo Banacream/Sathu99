@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4c7f17671d3c941aca7a26ec098c99, type: 3}
   m_Name: Stir-fried chicken with curry paste
   m_EditorClassIdentifier: 
-  outputItem: {fileID: 0}
+  outputItem: {fileID: 11400000, guid: 5fef20a9015641c4ba3232adf470538d, type: 2}
   outputStack: 1
   recipeItems:
   - ingredient: {fileID: 11400000, guid: 6b2f18b33f1fa72438f1de0066d2e1ed, type: 2}
