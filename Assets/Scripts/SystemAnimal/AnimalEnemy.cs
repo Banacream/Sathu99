@@ -57,20 +57,33 @@ public abstract class AnimalEnemy : MonoBehaviour
     }
 
     // Method to take damage from a weapon
-    public virtual void TakeDamage(string weapon)
+    public virtual void TakeDamage(HandleSlot weaponSlot)
     {
-        if (IsWeaponEffective(weapon))
+
+        if (weaponSlot.item != null && weaponSlot.item.itemType == DataItem.ItemType.Tool)
         {
-            Health -= 10; // Example damage value
+            DataItem weapon = weaponSlot.item;
+            Health -= (int)weapon.damage;
+            Debug.Log($"{Name} took {weapon.damage} damage. Health remaining: {Health}");
+
             if (Health <= 0)
             {
-                Drop();
+                Destroy(gameObject);
             }
         }
-        else
-        {
-            Debug.Log($"{weapon} is not effective against {Name}.");
-        }
+
+        //if (IsWeaponEffective(weapon))
+        //{
+        //    Health -= 10; // Example damage value
+        //    if (Health <= 0)
+        //    {
+        //        Drop();
+        //    }
+        //}
+        //else
+        //{
+        //    Debug.Log($"{weapon} is not effective against {Name}.");
+        //}
     }
 
     // Method to check weapon type against animal type

@@ -12,7 +12,11 @@ public class Dog : AnimalEnemy
     public float attackDamage = 10.0f; // ความเสียหายเมื่อโจมตีผู้เล่น
 
     private PlayerMove playerMove;
+    private Color originalColor;
 
+    public Animator anim;
+    public List<SpriteRenderer> spriteRenderers;
+    private bool isFlipped = false; // สถานะการฟลิป
     public Dog() : base("Dog", 50, null) { }
 
     protected override void Start()
@@ -33,11 +37,17 @@ public class Dog : AnimalEnemy
 
         // หา PlayerMove component
         FindPlayerMove();
+        if (spriteRenderers.Count > 0)
+        {
+            originalColor = spriteRenderers[0].color;
+        }
     }
 
     protected override void Update()
     {
         base.Update();
+
+        anim.SetFloat("Speed", navMeshAgent.velocity.magnitude);
 
         // หา PlayerMove component หากยังไม่พบ
         if (playerMove == null)
@@ -56,6 +66,47 @@ public class Dog : AnimalEnemy
             {
                 navMeshAgent.speed = normalSpeed; // ความเร็วปกติเมื่อผู้เล่นอยู่ไกล
             }
+
+            // ฟลิปด้านตามทิศทางการเคลื่อนที่
+            if (navMeshAgent.velocity.x > 0 && !isFlipped)
+            {
+                SetFlipX(true);
+                isFlipped = true;
+            }
+            else if (navMeshAgent.velocity.x < 0 && isFlipped)
+            {
+                SetFlipX(false);
+                isFlipped = false;
+            }
+        }
+
+      
+    }
+
+    private void SetFlipX(bool flipX)
+    {
+        foreach (SpriteRenderer sr in spriteRenderers)
+        {
+            sr.flipX = flipX;
+        }
+    }
+
+    public override void TakeDamage(HandleSlot weaponSlot)
+    {
+        base.TakeDamage(weaponSlot);
+        StartCoroutine(FlashRed());
+    }
+
+    private IEnumerator FlashRed()
+    {
+        foreach (SpriteRenderer sr in spriteRenderers)
+        {
+            sr.color = Color.red; // เปลี่ยนสีเป็นสีแดง
+        }
+        yield return new WaitForSeconds(0.2f); // รอ 0.2 วินาที
+        foreach (SpriteRenderer sr in spriteRenderers)
+        {
+            sr.color = originalColor; // เปลี่ยนสีกลับเป็นสีเดิม
         }
     }
 

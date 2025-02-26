@@ -84,7 +84,7 @@ public abstract class Animal : MonoBehaviour
 
     // Method to take damage from a weapon
 
-    public void TakeDamage(HandleSlot weaponSlot)
+    public virtual void TakeDamage(HandleSlot weaponSlot)
     {
         if (weaponSlot == null || weaponSlot.item == null && !isDead)
         {
