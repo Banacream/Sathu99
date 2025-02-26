@@ -22,7 +22,7 @@ public class Snake : AnimalEnemy
     protected override void Start()
     {
         base.Start();
-        DropItem = snakeMeatPrefab.name; // Assign the drop item
+        //DropItem = snakeMeatPrefab.name; // Assign the drop item
 
         // ตรวจสอบและตั้งค่า NavMeshAgent
         navMeshAgent = GetComponent<NavMeshAgent>();

@@ -22,7 +22,7 @@ public class Dog : AnimalEnemy
     protected override void Start()
     {
         base.Start();
-        DropItem = dogMeatPrefab.name; // Assign the drop item
+        //DropItem = dogMeatPrefab.name; // Assign the drop item
 
         // ตรวจสอบและตั้งค่า NavMeshAgent
         navMeshAgent = GetComponent<NavMeshAgent>();

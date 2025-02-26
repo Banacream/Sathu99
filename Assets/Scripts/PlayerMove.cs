@@ -16,6 +16,7 @@ public class PlayerMove : MonoBehaviour
     private bool isAttack = false;
     public float crouchSpeed = 2.0f;
     public float jumpForce = 15.0f;
+    public float fallMultiplier = 2.5f;
     public float health = 100.0f;
 
     public Animator anim;
@@ -23,7 +24,7 @@ public class PlayerMove : MonoBehaviour
     public List<SpriteRenderer> armSpriteRenderer; // SpriteRenderer ที่เป็นแขน
     public float attackRange = 2.0f; // ระยะการโจมตี
     private bool isFlipped = false; // สถานะการฟลิป
-
+ 
     void Update()
     {
         anim.SetFloat("Speed", theRB.velocity.magnitude);
@@ -47,11 +48,13 @@ public class PlayerMove : MonoBehaviour
         {
             SetFlipX(true);
             isFlipped = true;
+       
         }
         else if (moveInput.x < 0 && isFlipped)
         {
             SetFlipX(false);
             isFlipped = false;
+           
         }
 
 
@@ -70,6 +73,16 @@ public class PlayerMove : MonoBehaviour
             Jump();
         }
 
+        // Apply additional gravity when falling
+        if (theRB.velocity.y < 0)
+        {
+            theRB.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+        }
+        else if (theRB.velocity.y > 0 && !Input.GetButton("Jump"))
+        {
+            theRB.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+        }
+
         // Check for mouse click to attack
         if (Input.GetMouseButtonDown(0)) // Left mouse button
         {
@@ -84,7 +97,10 @@ public class PlayerMove : MonoBehaviour
                 }
             }
         }
+
+     
     }
+
 
     private void SetFlipX(bool flipX)
     {
@@ -107,7 +123,8 @@ public class PlayerMove : MonoBehaviour
     }
 
 
-        private void Jump()
+
+    private void Jump()
     {
         theRB.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         isGrounded = false;
