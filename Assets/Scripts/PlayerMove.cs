@@ -20,11 +20,12 @@ public class PlayerMove : MonoBehaviour
     public float health = 2.0f;
 
     public Animator anim;
+    public List<string> validWeapons;
     public List<SpriteRenderer> spriteRenderers;
     public List<SpriteRenderer> armSpriteRenderer; // SpriteRenderer ที่เป็นแขน
-    public float attackRange = 2.0f; // ระยะการโจมตี
+    public float attackRange = 8.0f; // ระยะการโจมตี
     private bool isFlipped = false; // สถานะการฟลิป
-
+    private static readonly DataItem EMTRY_ITEM;
     private Color originalColor;
 
     public string sceneName;
@@ -101,19 +102,30 @@ public class PlayerMove : MonoBehaviour
         // Check for mouse click to attack
         if (Input.GetMouseButtonDown(0)) // Left mouse button
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+            if (Input.GetMouseButtonDown(0)) // Left mouse button
             {
-                Animal animal = hit.collider.GetComponent<Animal>();
-                if (animal != null && Vector3.Distance(transform.position, animal.transform.position) <= attackRange)
+                if (validWeapons.Contains(handleSlot.item.name)) // Check if there is a valid weapon in the handle slot
                 {
-                    Attack(animal);
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit hit;
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        Animal animal = hit.collider.GetComponent<Animal>();
+                        if (animal != null && Vector3.Distance(transform.position, animal.transform.position) <= attackRange)
+                        {
+                            Attack(animal);
+                        }
+                    }
+                }
+                else
+                {
+                    Debug.Log("No valid weapon in handle slot!");
                 }
             }
+
         }
 
-     
+
     }
 
 

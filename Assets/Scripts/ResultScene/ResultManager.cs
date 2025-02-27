@@ -68,6 +68,11 @@ public class ResultManager : MonoBehaviour
 
     }
 
+    public void NextDayInGameManager()
+    {
+        GameDataManager.NextDay();
+    }
+
     public void AddCoin(int amount)
     {
         GameDataManager.Addcoins(amount);

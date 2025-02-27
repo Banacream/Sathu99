@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
         UpdateDayUI();
         CheckGameOver();
         CheckWinCondition();
+
     }
 
     public void UpdateDayUI()
