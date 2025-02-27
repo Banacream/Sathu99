@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class PlayerMove : MonoBehaviour
 {
     public Inventory inventory;
     public HandleSlot handleSlot; // Add reference to HandleSlot
-
+    public GameObject confirmForDiePanel;
     public Rigidbody theRB;
     public float moveSpeed;
     private Vector2 moveInput;
@@ -17,14 +17,29 @@ public class PlayerMove : MonoBehaviour
     public float crouchSpeed = 2.0f;
     public float jumpForce = 15.0f;
     public float fallMultiplier = 2.5f;
-    public float health = 100.0f;
+    public float health = 2.0f;
 
     public Animator anim;
     public List<SpriteRenderer> spriteRenderers;
     public List<SpriteRenderer> armSpriteRenderer; // SpriteRenderer ที่เป็นแขน
     public float attackRange = 2.0f; // ระยะการโจมตี
     private bool isFlipped = false; // สถานะการฟลิป
+
+    private Color originalColor;
+
+    public string sceneName;
+
+
+    private void Start()
+    {
  
+        if (spriteRenderers.Count > 0)
+        {
+            originalColor = spriteRenderers[0].color;
+        }
+    }
+
+
     void Update()
     {
         anim.SetFloat("Speed", theRB.velocity.magnitude);
@@ -168,16 +183,34 @@ public class PlayerMove : MonoBehaviour
     // ฟังก์ชันรับดาเมจ
     public void TakeDamage(float damage)
     {
+       
         health -= damage;
+        StartCoroutine(FlashRed());
         if (health <= 0)
         {
             Die();
         }
     }
 
+    private IEnumerator FlashRed()
+    {
+        foreach (SpriteRenderer sr in spriteRenderers)
+        {
+            sr.color = Color.red; // เปลี่ยนสีเป็นสีแดง
+        }
+        yield return new WaitForSeconds(0.2f); // รอ 0.2 วินาที
+        foreach (SpriteRenderer sr in spriteRenderers)
+        {
+            sr.color = originalColor; // เปลี่ยนสีกลับเป็นสีเดิม
+        }
+    }
+
     // ฟังก์ชันจัดการการตายของผู้เล่น
     private void Die()
     {
+
+        confirmForDiePanel.SetActive(true);
+        Time.timeScale = 0;
         Debug.Log("Player has died.");
         // เพิ่มการจัดการการตายของผู้เล่น เช่น การรีสตาร์ทเกมหรือแสดงหน้าจอ Game Over
     }

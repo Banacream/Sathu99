@@ -121,5 +121,14 @@ public class GameManager : MonoBehaviour
         // Add logic to handle game over, such as disabling gameplay
     }
 
+    public void Pause()
+    {
+        Time.timeScale = 0;
+    }
+
+    public void Continue()
+    {
+        Time.timeScale = 1;
+    }
 
 }

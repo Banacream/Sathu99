@@ -10,13 +10,16 @@ public class Snake : AnimalEnemy
     public float normalSpeed; // ความเร็วปกติของสุนัข
     public float chaseSpeed; // ความเร็วเมื่อไล่ผู้เล่น
     public float attackDamage = 10.0f; // ความเสียหายเมื่อโจมตีผู้เล่น
+    public float attackCooldown = 2.0f; // ระยะเวลาคูลดาวน์ระหว่างการโจมตี
 
     private PlayerMove playerMove;
     private Color originalColor;
 
     public Animator anim;
+
     public List<SpriteRenderer> spriteRenderers;
     private bool isFlipped = false; // สถานะการฟลิป
+    private bool canAttack = true; // สถานะการโจมตี
     public Snake() : base("Snake", 50, null) { }
 
     protected override void Start()
@@ -125,13 +128,42 @@ public class Snake : AnimalEnemy
 
     protected override void AttackPlayer()
     {
-        if (playerMove != null)
+        if (playerMove != null && canAttack)
         {
-            // Example: Reduce player's health
+            // หยุดการเคลื่อนที่
+            navMeshAgent.isStopped = true;
+
+            // เล่นอนิเมชั่นการโจมตี
+            anim.SetTrigger("Attack");
+
+            // ลดพลังชีวิตของผู้เล่น
             playerMove.TakeDamage(attackDamage);
             Debug.Log("Dog attacked the player!");
+
+            // เริ่มคูลดาวน์การโจมตี
+            StartCoroutine(AttackCooldown());
         }
     }
+
+    private IEnumerator AttackCooldown()
+    {
+        canAttack = false;
+        yield return new WaitForSeconds(attackCooldown);
+        canAttack = true;
+        // กลับมาเคลื่อนที่อีกครั้งหลังจากคูลดาวน์เสร็จสิ้น
+        navMeshAgent.isStopped = false;
+    }
+
+
+    //protected override void AttackPlayer()
+    //{
+    //    if (playerMove != null)
+    //    {
+    //        // Example: Reduce player's health
+    //        playerMove.TakeDamage(attackDamage);
+    //        Debug.Log("Snake attacked the player!");
+    //    }
+    //}
 
     protected override bool IsWeaponEffective(string weapon)
     {

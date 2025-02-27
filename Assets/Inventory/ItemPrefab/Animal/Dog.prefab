@@ -142,7 +142,7 @@ MonoBehaviour:
   dogMeatPrefab: {fileID: 0}
   normalSpeed: 5
   chaseSpeed: 7
-  attackDamage: 10
+  attackDamage: 0
   anim: {fileID: 2330364906621737911}
   spriteRenderers:
   - {fileID: 9100370025177684672}

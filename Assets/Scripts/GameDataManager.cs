@@ -29,7 +29,6 @@ public class GameDataManager : MonoBehaviour
     private void Awake()
     {
 
- 
         SavePlayerData();
         LoadPlayerData();
         LoadDebt();
@@ -339,38 +338,38 @@ public class GameDataManager : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
-    private void OnGUI()
-    {
-        // ��˹����˹���Т�Ҵ�ͧ����
-        // ���ҧ���� Save
-        if (GUILayout.Button("Save"))
-        {
-            // ���¡�ѧ��ѹ SaveInventory
-            Inventory currentInventory = GameObject.FindObjectOfType<Inventory>();
-            if (currentInventory != null)
-            {
-                GameDataManager.Instance.SaveInventory(currentInventory);
-                Debug.Log("Inventory saved!");
-            }
-            else
-            {
-                Debug.LogWarning("No Inventory found to save.");
-            }
-        }
-        if (GUILayout.Button("Load"))
-        {
-            Inventory currentInventory = GameObject.FindObjectOfType<Inventory>();
-            if (currentInventory != null)
-            {
-                GameDataManager.Instance.LoadInventory(currentInventory);
-                Debug.Log("Inventory loaded!");
-            }
-            else
-            {
-                Debug.LogWarning("No Inventory found to load.");
-            }
-        }
-    }
+    //private void OnGUI()
+    //{
+    //    // ��˹����˹���Т�Ҵ�ͧ����
+    //    // ���ҧ���� Save
+    //    if (GUILayout.Button("Save"))
+    //    {
+    //        // ���¡�ѧ��ѹ SaveInventory
+    //        Inventory currentInventory = GameObject.FindObjectOfType<Inventory>();
+    //        if (currentInventory != null)
+    //        {
+    //            GameDataManager.Instance.SaveInventory(currentInventory);
+    //            Debug.Log("Inventory saved!");
+    //        }
+    //        else
+    //        {
+    //            Debug.LogWarning("No Inventory found to save.");
+    //        }
+    //    }
+    //    if (GUILayout.Button("Load"))
+    //    {
+    //        Inventory currentInventory = GameObject.FindObjectOfType<Inventory>();
+    //        if (currentInventory != null)
+    //        {
+    //            GameDataManager.Instance.LoadInventory(currentInventory);
+    //            Debug.Log("Inventory loaded!");
+    //        }
+    //        else
+    //        {
+    //            Debug.LogWarning("No Inventory found to load.");
+    //        }
+    //    }
+    //}
     #endregion
 
     #region Medthos PlayerData

@@ -143,7 +143,7 @@ MonoBehaviour:
   snakeMeatPrefab: {fileID: 0}
   normalSpeed: 6
   chaseSpeed: 8
-  attackDamage: 20
+  attackDamage: 2
   anim: {fileID: 7185680388798885824}
   spriteRenderers:
   - {fileID: 4236790655617995202}

@@ -13,6 +13,7 @@ public class MoveScene : MonoBehaviour
        
 
             SceneManager.LoadScene(sceneName);  // โหลดฉากที่มีชื่อที่ระบุ
+            Time.timeScale = 1;
         }
         else
         {

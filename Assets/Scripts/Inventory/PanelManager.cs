@@ -13,6 +13,8 @@ public class PanelManager : MonoBehaviour
     public GameObject debtPanel;
     public GameObject debtWarnPanel;
     public GameObject cookBookPanel;
+    public GameObject confirmPanel;
+    public GameObject pausePanel;
     public CanvasGroup cookingPanelCanvasGroup; // CanvasGroup ของ Cooking Panel
     public CanvasGroup inventoryPanelCanvasGroup;
     public CanvasGroup cookSellPanelCanvasGroup; // CanvasGroup ของ Cook Sell Panel
@@ -87,7 +89,28 @@ public class PanelManager : MonoBehaviour
         {
             Debug.LogWarning("Panel is not assigned in the Inspector.");
         }
-    } 
+    }
+
+    public void ActiveComfirmPanel()
+    {
+       confirmPanel.SetActive(true);
+    }
+
+    public void NotactiveComfirmPanel()
+    {
+        confirmPanel.SetActive(false);
+    }
+
+    public void ActivePausePanel()
+    {
+        pausePanel.SetActive(true);
+    }
+
+    public void NotactivePausePanel()
+    {
+        pausePanel.SetActive(false);
+    }
+
     public void ActiveCookingPanel()
     {
 
