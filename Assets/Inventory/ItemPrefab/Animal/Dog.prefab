@@ -143,6 +143,7 @@ MonoBehaviour:
   normalSpeed: 5
   chaseSpeed: 7
   attackDamage: 0
+  attackCooldown: 2
   anim: {fileID: 2330364906621737911}
   spriteRenderers:
   - {fileID: 9100370025177684672}
@@ -357,7 +358,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -6738977550870355213, guid: ad3bc3f99e059aa44a29239ba438892b, type: 3}
       propertyPath: m_SortingOrder
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: -4817080644054425442, guid: ad3bc3f99e059aa44a29239ba438892b, type: 3}
       propertyPath: m_Bounds.m_Center.x
@@ -429,7 +430,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 513139752215001678, guid: ad3bc3f99e059aa44a29239ba438892b, type: 3}
       propertyPath: m_SortingOrder
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 1428485025064307505, guid: ad3bc3f99e059aa44a29239ba438892b, type: 3}
       propertyPath: m_FlipX
@@ -469,7 +470,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5359103177601667974, guid: ad3bc3f99e059aa44a29239ba438892b, type: 3}
       propertyPath: m_SortingOrder
-      value: -1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5359103177601667974, guid: ad3bc3f99e059aa44a29239ba438892b, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5468993409147666295, guid: ad3bc3f99e059aa44a29239ba438892b, type: 3}
       propertyPath: m_Bounds.m_Center.x
