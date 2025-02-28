@@ -16,7 +16,11 @@ public class ShopManager : MonoBehaviour
         price = itemPrice;
 
         if (GameDataManager.playerData.coins >= price)
-        resultManager.SpendCoins(itemPrice);
+        {
+            resultManager.SpendCoins(itemPrice);
+            //InventorySlot slot = mainInventory.IsEmptySlotLeft(item);
+            //slot.SetThisSlot(item, 1);
+        }
     } 
     public void AddToolItem(DataItem item)
     {
@@ -28,6 +32,8 @@ public class ShopManager : MonoBehaviour
             InventorySlot slot = mainInventory.IsEmptySlotLeft(item);
             slot.SetThisSlot(item, 1);
         }
+        else
+            Debug.Log($"Can Not Adding tool");
 
     }
 }
