@@ -13,6 +13,7 @@ public class Chicken : Animal
     public Animator anim;
     public List<SpriteRenderer> spriteRenderers;
     private bool isFlipped = false; // สถานะการฟลิป
+    private bool isStopped = false; // สถานะการหยุดนิ่ง
 
     private PlayerMove playerMove;
     private Color originalColor; // สีเดิมของไก่
@@ -61,7 +62,10 @@ public class Chicken : Animal
             {
                 if (playerMove.IsCrouching())
                 {
-                    navMeshAgent.speed = slowSpeed; // ลดความเร็วเมื่อผู้เล่นย่อ
+                    if (!isStopped)
+                    {
+                        StartCoroutine(StopAndResume());
+                    }
                 }
                 else if (playerMove.GetCurrentSpeed() > playerMove.moveSpeed)
                 {
@@ -101,6 +105,17 @@ public class Chicken : Animal
     {
         base.TakeDamage(weaponSlot);
         StartCoroutine(FlashRed());
+    }
+
+    
+    private IEnumerator StopAndResume()
+    {
+        isStopped = true;
+        navMeshAgent.isStopped = true; // หยุดการเคลื่อนที่
+        yield return new WaitForSeconds(3f); // หยุดนิ่งเป็นเวลา 3 วินาที
+        navMeshAgent.isStopped = false; // กลับมาเคลื่อนที่อีกครั้ง
+        navMeshAgent.speed = slowSpeed; // ลดความเร็วเมื่อผู้เล่นย่อ
+        isStopped = false;
     }
 
     private IEnumerator FlashRed()

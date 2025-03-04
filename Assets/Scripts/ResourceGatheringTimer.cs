@@ -54,6 +54,6 @@ public class ResourceGatheringTimer : MonoBehaviour
     private void OnTimeUp()
     {
         Debug.Log("Time is up! Moving to the target scene.");
-        SceneManager.LoadScene(targetSceneName);
+        ScenesController.LoadNextScene();
     }
 }

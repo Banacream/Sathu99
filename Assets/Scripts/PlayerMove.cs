@@ -102,8 +102,7 @@ public class PlayerMove : MonoBehaviour
         // Check for mouse click to attack
         if (Input.GetMouseButtonDown(0)) // Left mouse button
         {
-            if (Input.GetMouseButtonDown(0)) // Left mouse button
-            {
+           
                 if (validWeapons.Contains(handleSlot.item.name)) // Check if there is a valid weapon in the handle slot
                 {
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -111,17 +110,22 @@ public class PlayerMove : MonoBehaviour
                     if (Physics.Raycast(ray, out hit))
                     {
                         Animal animal = hit.collider.GetComponent<Animal>();
-                        if (animal != null && Vector3.Distance(transform.position, animal.transform.position) <= attackRange)
+                        AnimalEnemy animalEnemy = hit.collider.GetComponent<AnimalEnemy>();
+                    if (animal != null && Vector3.Distance(transform.position, animal.transform.position) <= attackRange)
                         {
                             Attack(animal);
                         }
+                    if (animalEnemy != null && Vector3.Distance(transform.position, animalEnemy.transform.position) <= attackRange)
+                    {
+                        AttackEnemy(animalEnemy);
                     }
+                }
                 }
                 else
                 {
                     Debug.Log("No valid weapon in handle slot!");
                 }
-            }
+            
 
         }
 
@@ -166,7 +170,7 @@ public class PlayerMove : MonoBehaviour
     }
     public void Attack(Animal animal)
     {
-        if (theRB.velocity.magnitude > 0)
+        if (theRB.velocity.magnitude > 1)
         {
             anim.SetTrigger("Attack&Walk");
         }
@@ -176,6 +180,20 @@ public class PlayerMove : MonoBehaviour
         }
         animal.TakeDamage(handleSlot); // Use HandleSlot to check weapon
     }
+
+    public void AttackEnemy(AnimalEnemy animalEnemy)
+    {
+        if (theRB.velocity.magnitude > 0)
+        {
+            anim.SetTrigger("Attack&Walk");
+        }
+        else
+        {
+            anim.SetTrigger("Attack");
+        }
+        animalEnemy.TakeDamage(handleSlot); // Use HandleSlot to check weapon
+    }
+
 
     public bool AttackforRunAway()
     {

@@ -9953,6 +9953,7 @@ MonoBehaviour:
   mainInventory: {fileID: 49374671}
   price: 25
   item: {fileID: 11400000, guid: f532fa90b9d1eab4a99cb411cf08ab8f, type: 2}
+  buyButton: {fileID: 1549862838}
 --- !u!1 &1558556156
 GameObject:
   m_ObjectHideFlags: 0
@@ -11281,6 +11282,7 @@ MonoBehaviour:
   mainInventory: {fileID: 49374671}
   price: 100
   item: {fileID: 11400000, guid: b8dbc702768356d4e85f0f7268ffd3f2, type: 2}
+  buyButton: {fileID: 1648025068}
 --- !u!1 &1651293358
 GameObject:
   m_ObjectHideFlags: 0
@@ -11317,7 +11319,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -463, y: 0}
+  m_AnchoredPosition: {x: -231, y: -12}
   m_SizeDelta: {x: 169.7764, y: 70.4335}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1651293360
@@ -11761,6 +11763,7 @@ MonoBehaviour:
   mainInventory: {fileID: 49374671}
   price: 239
   item: {fileID: 11400000, guid: 3bfc4cdb20f63f84faecf026e25ff210, type: 2}
+  buyButton: {fileID: 1680121801}
 --- !u!1 &1712824777
 GameObject:
   m_ObjectHideFlags: 0

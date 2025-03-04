@@ -98,10 +98,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.77811575
+  m_Height: 1.9505339
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0.07255745, y: -0.024733067, z: -0.041000843}
 --- !u!195 &82422831239817904
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -144,6 +144,7 @@ MonoBehaviour:
   normalSpeed: 6
   chaseSpeed: 8
   attackDamage: 2
+  attackCooldown: 2
   anim: {fileID: 7185680388798885824}
   spriteRenderers:
   - {fileID: 4236790655617995202}
