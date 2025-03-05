@@ -12,7 +12,6 @@ public class HandleSlot : InventorySlot
     void Start()
     {
         Debug.Log("HandleSlot Started");
-        // �� HandleSlotSync 㹩ҡ
         slotSync = FindObjectOfType<HandleSlotSync>();
         if (slotSync == null)
         {
@@ -29,29 +28,25 @@ public class HandleSlot : InventorySlot
 
     public override void SetThisSlot(DataItem newItem, int amount)
     {
-        // �ҡ newItem �� null ����ʴ���ͤ����Դ��Ҵ
+
         if (newItem == null)
         {
-            Debug.LogError("SetThisSlot: newItem is null!"); // ����� newItem �����������١��˹�
+            Debug.LogError("SetThisSlot: newItem is null!"); 
             return;
         }
 
-        // ��駤�� item ��� icon 㹪�ͧ�������� item ����
+
         item = newItem;
         icon.sprite = newItem.icon;
 
-        // �ӹǳ�ӹǹ�������ö��� slot ������Թ maxStack �ͧ item
+    
         int itemAmount = amount;
-        int intInthisSlot = Mathf.Clamp(itemAmount, 0, newItem.maxStack); // �ӹǳ�ӹǹ�����������ö����
-        stack = intInthisSlot; // �Ѿഷ stack ���¨ӹǹ���ӹǳ��
-
-        // �ʴ���ͤ���㹤͹����� OutputSlot �١��駤�����º��������
+        int intInthisSlot = Mathf.Clamp(itemAmount, 0, newItem.maxStack); 
+        stack = intInthisSlot; 
         Debug.Log($"Handle slot set with item: {newItem.name}, amount: {stack}");
 
-        // ���¡��ҹ CheckShowText �����Ѿഷ����ʴ��Ũӹǹ�������͵
         CheckShowText();
 
-        // sync ��ѧ slot ���
         if (slotSync != null)
         {
             slotSync.SyncSlots(this, newItem, amount);

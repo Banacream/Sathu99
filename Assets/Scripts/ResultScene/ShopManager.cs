@@ -12,14 +12,17 @@ public class ShopManager : MonoBehaviour
     [Header("Slot Detail")]
     public DataItem item;
     public Button buyButton; // ปุ่มซื้อ
-
     private bool isPurchased = false; // สถานะการซื้อ
 
     private void Start()
     {
+        // โหลดสถานะการซื้อจาก PlayerPrefs
+        isPurchased = PlayerPrefs.GetInt("IsPurchased_" + item.name, 0) == 1;
+
         if (buyButton != null)
         {
             buyButton.onClick.AddListener(() => BuyItem(price));
+            SetButtonState(!isPurchased); // ตั้งค่าสถานะของปุ่มตามสถานะการซื้อ
         }
     }
 
@@ -27,15 +30,21 @@ public class ShopManager : MonoBehaviour
     {
         price = itemPrice;
 
-        if (GameDataManager.playerData.coins >= price)
+        if (GameDataManager.playerData.coins >= price && !isPurchased)
         {
             resultManager.SpendCoins(itemPrice);
             isPurchased = true;
             SetButtonState(false);
+
+            // บันทึกสถานะการซื้อใน PlayerPrefs
+            PlayerPrefs.SetInt("IsPurchased_" + item.name, 1);
+            PlayerPrefs.Save();
+
             //InventorySlot slot = mainInventory.IsEmptySlotLeft(item);
             //slot.SetThisSlot(item, 1);
         }
-    } 
+    }
+
     public void AddToolItem(DataItem item)
     {
         if (GameDataManager.playerData.coins >= price)

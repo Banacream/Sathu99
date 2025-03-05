@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     public void ResetAllData()
     {
         PlayerPrefsManager.ResetPlayerData();
+        PlayerPrefsManager.ResetPlayerDataAll();
         // Reload the scene or reset the game state as needed
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
         gameOver.SetActive(false); // ปิด gameOver เมื่อรีเซ็ตเกม

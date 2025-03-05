@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Linq; // ���������ҹ LINQ
+using System.Linq; 
 
 
 public class Inventory : MonoBehaviour
@@ -12,27 +12,27 @@ public class Inventory : MonoBehaviour
     public static Inventory Instance { get; private set; }
 
     [Header("Inventory")]
-    public DataItem EMTRY_ITEM; // ����������繵��᷹�ͧ��ͧ��ҧ㹡�����
-    public Transform slotPrefab; // Prefab �ͧ��ͧ㹡�����
-    public Transform handleSlotPrefab; // Prefab �ͧ��ͧ㹡�����
-    public Transform InventoryPanel; // ���ŷ�����ʴ�������
-    public Transform ToolInventoryPanel; // ���ŷ�����ʴ�������
-    public Transform CookSellPanel; // ���ŷ�����ʴ�������
-    public Transform[] HandleInventoryPanel; // ���ŷ�����ʴ�������
+    public DataItem EMTRY_ITEM; 
+    public Transform slotPrefab; 
+    public Transform handleSlotPrefab;
+    public Transform InventoryPanel;
+    public Transform ToolInventoryPanel; 
+    public Transform CookSellPanel; 
+    public Transform[] HandleInventoryPanel; 
     [Header("Cook Inventory")]
-    public CookingInventory cookingInventory; // ����������Ѻ���ѵ�شԺ㹡�÷������
-    public ResultManager resultManager; // ����������Ѻ���ѵ�شԺ㹡�÷������
+    public CookingInventory cookingInventory; 
+    public ResultManager resultManager; 
     public CookRecipe[] recipes;
 
     [Header("Tool")]
     public HandleSlot handleSlot;
 
-    protected GridLayoutGroup gridLayoutGroup; // GridLayoutGroup ����Ѻ�Ѵ���§��ͧ㹡�����
+    protected GridLayoutGroup gridLayoutGroup; // GridLayoutGroup 
     [Space(5)]
-    public int slotAmount = 30; // �ӹǹ��ͧ㹡�����
-    public InventorySlot[] toolinventorySlots; // ��������ͧ��ͧ㹡�����
-    public InventorySlot[] iteminventorySlots; // ��������ͧ��ͧ㹡�����
-    public InventorySlot[] cookSellSlots; // ��������ͧ��ͧ㹡�����
+    public int slotAmount = 30; 
+    public InventorySlot[] toolinventorySlots; 
+    public InventorySlot[] iteminventorySlots; 
+    public InventorySlot[] cookSellSlots; 
 
     [Header("Inventory Data")]
     [SerializeField]
@@ -139,7 +139,14 @@ public class Inventory : MonoBehaviour
 
     public void InventoryToHand(int slotIndex, InventorySlot.InventoryType inventoryType)
     {
-        // �֧�����������ҡ Tool Inventory
+        // ตรวจสอบว่า inventoryType เป็น Tool หรือไม่
+        if (inventoryType != InventorySlot.InventoryType.Tool)
+        {
+            Debug.Log("This slot is not a Tool inventory slot.");
+            return;
+        }
+
+        // อ้างอิงถึงช่องใน Tool Inventory
         InventorySlot slot = toolinventorySlots[slotIndex];
         if (slot.item == EMTRY_ITEM)
         {
@@ -147,13 +154,13 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        // �ҡ handleSlot �������������� ����觤�ҡ�Ѻ价�� Tool Inventory
+        // จาก handleSlot ไปยัง Tool Inventory
         if (handleSlot.item != EMTRY_ITEM)
         {
-            // �觤���������������� handleSlot ��Ѻ价�� Tool Inventory
+            // ค้นหาช่องว่างใน Tool Inventory
             for (int i = 0; i < toolinventorySlots.Length; i++)
             {
-                // ���Ҫ�ͧ��ҧ� Tool Inventory ���͹�������Ѻ�
+                // หากพบช่องว่างใน Tool Inventory
                 if (toolinventorySlots[i].item == EMTRY_ITEM)
                 {
                     toolinventorySlots[i].SetThisSlot(handleSlot.item, handleSlot.stack);
@@ -162,14 +169,14 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        // ���������ҡ Tool Inventory ��ѧ��� (handleSlot)
+        // ย้ายไอเท็มจาก Tool Inventory ไปยัง handleSlot
         DataItem itemToEquip = slot.item;
         int itemAmount = slot.stack;
 
-        // ��駤�Ҫ�ͧ� Tool Inventory �����ҧ����
+        // ตั้งค่าช่องใน Tool Inventory ให้เป็นว่าง
         slot.SetThisSlot(EMTRY_ITEM, 0);
 
-        // ��駤�� handleSlot �����������������
+        // ตั้งค่า handleSlot ด้วยไอเท็มที่ย้ายมา
         handleSlot.SetThisSlot(itemToEquip, itemAmount);
 
         Debug.Log($"Moved {itemToEquip.name} x{itemAmount} to hand.");

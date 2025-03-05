@@ -14,7 +14,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public static void ResetPlayerData()
     {
-        ResetSpecificKey(COINS_KEY);
+        ResetSpecificKey(COINS_KEY);    
         ResetSpecificKey(DAY_KEY);
         ResetSpecificKey(DAYS_WITHOUT_PAYMENT_KEY);
         ResetSpecificKey(DEBT_KEY);

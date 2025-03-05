@@ -10,6 +10,7 @@
     public float debt = 0;
     public int day = 0;
     public int daysWithoutPayment = 0;
+    public List<string> purchasedItems = new List<string>(); // เพิ่มรายการไอเท็มที่ซื้อแล้ว
 }
 
 public class GameDataManager : MonoBehaviour
@@ -420,7 +421,38 @@ public class GameDataManager : MonoBehaviour
 
     #endregion
 
+    #region PurchasedItem
+    // เพิ่มฟังก์ชันสำหรับจัดการสถานะการซื้อ
+    public static bool IsItemPurchased(string itemName)
+    {
+        return playerData.purchasedItems.Contains(itemName);
+    }
 
+    public static void SetItemPurchased(string itemName)
+    {
+        if (!playerData.purchasedItems.Contains(itemName))
+        {
+            playerData.purchasedItems.Add(itemName);
+            SavePurchasedItems();
+        }
+    }
+
+    private static void SavePurchasedItems()
+    {
+        string jsonData = JsonUtility.ToJson(playerData.purchasedItems);
+        PlayerPrefs.SetString("PurchasedItems", jsonData);
+        PlayerPrefs.Save();
+    }
+
+    private static void LoadPurchasedItems()
+    {
+        if (PlayerPrefs.HasKey("PurchasedItems"))
+        {
+            string jsonData = PlayerPrefs.GetString("PurchasedItems");
+            playerData.purchasedItems = JsonUtility.FromJson<List<string>>(jsonData);
+        }
+    }
+    #endregion
 
 
 }

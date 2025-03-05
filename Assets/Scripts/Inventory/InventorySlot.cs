@@ -81,28 +81,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
                     }
                 }
 
-                //UseItem(1);
-                //foreach (CookRecipe recipe in inventory.recipes)
-                //{
-                //    if (recipe.outputItem == dataItem)
-                //    {
-
-                //        DisplayRecipeDetails(recipe);
-
-                //        // คืนวัตถุดิบที่ใช้ทำอาหารกลับไปที่ Main Inventory
-                //        foreach (var recipeItem in recipe.recipeItems)
-                //        {
-                //            // เรียกคืนวัตถุดิบที่ใช้ โดยส่ง ingredient และ quantity ที่ใช้ในสูตร
-                //            ReturnUsedMaterials(recipeItem.ingredient, recipeItem.quantity);
-                //            break;
-                //        }
-
-
-
-                //    }
-                //}
-
-
 
 
             }

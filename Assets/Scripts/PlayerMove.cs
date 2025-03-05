@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class PlayerMove : MonoBehaviour
 {
+    AudioManager audioManager;
+
     public Inventory inventory;
     public HandleSlot handleSlot; // Add reference to HandleSlot
     public GameObject confirmForDiePanel;
@@ -14,12 +16,15 @@ public class PlayerMove : MonoBehaviour
     private bool isGrounded;
     private bool isCrouching = false;
     private bool isAttack = false;
+    private bool canAttack = true; // สถานะการโจมตี
+    private bool isAttacking = false; // สถานะการโจมตี
     public float crouchSpeed = 2.0f;
     public float jumpForce = 15.0f;
     public float fallMultiplier = 2.5f;
     public float health = 2.0f;
 
     public Animator anim;
+
     public List<string> validWeapons;
     public List<SpriteRenderer> spriteRenderers;
     public List<SpriteRenderer> armSpriteRenderer; // SpriteRenderer ที่เป็นแขน
@@ -30,6 +35,11 @@ public class PlayerMove : MonoBehaviour
 
     public string sceneName;
 
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
 
     private void Start()
     {
@@ -48,6 +58,10 @@ public class PlayerMove : MonoBehaviour
         moveInput.y = Input.GetAxis("Vertical");
         moveInput.Normalize();
 
+
+
+
+
         // Check for crouch input
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -58,19 +72,34 @@ public class PlayerMove : MonoBehaviour
             isCrouching = false;
         }
 
-        float currentSpeed = isCrouching ? crouchSpeed : moveSpeed;
+        float currentSpeed = isCrouching ? crouchSpeed : (isAttacking ? moveSpeed / 2 : moveSpeed);
         theRB.velocity = new Vector3(moveInput.x * currentSpeed, theRB.velocity.y, moveInput.y * currentSpeed);
-        if (moveInput.x > 0 && !isFlipped)
+
+        if (theRB.velocity.magnitude >= 1 && isGrounded)
         {
-            SetFlipX(true);
-            isFlipped = true;
-       
+            if (!audioManager.IsPlaying())
+            {
+                audioManager.PlayfootStepsmusicSource(audioManager.footSteps);
+            }
         }
-        else if (moveInput.x < 0 && isFlipped)
+        else
         {
-            SetFlipX(false);
-            isFlipped = false;
-           
+            audioManager.StopSFX();
+        }
+
+
+        if (!isAttacking)
+        {
+            if (moveInput.x > 0 && !isFlipped)
+            {
+                SetFlipX(true);
+                isFlipped = true;
+            }
+            else if (moveInput.x < 0 && isFlipped)
+            {
+                SetFlipX(false);
+                isFlipped = false;
+            }
         }
 
 
@@ -100,24 +129,28 @@ public class PlayerMove : MonoBehaviour
         }
 
         // Check for mouse click to attack
-        if (Input.GetMouseButtonDown(0)) // Left mouse button
+        if (Input.GetMouseButtonDown(0) && canAttack) // Left mouse button
         {
            
                 if (validWeapons.Contains(handleSlot.item.name)) // Check if there is a valid weapon in the handle slot
                 {
+                
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     RaycastHit hit;
                     if (Physics.Raycast(ray, out hit))
                     {
                         Animal animal = hit.collider.GetComponent<Animal>();
                         AnimalEnemy animalEnemy = hit.collider.GetComponent<AnimalEnemy>();
+                   
                     if (animal != null && Vector3.Distance(transform.position, animal.transform.position) <= attackRange)
                         {
-                            Attack(animal);
-                        }
+                        Attack(animal);
+                        StartCoroutine(AttackCooldown());
+                    }
                     if (animalEnemy != null && Vector3.Distance(transform.position, animalEnemy.transform.position) <= attackRange)
                     {
                         AttackEnemy(animalEnemy);
+                        StartCoroutine(AttackCooldown());
                     }
                 }
                 }
@@ -128,6 +161,8 @@ public class PlayerMove : MonoBehaviour
             
 
         }
+
+      
 
 
     }
@@ -170,28 +205,42 @@ public class PlayerMove : MonoBehaviour
     }
     public void Attack(Animal animal)
     {
-        if (theRB.velocity.magnitude > 1)
+        isAttacking = true;
+        if (theRB.velocity.magnitude >= 1)
         {
             anim.SetTrigger("Attack&Walk");
+            audioManager.PlaySFX(audioManager.attackPlayer);
         }
         else
         {
             anim.SetTrigger("Attack");
+            audioManager.PlaySFX(audioManager.attackPlayer);
         }
         animal.TakeDamage(handleSlot); // Use HandleSlot to check weapon
     }
 
     public void AttackEnemy(AnimalEnemy animalEnemy)
     {
+        isAttacking = true;
         if (theRB.velocity.magnitude > 0)
         {
             anim.SetTrigger("Attack&Walk");
+            audioManager.PlaySFX(audioManager.attackPlayer);
         }
         else
         {
             anim.SetTrigger("Attack");
+            audioManager.PlaySFX(audioManager.attackPlayer);
         }
         animalEnemy.TakeDamage(handleSlot); // Use HandleSlot to check weapon
+    }
+
+    private IEnumerator AttackCooldown()
+    {
+        canAttack = false;
+        yield return new WaitForSeconds(1.5f); // คูลดาวน์ 2 วินาที
+        canAttack = true;
+        isAttacking = false;
     }
 
 
@@ -215,6 +264,7 @@ public class PlayerMove : MonoBehaviour
     {
        
         health -= damage;
+        audioManager.PlaySFX(audioManager.playerDamage);
         StartCoroutine(FlashRed());
         if (health <= 0)
         {
