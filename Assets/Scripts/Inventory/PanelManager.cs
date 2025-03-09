@@ -18,12 +18,27 @@ public class PanelManager : MonoBehaviour
     public GameObject lowHealthWarningPanel01;
     public GameObject lowHealthWarningPanel02;
     public GameObject lowHealthWarningPanel03;
+    public GameObject tutorialPanel; // Panel สำหรับบทช่วยสอน
+    public GameObject[] tutorialPages; // หน้าของบทช่วยสอน
+    private int currentTutorialPage = 0; // หน้าปัจจุบันของบทช่วยสอน
     public CanvasGroup cookingPanelCanvasGroup; // CanvasGroup ของ Cooking Panel
     public CanvasGroup inventoryPanelCanvasGroup;
     public CanvasGroup cookSellPanelCanvasGroup; // CanvasGroup ของ Cook Sell Panel
     private float debtWarnPanelCooldown = 5f; // เวลาที่ต้องรอก่อนจะเปิดใหม่อีกครั้ง
     private float debtWarnPanelTimer = 0f;
+    private const string TutorialShownKey = "TutorialShown";
 
+    private void Start()
+    {
+        // แสดงบทช่วยสอนถ้ายังไม่เคยแสดงมาก่อน
+        int tutorialShownCount = PlayerPrefs.GetInt(TutorialShownKey, 0);
+        if (tutorialShownCount < 2)
+        {
+            ShowTutorial();
+            PlayerPrefs.SetInt(TutorialShownKey, tutorialShownCount + 1);
+            PlayerPrefs.Save();
+        }
+    }
 
     private void Update()
     {
@@ -139,6 +154,41 @@ public class PanelManager : MonoBehaviour
         }
      
     }
+
+    #region Tutorial
+    public void ShowTutorial()
+    {
+        if (tutorialPanel != null && tutorialPages.Length > 0)
+        {
+            tutorialPanel.SetActive(true);
+            ShowTutorialPage(0);
+        }
+    }
+
+    public void ShowTutorialPage(int pageIndex)
+    {
+        if (pageIndex >= 0 && pageIndex < tutorialPages.Length)
+        {
+            for (int i = 0; i < tutorialPages.Length; i++)
+            {
+                tutorialPages[i].SetActive(i == pageIndex);
+            }
+            currentTutorialPage = pageIndex;
+        }
+    }
+
+    public void NextTutorialPage()
+    {
+        if (currentTutorialPage < tutorialPages.Length - 1)
+        {
+            ShowTutorialPage(currentTutorialPage + 1);
+        }
+        else
+        {
+            tutorialPanel.SetActive(false);
+        }
+    }
+    #endregion
 
     #region ShowLowHealth
     public void ShowLowHealthWarningLevel1()
