@@ -141,7 +141,7 @@ public class Dog : AnimalEnemy
 
             // ลดพลังชีวิตของผู้เล่น
             playerMove.TakeDamage(attackDamage);
-            Debug.Log("Snake attacked the player!");
+            Debug.Log("Dog attacked the player!");
 
             // เริ่มคูลดาวน์การโจมตี
             StartCoroutine(AttackCooldown());

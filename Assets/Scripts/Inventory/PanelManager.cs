@@ -15,6 +15,9 @@ public class PanelManager : MonoBehaviour
     public GameObject cookBookPanel;
     public GameObject confirmPanel;
     public GameObject pausePanel;
+    public GameObject lowHealthWarningPanel01;
+    public GameObject lowHealthWarningPanel02;
+    public GameObject lowHealthWarningPanel03;
     public CanvasGroup cookingPanelCanvasGroup; // CanvasGroup ของ Cooking Panel
     public CanvasGroup inventoryPanelCanvasGroup;
     public CanvasGroup cookSellPanelCanvasGroup; // CanvasGroup ของ Cook Sell Panel
@@ -136,7 +139,71 @@ public class PanelManager : MonoBehaviour
         }
      
     }
-   
+
+    #region ShowLowHealth
+    public void ShowLowHealthWarningLevel1()
+    {
+        if (lowHealthWarningPanel01 != null)
+        {
+            lowHealthWarningPanel01.SetActive(true);
+        }
+        if (lowHealthWarningPanel02 != null)
+        {
+            lowHealthWarningPanel02.SetActive(false);
+        }
+        if (lowHealthWarningPanel03 != null)
+        {
+            lowHealthWarningPanel03.SetActive(false);
+        }
+    }
+
+    public void ShowLowHealthWarningLevel2()
+    {
+        if (lowHealthWarningPanel01 != null)
+        {
+            lowHealthWarningPanel01.SetActive(false);
+        }
+        if (lowHealthWarningPanel02 != null)
+        {
+            lowHealthWarningPanel02.SetActive(true);
+        }
+        if (lowHealthWarningPanel03 != null)
+        {
+            lowHealthWarningPanel03.SetActive(false);
+        }
+    }
+
+    public void ShowLowHealthWarningLevel3()
+    {
+        if (lowHealthWarningPanel01 != null)
+        {
+            lowHealthWarningPanel01.SetActive(false);
+        }
+        if (lowHealthWarningPanel02 != null)
+        {
+            lowHealthWarningPanel02.SetActive(false);
+        }
+        if (lowHealthWarningPanel03 != null)
+        {
+            lowHealthWarningPanel03.SetActive(true);
+        }
+    }
+
+    public void HideLowHealthWarning()
+    {
+        if (lowHealthWarningPanel01 != null)
+        {
+            lowHealthWarningPanel01.SetActive(false);
+        }
+        if (lowHealthWarningPanel02 != null)
+        {
+            lowHealthWarningPanel02.SetActive(false);
+        }
+        if (lowHealthWarningPanel03 != null)
+        {
+            lowHealthWarningPanel03.SetActive(false);
+        }
+    }
+    #endregion
 
 }
-    

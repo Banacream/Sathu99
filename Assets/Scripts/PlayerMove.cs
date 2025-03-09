@@ -7,6 +7,7 @@ public class PlayerMove : MonoBehaviour
     AudioManager audioManager;
 
     public Inventory inventory;
+    public PanelManager panelManager;
     public HandleSlot handleSlot; // Add reference to HandleSlot
     public GameObject confirmForDiePanel;
     public Rigidbody theRB;
@@ -162,7 +163,22 @@ public class PlayerMove : MonoBehaviour
 
         }
 
-      
+        if (health < 10)
+        {
+            panelManager.ShowLowHealthWarningLevel3();
+        }
+        else if (health < 15)
+        {
+            panelManager.ShowLowHealthWarningLevel2();
+        }
+        else if (health < 25)
+        {
+            panelManager.ShowLowHealthWarningLevel1();
+        }
+        else
+        {
+            panelManager.HideLowHealthWarning();
+        }
 
 
     }
@@ -266,6 +282,8 @@ public class PlayerMove : MonoBehaviour
         health -= damage;
         audioManager.PlaySFX(audioManager.playerDamage);
         StartCoroutine(FlashRed());
+       
+
         if (health <= 0)
         {
             Die();
