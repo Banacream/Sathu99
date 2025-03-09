@@ -11,6 +11,7 @@
     public int day = 0;
     public int daysWithoutPayment = 0;
     public List<string> purchasedItems = new List<string>(); // เพิ่มรายการไอเท็มที่ซื้อแล้ว
+    public List<string> changedScenes = new List<string>();
 }
 
 public class GameDataManager : MonoBehaviour
@@ -35,6 +36,7 @@ public class GameDataManager : MonoBehaviour
         LoadDebt();
         LoadDay();
         LoadDaysWithoutPayment();
+        LoadChangedScenes();
         if (Instance == null)
         {
             Instance = this;
@@ -454,5 +456,41 @@ public class GameDataManager : MonoBehaviour
     }
     #endregion
 
+    #region SceneManagement
+    public void ChangeScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public static bool HasSceneChanged(string sceneName)
+    {
+        return playerData.changedScenes.Contains(sceneName);
+    }
+
+    public static void SetSceneChanged(string sceneName)
+    {
+        if (!playerData.changedScenes.Contains(sceneName))
+        {
+            playerData.changedScenes.Add(sceneName);
+            SaveChangedScenes();
+        }
+    }
+
+    private static void SaveChangedScenes()
+    {
+        string jsonData = JsonUtility.ToJson(playerData.changedScenes);
+        PlayerPrefs.SetString("ChangedScenes", jsonData);
+        PlayerPrefs.Save();
+    }
+
+    private static void LoadChangedScenes()
+    {
+        if (PlayerPrefs.HasKey("ChangedScenes"))
+        {
+            string jsonData = PlayerPrefs.GetString("ChangedScenes");
+            playerData.changedScenes = JsonUtility.FromJson<List<string>>(jsonData);
+        }
+    }
+    #endregion
 
 }

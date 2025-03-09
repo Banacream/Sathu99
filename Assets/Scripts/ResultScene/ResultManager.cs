@@ -4,6 +4,8 @@ using UnityEngine;
 using TMPro; 
 using System.Linq; // สำหรับการใช้งาน List
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class ResultManager : MonoBehaviour
 {
@@ -27,7 +29,12 @@ public class ResultManager : MonoBehaviour
         totalCoins = GameDataManager.playerData.coins;
         totalDebt = GameDataManager.playerData.debt;
         withoutPaytotalDebt = GameDataManager.playerData.daysWithoutPayment;
-        UpdateCoinUI(); 
+        UpdateCoinUI();
+        if (GameDataManager.GetCurrentDay() == 5 && !GameDataManager.HasSceneChanged("CutscenesEnd"))
+        {
+            GameDataManager.Instance.ChangeScene("CutscenesEnd");
+            GameDataManager.SetSceneChanged("CutscenesEnd");
+        }
     }
 
     public void CheckPriceFood()

@@ -17,6 +17,7 @@ public class ResourceGatheringTimer : MonoBehaviour
     {
         remainingTime = gatheringTime;
         UpdateTimerUI();
+
     }
 
     private void Update()

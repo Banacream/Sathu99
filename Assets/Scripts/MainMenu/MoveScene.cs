@@ -16,7 +16,12 @@ public class MoveScene : MonoBehaviour
         if (changTime != 0)
         {
             changTime -= Time.deltaTime;
-            if (changTime <= 0 && sceneNameTime != null)
+            if (changTime <= 0 && sceneNameTime == "Wild Spice")
+            {
+                SceneManager.LoadScene(sceneNameTime);
+
+            }
+            if(changTime <= 0 && sceneNameTime == "Result")
             {
                 SceneManager.LoadScene(sceneNameTime);
             }

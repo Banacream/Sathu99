@@ -25,6 +25,10 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public static void ResetPlayerDataAll()
     {
+
+        PlayerPrefs.DeleteKey("ChangedScenes");
+        PlayerPrefs.Save();
+        
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
         PlayerPrefs.SetInt(SaveStatusKey, 0);
