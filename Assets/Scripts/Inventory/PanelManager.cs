@@ -24,7 +24,6 @@ public class PanelManager : MonoBehaviour
     public CanvasGroup cookingPanelCanvasGroup; // CanvasGroup ของ Cooking Panel
     public CanvasGroup inventoryPanelCanvasGroup;
     public CanvasGroup cookSellPanelCanvasGroup; // CanvasGroup ของ Cook Sell Panel
-    public CanvasGroup cookSellButtonCanvasGroup; // CanvasGroup ของ Cook Sell Panel
     private float debtWarnPanelCooldown = 5f; // เวลาที่ต้องรอก่อนจะเปิดใหม่อีกครั้ง
     private float debtWarnPanelTimer = 0f;
     private const string TutorialShownKey = "TutorialShown";
@@ -148,27 +147,12 @@ public class PanelManager : MonoBehaviour
         cookSellPanelCanvasGroup.interactable = !isCookSellPanelActive;
         cookSellPanelCanvasGroup.blocksRaycasts = !isCookSellPanelActive;
 
-
         if (cookBookPanel != null)
         {
             bool isActive = cookBookPanel.activeSelf;
             cookBookPanel.SetActive(!isActive);
         }
-
-        // ปรับ alpha และการโต้ตอบของปุ่ม
-        if (cookSellPanelCanvasGroup.alpha > 0)
-        {
-            cookSellButtonCanvasGroup.alpha = 1;
-            cookSellButtonCanvasGroup.interactable = true;
-            cookSellButtonCanvasGroup.blocksRaycasts = true;
-        }
-        else
-        {
-            cookSellButtonCanvasGroup.alpha = 0.8f;
-            cookSellButtonCanvasGroup.interactable = false;
-            cookSellButtonCanvasGroup.blocksRaycasts = false;
-        }
-
+     
     }
 
     #region Tutorial
