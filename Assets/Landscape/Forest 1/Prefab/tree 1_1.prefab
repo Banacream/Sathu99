@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8246881662955037624}
   - component: {fileID: 8331439143441324743}
+  - component: {fileID: -5112674690453944957}
   m_Layer: 0
   m_Name: tree 1_1
   m_TagString: Untagged
@@ -84,3 +85,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!136 &-5112674690453944957
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462473684818033079}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.29917493
+  m_Height: 9.168041
+  m_Direction: 1
+  m_Center: {x: 0.03118673, y: 4.4759793, z: 0.06661366}
