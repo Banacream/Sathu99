@@ -8,7 +8,7 @@ public class ItemObject : MonoBehaviour
     public DataItem item;
     public int amount = 1;
     public TextMeshProUGUI amountText;
-
+    public float pickupRange = 2.0f;
 
     private void Start()
     {
@@ -36,19 +36,26 @@ public class ItemObject : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Destroy(gameObject);
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null)
         {
-            PlayerMove playerMove = player.GetComponent<PlayerMove>();
-            if (playerMove != null)
+            float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+            if (distanceToPlayer <= pickupRange)
             {
-                playerMove.inventory.AddItem(item, amount);
-                Destroy(gameObject); // Remove the item from the scene
+                PlayerMove playerMove = player.GetComponent<PlayerMove>();
+                if (playerMove != null)
+                {
+                    playerMove.inventory.AddItem(item, amount);
+                    Destroy(gameObject); // Remove the item from the scene
+                }
+                else
+                {
+                    Debug.LogError("PlayerMove or Inventory component not found on the player.");
+                }
             }
             else
             {
-                Debug.LogError("PlayerMove or Inventory component not found on the player.");
+                Debug.Log("Player is too far to pick up the item.");
             }
         }
         else

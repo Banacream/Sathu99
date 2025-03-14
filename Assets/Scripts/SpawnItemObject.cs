@@ -53,10 +53,17 @@ public class SpawnItemObject : MonoBehaviour
                         // สร้างตำแหน่งสุ่มรอบๆ ตำแหน่ง spawn
                         Vector3 randomPosition = spawnPosition.position + Random.insideUnitSphere * 40f; // รัศมี 40 หน่วย
                         randomPosition.y = spawnPosition.position.y; // กำหนดค่า y ให้ตรงกับตำแหน่ง spawn
-                        NavMeshHit hit;
-                        if (NavMesh.SamplePosition(randomPosition, out hit, 10f, NavMesh.AllAreas))
+
+                    NavMeshHit navMeshHit;
+                    if (NavMesh.SamplePosition(randomPosition, out navMeshHit, 10f, NavMesh.AllAreas))
+                    {
+                        randomPosition.y = navMeshHit.position.y; // กำหนดตำแหน่งที่หาได้จาก NavMesh
+
+                        // ตรวจสอบว่าตำแหน่งที่ spawn ไม่ลอยกับพื้น
+                        RaycastHit hitR;
+                        if (Physics.Raycast(randomPosition, Vector3.down, out hitR, Mathf.Infinity))
                         {
-                            randomPosition.y = hit.position.y + 0.3f; // กำหนดตำแหน่งที่หาได้จาก NavMesh
+                            randomPosition.y = hitR.point.y + 0.3f; // กำหนดตำแหน่งที่หาได้จาก Raycast
                         }
 
                         Instantiate(spawnInfo.itemPrefab, randomPosition, Quaternion.identity);
@@ -68,7 +75,7 @@ public class SpawnItemObject : MonoBehaviour
                         }
 
                         itemsSpawned++;
-                  
+                    }
                 }
             }
         }
