@@ -19,11 +19,15 @@ public class Fog : Animal
 
     private PlayerMove playerMove;
     private Color originalColor;
+    public AudioSource audioSource;
     public Fog() : base("Fog", 30, null) { }
 
     protected override void Start()
     {
         base.Start();
+        float randomDelay = Random.Range(0f, 5f); // สุ่มดีเลย์ 0-2 วินาที
+        audioSource.PlayDelayed(randomDelay);
+        navMeshAgent = GetComponent<NavMeshAgent>();
         DropItemPrefab = fogMeatPrefab;// Assign the drop item
         // Example: Move to a specific position when spawned
         //MoveTo(new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5)));

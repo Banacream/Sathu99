@@ -21,6 +21,7 @@ public class Snake : AnimalEnemy
     private bool isFlipped = false; // สถานะการฟลิป
     private bool canAttack = true; // สถานะการโจมตี
     public Snake() : base("Snake", 50, null) { }
+    public AudioSource audioSource;
 
     protected override void Start()
     {
@@ -28,6 +29,8 @@ public class Snake : AnimalEnemy
         //DropItem = snakeMeatPrefab.name; // Assign the drop item
 
         // ตรวจสอบและตั้งค่า NavMeshAgent
+        float randomDelay = Random.Range(0f, 5f); // สุ่มดีเลย์ 0-2 วินาที
+        audioSource.PlayDelayed(randomDelay);
         navMeshAgent = GetComponent<NavMeshAgent>();
         if (navMeshAgent != null)
         {

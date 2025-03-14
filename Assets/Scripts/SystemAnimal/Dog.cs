@@ -20,12 +20,15 @@ public class Dog : AnimalEnemy
     private bool isFlipped = false; // สถานะการฟลิป
     private bool canAttack = true; // สถานะการโจมตี
     public Dog() : base("Dog", 50, null) { }
+    public AudioSource audioSource;
 
     protected override void Start()
     {
         base.Start();
         //DropItem = dogMeatPrefab.name; // Assign the drop item
-
+        float randomDelay = Random.Range(0f, 5f); // สุ่มดีเลย์ 0-2 วินาที
+        audioSource.PlayDelayed(randomDelay);
+        navMeshAgent = GetComponent<NavMeshAgent>();
         // ตรวจสอบและตั้งค่า NavMeshAgent
         navMeshAgent = GetComponent<NavMeshAgent>();
         if (navMeshAgent != null)

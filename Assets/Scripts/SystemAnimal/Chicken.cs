@@ -18,12 +18,13 @@ public class Chicken : Animal
     private PlayerMove playerMove;
     private Color originalColor; // สีเดิมของไก่
     public Chicken() : base("Chicken", 30, null) { }
-
+    public AudioSource audioSource;
     protected override void Start()
     {
         base.Start();
         DropItemPrefab = chickenMeatPrefab;// Assign the drop item
-
+        float randomDelay = Random.Range(2f, 10f);
+        audioSource.PlayDelayed(randomDelay);
         navMeshAgent = GetComponent<NavMeshAgent>();
         if (navMeshAgent != null)
         {
