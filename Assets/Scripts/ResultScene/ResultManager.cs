@@ -71,7 +71,7 @@ public class ResultManager : MonoBehaviour
         }
 
         // แสดงราคาทั้งหมดบน UI
-        cookSellText.text = $"{totalSell}";
+        cookSellText.text = $"Sell: {totalSell}";
 
     }
 
@@ -129,8 +129,8 @@ public class ResultManager : MonoBehaviour
     {
         if (coinText != null || debtText != null)
         {
-            coinText.text = $"{totalCoins}"; // �ʴ��ӹǹ����­� UI
-            debtText.text = $"หนี้ทั้งหมด : {totalDebt}"; // �ʴ��ӹǹ����­� UI
+            coinText.text = $"Coins: {totalCoins}"; // �ʴ��ӹǹ����­� UI
+            debtText.text = $"Total Debt: {totalDebt}"; // �ʴ��ӹǹ����­� UI
         }
         else
         {
@@ -140,7 +140,7 @@ public class ResultManager : MonoBehaviour
         if (daysWithoutPaymentText != null)
         {
             int daysWithoutPayment = GameDataManager.GetDaysWithoutPayment();
-            daysWithoutPaymentText.text = $"จำนวนที่ไม่ได้จ่าย : {withoutPaytotalDebt} / 3";
+            daysWithoutPaymentText.text = $"Days without payment : {withoutPaytotalDebt} / 3";
         }
         else
         {

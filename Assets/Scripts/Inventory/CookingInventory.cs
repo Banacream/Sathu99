@@ -254,7 +254,19 @@ public class CookingInventory : Inventory
     #endregion
 
 
+    
+    //// �ѧ��ѹ�����׹�ͧ�ҧ��¡�á�Ѻ��ѧ�Թ�ǹ������ѡ
+    //public void ReturnToMainInventory(DataItem item, int amount)
+    //{
+    //    Debug.Log($"Returning {amount} {item.name} to main inventory");
+    //    mainInventory.AddItem(item, amount); // ����������Ѻ��ѧ�Թ�ǹ������ѡ
+    //}
 
+    //// �ѧ��ѹ���ж١���¡������ѵ�شԺ�������١�׹��Ѻ��ѧ�Թ�ǹ������ѡ
+    //private void OnDisable()
+    //{
+    //    ReturnAllToMainInventory(); // �׹�ͧ������������Թ�ǹ���ա�÷�����ö١�Դ
+    //}
 
 
 

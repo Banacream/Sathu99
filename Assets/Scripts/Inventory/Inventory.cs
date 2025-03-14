@@ -14,7 +14,6 @@ public class Inventory : MonoBehaviour
     [Header("Inventory")]
     public DataItem EMTRY_ITEM; 
     public Transform slotPrefab; 
-    public Transform slotPrefabV4; 
     public Transform handleSlotPrefab;
     public Transform InventoryPanel;
     public Transform ToolInventoryPanel; 
@@ -126,7 +125,7 @@ public class Inventory : MonoBehaviour
         cookSellSlots = new InventorySlot[10];
         for (int i = 0; i < 10; i++)
         {
-            Transform slot = Instantiate(slotPrefabV4, CookSellPanel);
+            Transform slot = Instantiate(slotPrefab, CookSellPanel);
             InventorySlot invSlot = slot.GetComponent<InventorySlot>();
 
             cookSellSlots[i] = invSlot;
@@ -217,7 +216,22 @@ public class Inventory : MonoBehaviour
 
     }
 
+    //public virtual void CreateInventorySlots()
+    //{
+    //    iteminventorySlots = new InventorySlot[slotAmount]; // ���ҧ��������ͧ��ͧ㹡�����
+    //    for (int i = 0; i < slotAmount; i++)
+    //    {
+    //        // ���ҧ��ͧ����ҡ prefab ���������ѧ InventoryPanel
+    //        Transform slot = Instantiate(slotPrefab, InventoryPanel);
+    //        InventorySlot invSlot = slot.GetComponent<InventorySlot>();
 
+    //        iteminventorySlots[i] = invSlot; // ��˹���ͧ������ҧ���Ѻ��������
+    //        invSlot.inventory = this; // ��˹�����ͧ������ѡ�Ѻ Inventory
+    //        invSlot.SetThisSlot(EMTRY_ITEM, 0); // ��˹��������������Ѻ��ͧ (��ͧ��ҧ)
+    //    }
+    //}
+
+    // �ѧ��ѹ������ժ�ͧ��ҧ㹡������������ ��Ф׹��Ҫ�ͧ�����ҧ
     public InventorySlot IsEmptySlotLeft(DataItem itemChecker = null, InventorySlot itemSlot = null)
     {
         InventorySlot firstEmptySlot = null; // เก็บช่องว่างที่พบในครั้งแรก
