@@ -9,10 +9,13 @@ public class ItemObject : MonoBehaviour
     public int amount = 1;
     public TextMeshProUGUI amountText;
     public float pickupRange = 2.0f;
+    public AudioClip pickupSound; // เพิ่มตัวแปรสำหรับเสียง
+    public AudioSource audioSource; // เพิ่มตัวแปรสำหรับ AudioSource
 
     private void Start()
     {
         UpdateAmountText();
+        
     }
 
     public void SetAmount(int newAmount)
@@ -46,6 +49,7 @@ public class ItemObject : MonoBehaviour
                 if (playerMove != null)
                 {
                     playerMove.inventory.AddItem(item, amount);
+                    PlayPickupSound();
                     Destroy(gameObject); // Remove the item from the scene
                 }
                 else
@@ -63,7 +67,12 @@ public class ItemObject : MonoBehaviour
             Debug.LogError("Player not found in the scene.");
         }
     }
-
+    private void PlayPickupSound()
+    {
+    
+            audioSource.PlayOneShot(pickupSound);
+        
+    }
     //private void Update()
     //{
     //    if (Input.GetMouseButtonDown(0)) 
