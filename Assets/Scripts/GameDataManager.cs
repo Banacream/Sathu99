@@ -6,7 +6,7 @@
 
 [System.Serializable] public class PlayerData
 {
-    public int coins = 250;
+    public int coins = 100;
     public float debt = 0;
     public int day = 0;
     public int daysWithoutPayment = 0;

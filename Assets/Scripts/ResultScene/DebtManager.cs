@@ -38,7 +38,7 @@ public class DebtManager : MonoBehaviour
 
     private void GenerateRandomDebtAmount()
     {
-        amountToPay = Random.Range(1, 10); // ������ҷ���ͧ���������ҧ 100 �֧ 200
+        amountToPay = Random.Range(10, 50); // ������ҷ���ͧ���������ҧ 100 �֧ 200
     }
 
     private void UpdateDebtAmountUI()
