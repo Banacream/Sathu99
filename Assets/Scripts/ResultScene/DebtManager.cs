@@ -45,7 +45,7 @@ public class DebtManager : MonoBehaviour
     {
         if (debtAmountText != null)
         {
-            debtAmountText.text = $"Debt to Pay: {amountToPay}";
+            debtAmountText.text = $"หนี้ที่ต้องจ่ายวันน : {amountToPay}";
         }
         else
         {
