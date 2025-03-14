@@ -25,7 +25,7 @@ public class ResultManager : MonoBehaviour
     private void Start()
     {
         GameDataManager.LoadPlayerData();
-        cookSellText.text = $"Sell: {totalSell}";
+        cookSellText.text = $"{totalSell}";
         totalCoins = GameDataManager.playerData.coins;
         totalDebt = GameDataManager.playerData.debt;
         withoutPaytotalDebt = GameDataManager.playerData.daysWithoutPayment;
