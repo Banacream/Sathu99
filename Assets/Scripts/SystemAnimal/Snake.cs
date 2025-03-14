@@ -29,7 +29,7 @@ public class Snake : AnimalEnemy
         //DropItem = snakeMeatPrefab.name; // Assign the drop item
 
         // ตรวจสอบและตั้งค่า NavMeshAgent
-        float randomDelay = Random.Range(0f, 5f); // สุ่มดีเลย์ 0-2 วินาที
+        float randomDelay = Random.Range(0f, 2f); // สุ่มดีเลย์ 0-2 วินาที
         audioSource.PlayDelayed(randomDelay);
         navMeshAgent = GetComponent<NavMeshAgent>();
         if (navMeshAgent != null)
