@@ -54,7 +54,12 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
-        anim.SetFloat("Speed", theRB.velocity.magnitude);
+        AnimatorStateInfo currentState = anim.GetCurrentAnimatorStateInfo(0);
+        if (!currentState.IsName("Attack")& !currentState.IsName("Attack&Walk")) // ถ้าอนิเมชั่นที่เล่นอยู่ไม่ใช่อนิเมชั่นตาย
+        {
+            anim.SetFloat("Speed", theRB.velocity.magnitude);// อัปเดตความเร็วในอนิเมชั่น
+        }
+       
         moveInput.x = Input.GetAxis("Horizontal");
         moveInput.y = Input.GetAxis("Vertical");
         moveInput.Normalize();
@@ -222,6 +227,22 @@ public class PlayerMove : MonoBehaviour
     public void Attack(Animal animal)
     {
         isAttacking = true;
+
+
+        if (animal != null)
+        {
+            if (animal.transform.position.x < transform.position.x && isFlipped) // ถ้าเป้าหมายอยู่ทางขวาและตัวละครหันซ้าย
+            {
+                SetFlipX(false); // หันไปทางขวา
+                isFlipped = false;
+            }
+            else if (animal.transform.position.x > transform.position.x && !isFlipped) // ถ้าเป้าหมายอยู่ทางซ้ายและตัวละครหันขวา
+            {
+                SetFlipX(true); // หันไปทางซ้าย
+                isFlipped = true;
+            }
+        }
+        anim.SetFloat("Speed",0f);
         if (theRB.velocity.magnitude >= 1)
         {
             anim.SetTrigger("Attack&Walk");

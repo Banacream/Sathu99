@@ -16,6 +16,7 @@ public class Fog : Animal
 
     private bool isFlipped = false; // สถานะการฟลิป
     private bool isStopped = false; // สถานะการหยุดนิ่ง
+    private bool isDeadF = false; // สถานะการตาย
 
     private PlayerMove playerMove;
     private Color originalColor;
@@ -53,9 +54,15 @@ public class Fog : Animal
 
     protected override void Update()
     {
+        if (isDeadF) return; // ถ้าหมาตายแล้ว ไม่รับความเสียหายอีก
+
         base.Update();
 
-        anim.SetFloat("Speed", navMeshAgent.velocity.magnitude);
+        AnimatorStateInfo currentState = anim.GetCurrentAnimatorStateInfo(0);
+        if (!currentState.IsName("Dead")) // ถ้าอนิเมชั่นที่เล่นอยู่ไม่ใช่อนิเมชั่นตาย
+        {
+            anim.SetFloat("Speed", navMeshAgent.velocity.magnitude); // อัปเดตความเร็วในอนิเมชั่น
+        }
 
         // หา PlayerMove component หากยังไม่พบ
         if (playerMove == null)
@@ -115,9 +122,34 @@ public class Fog : Animal
 
     public override void TakeDamage(HandleSlot weaponSlot)
     {
+        if (isDeadF) return; // ถ้าหมาตายแล้ว ไม่รับความเสียหายอีก
+
         base.TakeDamage(weaponSlot);
-        StartCoroutine(FlashRed());
+
+        if (Health <= 0)
+        {
+            StartCoroutine(HandleDeath());
+        }
+        else
+        {
+            StartCoroutine(FlashRed());
+        }
     }
+
+    private IEnumerator HandleDeath()
+    {
+        isDeadF = true; // ตั้งสถานะว่าหมาตายแล้ว
+        navMeshAgent.isStopped = true; // หยุดการเคลื่อนที่
+        navMeshAgent.velocity = Vector3.zero;
+        anim.SetFloat("Speed", 0f);
+        anim.SetTrigger("Dead");
+
+
+        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length); // รอจนกว่าอนิเมชั่นตายจะจบ
+        
+
+    }
+
     private IEnumerator StopAndResume()
     {
         isStopped = true;
@@ -143,6 +175,8 @@ public class Fog : Animal
 
     private void FindPlayerMove()
     {
+        if (isDeadF) return; // ถ้าหมาตายแล้ว ไม่รับความเสียหายอีก
+
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null)
         {

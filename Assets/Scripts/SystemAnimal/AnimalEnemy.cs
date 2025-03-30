@@ -66,10 +66,6 @@ public abstract class AnimalEnemy : MonoBehaviour
             Health -= (int)weapon.damage;
             Debug.Log($"{Name} took {weapon.damage} damage. Health remaining: {Health}");
 
-            if (Health <= 0)
-            {
-                Destroy(gameObject);
-            }
         }
 
         //if (IsWeaponEffective(weapon))
@@ -105,30 +101,32 @@ public abstract class AnimalEnemy : MonoBehaviour
     protected virtual void Update()
     {
         randomMoveTimer += Time.deltaTime;
-
-        if (playerTransform != null)
+        if (Health > 0)
         {
-            float distance = Vector3.Distance(transform.position, playerTransform.position);
-            // Debug.Log($"Distance to player: {distance}");
+            if (playerTransform != null)
+            {
+                float distance = Vector3.Distance(transform.position, playerTransform.position);
+                // Debug.Log($"Distance to player: {distance}");
 
-            if (distance < AttackDistance)
-            {
-                AttackPlayer();
-            }
-            else if (distance < ChaseDistance)
-            {
-                ChasePlayer();
+                if (distance < AttackDistance)
+                {
+                    AttackPlayer();
+                }
+                else if (distance < ChaseDistance)
+                {
+                    ChasePlayer();
+                }
+                else if (randomMoveTimer >= RandomMoveInterval)
+                {
+                    RandomMove();
+                    randomMoveTimer = 0f;
+                }
             }
             else if (randomMoveTimer >= RandomMoveInterval)
             {
                 RandomMove();
                 randomMoveTimer = 0f;
             }
-        }
-        else if (randomMoveTimer >= RandomMoveInterval)
-        {
-            RandomMove();
-            randomMoveTimer = 0f;
         }
     }
 

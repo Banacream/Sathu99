@@ -20,6 +20,7 @@ public class Snake : AnimalEnemy
     public List<SpriteRenderer> spriteRenderers;
     private bool isFlipped = false; // สถานะการฟลิป
     private bool canAttack = true; // สถานะการโจมตี
+    private bool isDead = false; // สถานะการตาย
     public Snake() : base("Snake", 50, null) { }
     public AudioSource audioSource;
 
@@ -51,6 +52,7 @@ public class Snake : AnimalEnemy
 
     protected override void Update()
     {
+        if (isDead) return;
         base.Update();
         anim.SetFloat("Speed", navMeshAgent.velocity.magnitude);
         // หา PlayerMove component หากยังไม่พบ
@@ -95,8 +97,18 @@ public class Snake : AnimalEnemy
 
     public override void TakeDamage(HandleSlot weaponSlot)
     {
+        if (isDead) return; // ถ้าหมาตายแล้ว ไม่รับความเสียหายอีก
+
         base.TakeDamage(weaponSlot);
-        StartCoroutine(FlashRed());
+
+        if (Health <= 0)
+        {
+            StartCoroutine(HandleDeath());
+        }
+        else
+        {
+            StartCoroutine(FlashRed());
+        }
     }
 
     private IEnumerator FlashRed()
@@ -110,6 +122,19 @@ public class Snake : AnimalEnemy
         {
             sr.color = originalColor; // เปลี่ยนสีกลับเป็นสีเดิม
         }
+    }
+
+    private IEnumerator HandleDeath()
+    {
+        isDead = true; // ตั้งสถานะว่าหมาตายแล้ว
+        navMeshAgent.isStopped = true; // หยุดการเคลื่อนที่
+        navMeshAgent.velocity = Vector3.zero;
+        anim.SetFloat("Speed", 0f);
+        anim.SetTrigger("Dead"); // เล่นอนิเมชั่นตาย
+
+        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length); // รอจนกว่าอนิเมชั่นตายจะจบ
+
+        Destroy(gameObject); // ลบ GameObject ทิ้ง
     }
 
     private void FindPlayerMove()

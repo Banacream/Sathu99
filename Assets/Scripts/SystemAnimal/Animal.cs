@@ -52,6 +52,8 @@ public abstract class Animal : MonoBehaviour
     // Method to move the animal to a target position
     public void MoveTo(Vector3 targetPosition)
     {
+        if (isDead) return;
+
         if (navMeshAgent != null && !isDead)
         {
             navMeshAgent.SetDestination(targetPosition);
@@ -64,6 +66,7 @@ public abstract class Animal : MonoBehaviour
     // Coroutine to gradually slow down when close to the target position
     private IEnumerator SlowDownWhenClose(Vector3 targetPosition)
     {
+
         while (navMeshAgent != null && navMeshAgent.remainingDistance > 0.1f)
         {
             if (!navMeshAgent.isOnNavMesh || !navMeshAgent.isActiveAndEnabled || isDead)
@@ -86,6 +89,8 @@ public abstract class Animal : MonoBehaviour
 
     public virtual void TakeDamage(HandleSlot weaponSlot)
     {
+        if (isDead) return;
+
         if (weaponSlot == null || weaponSlot.item == null && !isDead)
         {
             Debug.Log("No weapon equipped in the handle slot.");
@@ -101,11 +106,11 @@ public abstract class Animal : MonoBehaviour
                 Health -= (int)weapon.damage;
                 Debug.Log($"{Name} took {weapon.damage} damage. Health remaining: {Health}");
 
-                if (Health <= 0)
-                {
-                    Die();
-                }
+            if (Health <= 0)
+            {
+                Die();
             }
+        }
 
        // }
         //else
@@ -134,11 +139,11 @@ public abstract class Animal : MonoBehaviour
     protected abstract bool IsWeaponEffective(string weapon);
 
     // Drop item upon death
-    private void Drop()
+    public void Drop()
     {
+
         Debug.Log($"{Name} has died and dropped an item.");
         SpawnItem.Instance.SpawnItemAtPosition(DropItemPrefab, transform.position); // Spawn item at the animal's position
-        Destroy(gameObject); // Remove the animal from the scene
     }
 
     // Check distance from the player and run away if too close
@@ -147,49 +152,64 @@ public abstract class Animal : MonoBehaviour
         if (isDead) return;
 
         randomMoveTimer += Time.deltaTime;
-
-        if (playerTransform != null)
+        if (Health > 0)
         {
-            float distance = Vector3.Distance(transform.position, playerTransform.position);
-            // Debug.Log($"Distance to player: {distance}");
-
-            if (distance < EnemyDistanceRun)
+            if (playerTransform != null)
             {
+                float distance = Vector3.Distance(transform.position, playerTransform.position);
+                // Debug.Log($"Distance to player: {distance}");
 
-                isMovingToTarget = true;
-                Vector3 dirToPlayer = transform.position - playerTransform.position;
-                Vector3 newPos = transform.position + dirToPlayer.normalized * 5.0f; // Move slightly further away
-                MoveTo(newPos);
+                if (distance < EnemyDistanceRun)
+                {
+
+                    isMovingToTarget = true;
+                    Vector3 dirToPlayer = transform.position - playerTransform.position;
+                    Vector3 newPos = transform.position + dirToPlayer.normalized * 5.0f; // Move slightly further away
+                    MoveTo(newPos);
+                }
+                else if (!isMovingToTarget && randomMoveTimer >= RandomMoveInterval)
+                {
+                    RandomMove();
+                    randomMoveTimer = 0f;
+                    RandomMoveInterval = Random.Range(3.0f, 6.0f);
+                }
+                //else if (randomMoveTimer >= RandomMoveInterval)
+                //{
+
+                //    RandomMove();
+                //    randomMoveTimer = 0f;
+                //}
             }
-            else if (!isMovingToTarget && randomMoveTimer >= RandomMoveInterval)
+            else if (randomMoveTimer >= RandomMoveInterval)
             {
+
                 RandomMove();
                 randomMoveTimer = 0f;
-                RandomMoveInterval = Random.Range(3.0f, 6.0f);
             }
-            //else if (randomMoveTimer >= RandomMoveInterval)
-            //{
-
-            //    RandomMove();
-            //    randomMoveTimer = 0f;
-            //}
-        }
-        else if (randomMoveTimer >= RandomMoveInterval)
-        {
-  
-            RandomMove();
-            randomMoveTimer = 0f;
         }
     }
 
     private void Die()
     {
+        if (isDead) return;
+
         isDead = true;
-        navMeshAgent.isStopped = true; // Stop the NavMeshAgent
-        Drop();
-        // Add any additional logic for when the animal dies, such as playing a death animation
+        navMeshAgent.isStopped = true; // หยุดการเคลื่อนที่
+        navMeshAgent.velocity = Vector3.zero;
+        StartCoroutine(HandleDeath()); // เรียก Coroutine เพื่อจัดการการตาย
     }
 
+    private IEnumerator HandleDeath()
+    {
+        // รอ 1 วินาทีก่อนดรอปไอเท็ม
+        yield return new WaitForSeconds(1.3f);
+
+        // ดรอปไอเท็ม
+        Drop();
+
+        // ลบ GameObject หลังจากดรอปไอเท็ม
+        Destroy(gameObject);
+    }
     // Random movement within a radius
     private void RandomMove()
     {

@@ -24,7 +24,6 @@ public class Inventory : MonoBehaviour
     public CookingInventory cookingInventory; 
     public ResultManager resultManager; 
     public CookRecipe[] recipes;
-
     [Header("Tool")]
     public HandleSlot handleSlot;
 
@@ -46,7 +45,7 @@ public class Inventory : MonoBehaviour
     void Start()
     {
         // �֧ GridLayoutGroup �ҡ InventoryPanel ������㹡�èѴ���§��ͧ
-
+     
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject); // ����� Instance ���
@@ -61,7 +60,7 @@ public class Inventory : MonoBehaviour
         if (InventoryPanel.childCount == 0 && ToolInventoryPanel.childCount == 0 && CookSellPanel.childCount == 0)
         {
             CreateInventorySlots();
-            AssignSlotIndexes();
+       
         }
         else
         {
@@ -69,12 +68,11 @@ public class Inventory : MonoBehaviour
             iteminventorySlots = InventoryPanel.GetComponentsInChildren<InventorySlot>();
             toolinventorySlots = ToolInventoryPanel.GetComponentsInChildren<InventorySlot>();
             cookSellSlots = CookSellPanel.GetComponentsInChildren<InventorySlot>();
-            AssignSlotIndexes();
+           
         }
 
 
-
-
+        Invoke(nameof(AssignSlotIndexes), 0.1f);
         if (GameDataManager.Instance != null)
         {
             GameDataManager.Instance.LoadInventory(this);

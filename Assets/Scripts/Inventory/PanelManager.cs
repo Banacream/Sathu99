@@ -15,6 +15,7 @@ public class PanelManager : MonoBehaviour
     public GameObject cookBookPanel;
     public GameObject confirmPanel;
     public GameObject pausePanel;
+
     public GameObject lowHealthWarningPanel01;
     public GameObject lowHealthWarningPanel02;
     public GameObject lowHealthWarningPanel03;
@@ -29,6 +30,7 @@ public class PanelManager : MonoBehaviour
     private float debtWarnPanelTimer = 0f;
     private const string TutorialShownKey = "TutorialShown";
 
+    public DialogueNPC dialogue;
     private void Start()
     {
         // แสดงบทช่วยสอนถ้ายังไม่เคยแสดงมาก่อน
@@ -202,6 +204,7 @@ public class PanelManager : MonoBehaviour
         else
         {
             tutorialPanel.SetActive(false);
+            dialogue.ShowDialogue();
         }
     }
     #endregion
