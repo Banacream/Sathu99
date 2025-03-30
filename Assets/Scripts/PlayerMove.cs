@@ -54,15 +54,17 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
+  
         AnimatorStateInfo currentState = anim.GetCurrentAnimatorStateInfo(0);
         if (!currentState.IsName("Attack")& !currentState.IsName("Attack&Walk")) // ถ้าอนิเมชั่นที่เล่นอยู่ไม่ใช่อนิเมชั่นตาย
         {
             anim.SetFloat("Speed", theRB.velocity.magnitude);// อัปเดตความเร็วในอนิเมชั่น
+
+            moveInput.x = Input.GetAxis("Horizontal");
+            moveInput.y = Input.GetAxis("Vertical");
+            moveInput.Normalize();
         }
-       
-        moveInput.x = Input.GetAxis("Horizontal");
-        moveInput.y = Input.GetAxis("Vertical");
-        moveInput.Normalize();
+
 
 
 
@@ -242,14 +244,17 @@ public class PlayerMove : MonoBehaviour
                 isFlipped = true;
             }
         }
-        anim.SetFloat("Speed",0f);
+
+        AnimatorStateInfo currentState = anim.GetCurrentAnimatorStateInfo(0);
         if (theRB.velocity.magnitude >= 1)
         {
+            anim.SetFloat("Speed", 0f);
             anim.SetTrigger("Attack&Walk");
             audioManager.PlaySFX(audioManager.attackPlayer);
         }
         else
         {
+            anim.SetFloat("Speed", 0f);
             anim.SetTrigger("Attack");
             audioManager.PlaySFX(audioManager.attackPlayer);
         }
