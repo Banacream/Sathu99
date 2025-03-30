@@ -8,7 +8,7 @@ public class ItemObject : MonoBehaviour
     public DataItem item;
     public int amount = 1;
     public TextMeshProUGUI amountText;
-    public float pickupRange = 2.0f;
+    public float pickupRange = 3.0f;
     public AudioClip pickupSound; // เพิ่มตัวแปรสำหรับเสียง
     public AudioSource audioSource; // เพิ่มตัวแปรสำหรับ AudioSource
 
