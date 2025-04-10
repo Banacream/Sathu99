@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Audio
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -13,7 +14,7 @@ TagManager:
   - NPC
   - Water
   - UI
-  - 
+  - Wall
   - 
   - 
   - 

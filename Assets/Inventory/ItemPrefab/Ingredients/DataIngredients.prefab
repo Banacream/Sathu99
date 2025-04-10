@@ -352,7 +352,6 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 141ad53be2ee57d4585c58a1e6ea8c7c, type: 2}
   amount: 1
   amountText: {fileID: 2998585048536181230}
-  pickupRange: 2
   pickupSound: {fileID: 8300000, guid: 65e31025d792eaf4c9bcb7378c619993, type: 3}
   audioSource: {fileID: 5851264836656615341}
 --- !u!1 &3655922082853362950

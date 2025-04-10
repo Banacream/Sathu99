@@ -8,7 +8,7 @@ public class ItemObject : MonoBehaviour
     public DataItem item;
     public int amount = 1;
     public TextMeshProUGUI amountText;
-    public float pickupRange = 3.0f;
+    private float pickupRange = 3f;
     public AudioClip pickupSound; // เพิ่มตัวแปรสำหรับเสียง
     public AudioSource audioSource; // เพิ่มตัวแปรสำหรับ AudioSource
 
@@ -37,36 +37,81 @@ public class ItemObject : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
+    void Update()
     {
-        GameObject player = GameObject.FindWithTag("Player");
-        if (player != null)
+        if (Input.GetMouseButtonDown(0)) // คลิกซ้าย
         {
-            float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-            if (distanceToPlayer <= pickupRange)
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            // มองข้าม Layer "Wall"
+            int layerMask = ~(1 << LayerMask.NameToLayer("Wall"));
+
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f, layerMask))
             {
-                PlayerMove playerMove = player.GetComponent<PlayerMove>();
-                if (playerMove != null)
+                if (hit.collider.gameObject == gameObject) // ตรวจว่าโดนไอเทมนี้
                 {
-                    playerMove.inventory.AddItem(item, amount);
-                    PlayPickupSound();
-                    Destroy(gameObject); // Remove the item from the scene
-                }
-                else
-                {
-                    Debug.LogError("PlayerMove or Inventory component not found on the player.");
+                    GameObject player = GameObject.FindWithTag("Player");
+                    if (player != null)
+                    {
+                        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+                        if (distanceToPlayer <= pickupRange)
+                        {
+                            PlayerMove playerMove = player.GetComponent<PlayerMove>();
+                            if (playerMove != null)
+                            {
+                                playerMove.inventory.AddItem(item, amount);
+                                PlayPickupSound();
+                                Destroy(gameObject); // ลบไอเทมหลังเก็บ
+                            }
+                            else
+                            {
+                                Debug.LogError("PlayerMove or Inventory component not found on the player.");
+                            }
+                        }
+                        else
+                        {
+                            Debug.Log("Player is too far to pick up the item.");
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError("Player not found in the scene.");
+                    }
                 }
             }
-            else
-            {
-                Debug.Log("Player is too far to pick up the item.");
-            }
-        }
-        else
-        {
-            Debug.LogError("Player not found in the scene.");
         }
     }
+
+    //private void OnMouseDown()
+    //{
+    //    GameObject player = GameObject.FindWithTag("Player");
+    //    if (player != null)
+    //    {
+    //        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+    //        if (distanceToPlayer <= pickupRange)
+    //        {
+    //            PlayerMove playerMove = player.GetComponent<PlayerMove>();
+    //            if (playerMove != null)
+    //            {
+    //                playerMove.inventory.AddItem(item, amount);
+    //                PlayPickupSound();
+    //                Destroy(gameObject); // Remove the item from the scene
+    //            }
+    //            else
+    //            {
+    //                Debug.LogError("PlayerMove or Inventory component not found on the player.");
+    //            }
+    //        }
+    //        else
+    //        {
+    //            Debug.Log("Player is too far to pick up the item.");
+    //        }
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError("Player not found in the scene.");
+    //    }
+    //}
     private void PlayPickupSound()
     {
     
